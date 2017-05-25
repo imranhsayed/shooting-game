@@ -37,7 +37,9 @@ Common css
  */
 
 body{
-    /*background-image: url( 'images/landscape.png' );*/
+    /*background-image: url( 'images/night-jungle-background.jpg' );*/
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .main-content{
     position: absolute;
@@ -120,6 +122,10 @@ left and right bird-nest for birds
     min-height: 50px;
 }
 
+.health-box img{
+    width: 30px;
+}
+
 /**
 footer
  */
@@ -145,3 +151,8 @@ footer{
     animation-name: fadeOut;
 }
 
+.game-over{
+    color: #ffffff;
+    font-size: 100px;
+    text-align: center;
+}

@@ -23,10 +23,9 @@
         <header class="header">
             <div class="health-box">
                 <p>Health Meter</p>
-                <p>| | | | | |</p>
             </div>
             <div class="start-button">
-                <button>Start the Game</button>
+                <button class="level1-start-button">Start the Game</button>
             </div>
             <div class="score-div">
                 <p>Your Score</p>
@@ -45,8 +44,18 @@
         <audio id="bird-flapping">
             <source src="sounds/bird-flapping.mp3" type="audio/mp3">
         </audio>
+        <audio id="rain-falling">
+            <source src="sounds/Rain-fall-background.mp3" type="audio/mp3">
+        </audio>
+
     </div>
 </section>
+
+<div class="game-over display ">
+    <p>Game Over. You Scored</p>
+    <p class="game-over-score">0</p>
+    <button class="level2-start-button">Play Level Two</button>
+</div>
 <script src="jquery.js"></script>
 <script src="javascript.js"></script>
 </body>

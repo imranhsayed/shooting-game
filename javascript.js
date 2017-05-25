@@ -4,58 +4,106 @@
 
 var birdAction = {
 
-    score: null,
+    score: 0,
+    audioBirdFlap: null,
+    audioRainDrop: null,
     health: 10,
+    healthBox: null,
     gunImage: null,
     newBirdLeft: null,
     newBirdRight: null,
     arrayLeftDivId: [],
     arrayRightDivId: [],
+    totalBirdsFlew:[],
+    totalBirdsShot:[],
+    birdsMissed: null,
     randLeft: null,
     randRight: null,
-    config: {
+    birdInterval: 100,
+    birdNoToSend: 1,
+    randRange: 10,
+    birdSpeed: 10000,
+
+    init: function () {
+        $( 'button.level1-start-button' ).on( 'click', birdAction.startLevelOne );
+        $( 'button.level2-start-button' ).on( 'click', birdAction.startLevelTwo );
+
+        $( 'body' ).on( 'mousemove', birdAction.imgFollowCursor );
+    },
+
+    startLevelOne: function(){
         /**
          * meaning after how many seconds next bird will be sent
          * @type {number}
          */
-        birdInterval: 1000,
+        birdAction.birdInterval = 100;
 
         /**
          * birdNoToSend is in multiples of 2 .
          * If you choose 2 meaning 4 birds will be sent
          * @type {number}
          */
-        birdNoToSend: 5,
+        birdAction.birdNoToSend = 1;
 
         /*
          * ids to be created from zero up until range
          */
-        randRange: 10,
-        birdSpeed: 20000
+        birdAction.randRange = 10;
+        birdAction.birdSpeed = 10000;
+        birdAction.createRain();
+        birdAction.audioRainDrop = document.getElementById( 'rain-falling');
+        birdAction.audioRainDrop.play();
+        var body = document.querySelector( 'body');
+        body.style.backgroundImage = "url( 'images/night-jungle-background.jpg' )";
+        birdAction.birdMoveNew();
     },
+    startLevelTwo: function(){
+        /**
+         * meaning after how many seconds next bird will be sent
+         * @type {number}
+         */
+        birdAction.birdInterval = 100;
 
-    init: function () {
-        $( 'button' ).on( 'click', birdAction.birdMoveNew );
-        $( 'body' ).on( 'mousemove', birdAction.imgFollowCursor );
+        /**
+         * birdNoToSend is in multiples of 2 .
+         * If you choose 2 meaning 4 birds will be sent
+         * @type {number}
+         */
+        birdAction.birdNoToSend = 1;
+
+        /*
+         * ids to be created from zero up until range
+         */
+        birdAction.randRange = 10;
+        birdAction.birdSpeed = 10000;
+
+        document.querySelector( 'section' ).classList.remove( 'display' );
+
+        var body = document.querySelector( 'body');
+        body.style.backgroundImage = "url( 'images/landscape.png' )";
+        birdAction.birdMoveNew();
     },
 
     birdMoveNew: function (event) {
-        birdAction.createRain();
 
-        var audioBirdFlap = document.getElementById( 'bird-flapping' );
-        audioBirdFlap.play();
+        birdAction.audioBirdFlap = document.getElementById( 'bird-flapping' );
+        birdAction.audioBirdFlap.play();
 
-        document.querySelector( 'button' ).disabled = true;
+        // document.querySelector( 'button' ).disabled = true;
+        document.querySelector( 'button' ).classList.add( 'display');
+
         birdAction.changeCursor();
 
         if ( null === birdAction.gunImage ) {
             birdAction.createGunImage();
         }
 
-        var z = 0,
+        var z = 0, k = 0,
             leftDiv = document.querySelector( '.left-bird-nest' ),
             rightDiv = document.querySelector( '.right-bird-nest' );
-
+        /**
+         * Making bird nest divs
+          */
         for( var i = 0; i < 10; i++  ){
             console.log( 'nest divs made' );
             var divLeftBird = document.createElement( 'div' ),
@@ -71,44 +119,72 @@ var birdAction = {
             leftDiv.appendChild( divLeftBird );
 
         }
-        var interval = setInterval( function () {
-            z = z + 1;
+        /**
+         * Making health hearts
+         */
+            birdAction.healthBox = document.querySelector( '.health-box' );
 
-            if ( z > birdAction.config.birdNoToSend ){
+        for ( var x = 0; x < 10; x++ ){
+            var healthHeart = document.createElement( 'img' );
+
+            healthHeart.setAttribute( 'src', 'images/health-heart.png');
+            healthHeart.setAttribute( 'class', 'health-' + x );
+            birdAction.healthBox.appendChild( healthHeart );
+
+        }
+        birdAction.healthBox.appendChild( healthHeart );
+
+        var interval = setInterval( function () {
+            if ( z > birdAction.birdNoToSend ){
                 clearInterval( interval );
+                console.log( 'z = ', z );
                 return;
             }
             console.log( 'z:', z );
             birdAction.createBirdsLeft();
+
             $( birdAction.newBirdLeft ).animate(
                 {
                     'bottom': window.innerHeight,
                     'left': window.innerWidth
                 },
                 {
-                    duration:birdAction.config.birdSpeed,
+                    duration:birdAction.birdSpeed,
                     complete: function () {
+                        birdAction.healthUpdate();
+
                         console.log( 'complete' );
+
                     }
                 }
             );
             birdAction.createBirdsRight();
+
             $( birdAction.newBirdRight ).delay(1000).animate(
                 {
                     'bottom': window.innerHeight,
                     'right': window.innerWidth
                 },
                 {
-                    duration:birdAction.config.birdSpeed,
+                    duration:birdAction.birdSpeed,
                     complete: function () {
+                        k = k + 1;
+                        if ( birdAction.birdNoToSend === k
+                            || birdAction.totalBirdsShot === birdAction.totalBirdsFlew
+                            ){
+                            birdAction.gameOver();
+                        }
+                        console.log( 'k = ', k );
+                        birdAction.healthUpdate();
                         $( this ).remove();
                         console.log( 'complete 2nd' );
-                        audioBirdFlap.pause();
 
                     }
                 }
             );
-        },birdAction.config.birdInterval );
+            z = z + 1;
+
+        },birdAction.birdInterval );
 
     },
     createBirdsLeft: function () {
@@ -160,10 +236,10 @@ var birdAction = {
         }
     },
     createRandomIdLeft: function () {
-        birdAction.randLeft = Math.floor( Math.random() * birdAction.config.randRange );;
+        birdAction.randLeft = Math.floor( Math.random() * birdAction.randRange );;
     },
     createRandomIdRight: function () {
-        birdAction.randRight = 10 + Math.floor( Math.random() * birdAction.config.randRange );;
+        birdAction.randRight = 10 + Math.floor( Math.random() * birdAction.randRange );;
     },
 
     randomIdCheckerLeft: function () {
@@ -188,6 +264,9 @@ var birdAction = {
     birdDisappear: function ( event ) {
         var audio = document.getElementById( 'audio' );
 
+        var birdHitId = event.target.parentNode.getAttribute( 'id' );
+        birdAction.totalBirdsShot.push( birdHitId );
+        console.log( 'totalBirdsShot', birdAction.totalBirdsShot );
         event.target.setAttribute( 'src', 'images/blood-splatter.jpg' );
         event.target.classList.add( 'blood-splat-img' );
         audio.play();
@@ -196,6 +275,17 @@ var birdAction = {
 
         birdAction.score = birdAction.score + 100;
         birdAction.addScore();
+    },
+    healthUpdate: function () {
+        birdAction.totalBirdsFlew =
+            birdAction.arrayRightDivId.concat( birdAction.arrayLeftDivId );
+        console.log( 'totalBirdFlew',birdAction.totalBirdsFlew );
+        birdAction.birdsMissed =
+            birdAction.totalBirdsFlew.length - birdAction.totalBirdsShot.length;
+        console.log(  'birdsMissed', birdAction.birdsMissed );
+        for( var j = 0; j < birdAction.birdsMissed; j++ ){
+            birdAction.healthBox.querySelectorAll( 'img' )[ j ].classList.add( 'display' );
+        }
     },
 
     addScore: function () {
@@ -265,6 +355,25 @@ var birdAction = {
             $('#drop'+i).css('left',dropLeft);
             $('#drop'+i).css('top',dropTop);
         }
+    },
+    gameOver: function () {
+
+        /**
+         * Stop Rain Music
+         */
+        birdAction.audioRainDrop.pause();
+        birdAction.audioBirdFlap.pause();
+        /**
+         * Stop rain
+         */
+        document.querySelector( 'section' ).classList.remove( 'rain' );
+        document.querySelector( 'section' ).classList.add( 'display' );
+        var gameOverScore = document.querySelector( '.game-over-score');
+        gameOverScore.innerText = birdAction.score + ' pts';
+        document.querySelector( '.game-over').classList.remove( 'display');
+
+
+
     }
 };
 
