@@ -61,10 +61,10 @@ button {
 All images css
  */
 img{
-    width: 60px;
+    width: 100px;
 }
 .blood-splat-img{
-    width: 70px;
+    width: 110px;
 }
 
 .gun-aim{
@@ -85,12 +85,15 @@ img{
     filter: FlipH;
     -ms-filter: "FlipH";
 }
+.man-bird-image{
+    width: 300px;
+}
 /**
 Before Game starts
  */
 .before-game-start{
     text-align: center;
-    padding-top: 100px;
+    padding-top: 200px;
 }
 .bird-game-start-gif img{
     width: 500px;
@@ -180,7 +183,7 @@ footer{
 .game-over{
     color: #ffffff;
     font-size: 50px;
-    padding-top: 100px;
+    padding-top: 200px;
     text-align: center;
 }
 

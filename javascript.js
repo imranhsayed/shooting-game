@@ -13,8 +13,12 @@ var birdAction = {
     audioBirdFlap: null,
     audioRainDrop: null,
     gunImage: null,
+    birdImageLeft: null,
+    birdImageRight: null,
     newBirdLeft: null,
     newBirdRight: null,
+    birdImgSourceLeft: 'images/giphy-bird-left.gif',
+    birdImgSourceRight: 'images/giphy-bird-right.gif',
     birdNestDivNo: 0,
     arrayLeftDivId: [],
     arrayRightDivId: [],
@@ -59,7 +63,7 @@ var birdAction = {
          */
         birdAction.randRange = birdAction.birdNestDivNo;
         birdAction.birdSpeed = 20000;
-        birdAction.requiredScore = birdAction.birdNoToSend * 100;
+        birdAction.requiredScore = birdAction.birdNoToSend * 10;
         birdAction.gameTimer = 60; // in secs
 
         birdAction.createRain();
@@ -81,11 +85,15 @@ var birdAction = {
 
 
 
+
         var birdsDivs = $( '.birds-div' );
         if ( birdsDivs.children().length ){
             birdsDivs.remove();
             console.log( birdsDivs );
         }
+
+        birdAction.birdImgSourceLeft ='images/level2-bird-left.gif';
+        birdAction.birdImgSourceRight ='images/level2-bird-right.gif';
         /**
          * meaning after how many seconds next bird will be sent
          * @type {number}
@@ -125,7 +133,7 @@ var birdAction = {
 
 
         var body = document.querySelector( 'body');
-        body.style.backgroundImage = "url( 'images/landscape.png' )";
+        body.style.backgroundImage = "url( 'images/landscape.gif' )";
         birdAction.birdMoveNew();
         birdAction.gameTimerLevel2();
 
@@ -244,7 +252,14 @@ var birdAction = {
         if( "" === leftBirdNest.innerHTML ){
             birdAction.newBirdLeft = document.createElement( 'img' );
             birdAction.newBirdLeft.setAttribute( 'class', 'bird' );
-            birdAction.newBirdLeft.setAttribute( 'src', 'images/giphy-bird-left.gif');
+            if( 5 === birdAction.randLeft ){
+
+                birdAction.newBirdLeft.setAttribute( 'src', 'images/man-flying.gif' );
+                birdAction.newBirdLeft.setAttribute( 'class', 'man-bird-image');
+
+            }else{
+                birdAction.newBirdLeft.setAttribute( 'src', birdAction.birdImgSourceLeft );
+            }
             leftBirdNest.appendChild( birdAction.newBirdLeft );
             birdAction.newBirdLeft.addEventListener( 'click', birdAction.birdDisappear );
         }
@@ -269,7 +284,7 @@ var birdAction = {
         if( "" === rightBirdNest.innerHTML ) {
             birdAction.newBirdRight = document.createElement( 'img' );
             birdAction.newBirdRight.setAttribute( 'class', 'bird' );
-            birdAction.newBirdRight.setAttribute( 'src', 'images/giphy-bird-right.gif' );
+            birdAction.newBirdRight.setAttribute( 'src', birdAction.birdImgSourceRight );
             rightBirdNest.appendChild(birdAction.newBirdRight);
             birdAction.newBirdRight.addEventListener( 'click', birdAction.birdDisappear );
 
@@ -302,6 +317,10 @@ var birdAction = {
         }
     },
     birdDisappear: function ( event ) {
+        if( $( event.target ).hasClass( 'man-bird-image')){
+            var birdManShot = true;
+            birdAction.gameOverLevel1( birdManShot );
+        }
         var audio = document.getElementById( 'audio' );
 
         var birdHitId = event.target.parentNode.getAttribute( 'id' );
@@ -386,7 +405,7 @@ var birdAction = {
             $('#drop'+i).css('top',dropTop);
         }
     },
-    gameTimerLevel1: function () {
+    gameTimerLevel1: function ( ) {
          birdAction.t = birdAction.gameTimer;
 
         // console.log( 'required score = ', birdAction.requiredScore );
@@ -450,7 +469,7 @@ var birdAction = {
     },
 
 
-    gameOverLevel1: function ( ) {
+    gameOverLevel1: function ( birdManShot ) {
 
         /**
          * Stop Rain Music
@@ -479,10 +498,19 @@ var birdAction = {
 
             gameOverScore.innerText = 'You Scored ' + birdAction.score + ' pts ' + 'in '
                 + birdAction.gameTimer + ' secs';
-            var couldNotScoreEl = document.createElement( 'p' ),
-                couldNotScoreText = document.createTextNode( 'Sorry you could not score the required target. Please Try Again' );
-            couldNotScoreEl.appendChild( couldNotScoreText );
-            gameOverScore.appendChild( couldNotScoreEl );
+
+            if( birdManShot === true ){
+                birdAction.score = 0;
+                $( '<p></p>', {
+                    text: 'Oops! You killed the BIRDMAN . Any progress Made is lost.Please go back to the home screen and restart',
+                    class: 'birdman-killed'
+                } ).prependTo( gameOverScore );
+            }else{
+                var couldNotScoreEl = document.createElement( 'p' ),
+                    couldNotScoreText = document.createTextNode( 'Sorry you could not score the required target. Please Try Again' );
+                couldNotScoreEl.appendChild( couldNotScoreText );
+                gameOverScore.appendChild( couldNotScoreEl );
+            }
             $( '.level2-start-button' ).replaceWith( '<button class="level1-start-button">Go to Home Screen and Start Again</button>' );
             $( 'button.level1-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
 
