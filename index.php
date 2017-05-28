@@ -18,16 +18,26 @@
 </head>
 <body>
 <section class="rain">
+    <div class="before-game-start">
+        <div class="start-button">
+            <button class="level1-start-button">Start the Game</button>
+        </div>
+        <h1>Bird Shooting Game</h1>
+
+        <div class="bird-game-start-gif">
+            <img src="images/many=birds-flying.gif" alt="">
+        </div>
+    </div>
 
     <div class="main-content ">
         <header class="header">
-            <div class="health-box">
-                <p>Health Meter</p>
-            </div>
-            <div class="start-button">
-                <button class="level1-start-button">Start the Game</button>
+            <div class="time-remaining">
+                <p>Time Remaining</p>
+                <p class="time-left"></p>
             </div>
             <div class="score-div">
+                <p>Target Score</p>
+                <p class="target-score">0</p>
                 <p>Your Score</p>
                 <p class="score-box">0</p>
             </div>
@@ -47,12 +57,14 @@
         <audio id="rain-falling">
             <source src="sounds/Rain-fall-background.mp3" type="audio/mp3">
         </audio>
+        <audio id="music-before-start">
+            <source src="sounds/Music-before-game-start.mp3" type="audio/mp3">
+        </audio>
 
     </div>
 </section>
 
 <div class="game-over display ">
-    <p>Game Over. You Scored</p>
     <p class="game-over-score">0</p>
     <button class="level2-start-button">Play Level Two</button>
 </div>

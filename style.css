@@ -1,9 +1,13 @@
 /**
 CSS for Rain
  */
-html{height:100%;}
+html{
+    height:100%;
+    margin: -10px;
+}
 body {
     /*background-image: url( 'images/landscape.png' );*/
+    margin-top: 0;
 
     background:#0D343A;
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(#000000)  );
@@ -81,6 +85,21 @@ img{
     filter: FlipH;
     -ms-filter: "FlipH";
 }
+/**
+Before Game starts
+ */
+.before-game-start{
+    text-align: center;
+    padding-top: 100px;
+}
+.bird-game-start-gif img{
+    width: 500px;
+}
+h1{
+    color: rgba(205, 220, 57, 0.97);
+    font-family: cursive;
+    font-size: 30px;
+}
 
 /**
 Header
@@ -91,8 +110,15 @@ Header
     color: #fff;
     overflow: hidden;
     text-align: center;
+    padding: 30px;
 }
 
+.header p {
+    margin: 5px;
+    padding: 0px;
+    letter-spacing: 3px;
+    font-family: ;
+}
 
 /**
 left and right bird-nest for birds
@@ -153,6 +179,13 @@ footer{
 
 .game-over{
     color: #ffffff;
-    font-size: 100px;
+    font-size: 50px;
+    padding-top: 100px;
     text-align: center;
+}
+
+.nine-sec-to-go{
+    color: red;
+    font-size: 500px;
+    opacity: 0.5;
 }
