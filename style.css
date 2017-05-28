@@ -192,3 +192,7 @@ footer{
     font-size: 500px;
     opacity: 0.5;
 }
+
+.bird-man-killed{
+    color: red;
+}

@@ -60,6 +60,12 @@
         <audio id="music-before-start">
             <source src="sounds/Music-before-game-start.mp3" type="audio/mp3">
         </audio>
+        <audio id="man-scream">
+            <source src="sounds/man-scream.mp3" type="audio/mp3">
+        </audio>
+        <audio id="background-music-level2">
+            <source src="sounds/background-music-level2.mp3" type="audio/mp3">
+        </audio>
 
     </div>
 </section>
@@ -67,6 +73,7 @@
 <div class="game-over display ">
     <p class="game-over-score">0</p>
     <button class="level2-start-button">Play Level Two</button>
+    <button class="level3-start-button display">Play Level Three</button>
 </div>
 <script src="jquery.js"></script>
 <script src="javascript.js"></script>

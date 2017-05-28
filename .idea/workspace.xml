@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2cc712c-bf19-4a2d-a59d-2f33fcf2518e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/Its Raining Men! Abalooyaa!.htm" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/bird-left.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/bird-right.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/eagle-left.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/game-start-background.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/giphy-bat-right.gif" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/health-heart.png" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/landscape.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sounds/Flapping-bird/Flapping-bird.mp3" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sounds/Flapping-bird/Read.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sounds/background-music-level1.zip" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/sounds/background-music-level2.zip" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript.js" afterPath="$PROJECT_DIR$/javascript.js" />
@@ -34,8 +30,8 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-144">
-              <caret line="15" column="29" lean-forward="false" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+            <state relative-caret-position="553">
+              <caret line="75" column="19" lean-forward="true" selection-start-line="75" selection-start-column="19" selection-end-line="75" selection-end-column="38" />
               <folding>
                 <element signature="e#6#88#0#PHP" expanded="true" />
               </folding>
@@ -46,8 +42,8 @@
       <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="97">
-              <caret line="87" column="1" lean-forward="false" selection-start-line="87" selection-start-column="1" selection-end-line="87" selection-end-column="15" />
+            <state relative-caret-position="217">
+              <caret line="178" column="10" lean-forward="true" selection-start-line="178" selection-start-column="10" selection-end-line="178" selection-end-column="10" />
               <folding />
             </state>
           </provider>
@@ -56,8 +52,8 @@
       <file leaf-file-name="javascript.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javascript.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="506">
-              <caret line="502" column="37" lean-forward="false" selection-start-line="502" selection-start-column="37" selection-end-line="502" selection-end-column="37" />
+            <state relative-caret-position="247">
+              <caret line="563" column="29" lean-forward="false" selection-start-line="563" selection-start-column="29" selection-end-line="563" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -83,6 +79,9 @@
       <find>land</find>
       <find>disappear</find>
       <find>disappea</find>
+      <find>Music-before-game-start</find>
+      <find>music-before</find>
+      <find>music</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -222,12 +221,12 @@
       <updated>1495664656661</updated>
       <workItem from="1495664658015" duration="1619000" />
       <workItem from="1495668265047" duration="46703000" />
-      <workItem from="1495988491824" duration="3079000" />
+      <workItem from="1495988491824" duration="5758000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="51401000" />
+    <option name="totallyTimeSpent" value="54080000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="873" extended-state="6" />
@@ -353,28 +352,28 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css.css" />
+    <entry file="file://$PROJECT_DIR$/style.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="217">
+          <caret line="178" column="10" lean-forward="true" selection-start-line="178" selection-start-column="10" selection-end-line="178" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-144">
-          <caret line="15" column="29" lean-forward="false" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
+        <state relative-caret-position="553">
+          <caret line="75" column="19" lean-forward="true" selection-start-line="75" selection-start-column="19" selection-end-line="75" selection-end-column="38" />
           <folding>
             <element signature="e#6#88#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="97">
-          <caret line="87" column="1" lean-forward="false" selection-start-line="87" selection-start-column="1" selection-end-line="87" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/javascript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="502" column="37" lean-forward="false" selection-start-line="502" selection-start-column="37" selection-end-line="502" selection-end-column="37" />
+        <state relative-caret-position="247">
+          <caret line="563" column="29" lean-forward="false" selection-start-line="563" selection-start-column="29" selection-end-line="563" selection-end-column="29" />
           <folding />
         </state>
       </provider>

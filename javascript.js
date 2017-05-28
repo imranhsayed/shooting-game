@@ -12,6 +12,8 @@ var birdAction = {
     nbRainDrop: 300,
     audioBirdFlap: null,
     audioRainDrop: null,
+    backgroundMusicLevel1: null,
+    backgroundMusicLevel2: null,
     gunImage: null,
     birdImageLeft: null,
     birdImageRight: null,
@@ -33,9 +35,12 @@ var birdAction = {
     birdSpeed: 10000,
 
     init: function () {
+
         document.querySelector( '.main-content' ).classList.add( 'display');
-        var musicBeforeGameStart = document.getElementById( 'music-before-start');
-        musicBeforeGameStart.play();
+        birdAction.backgroundMusicLevel1 = document.getElementById( 'music-before-start');
+        birdAction.backgroundMusicLevel2 = document.getElementById( 'background-music-level2' );
+        birdAction.backgroundMusicLevel1.play();
+        // birdAction.backgroundMusicLevel1.play();
         $( 'button.level1-start-button' ).on( 'click', birdAction.startLevelOne );
         $( 'button.level2-start-button' ).on( 'click', birdAction.startLevelTwo );
 
@@ -75,6 +80,10 @@ var birdAction = {
         birdAction.gameTimerLevel1();
     },
     startLevelTwo: function(){
+
+        birdAction.backgroundMusicLevel1.pause();
+
+        birdAction.backgroundMusicLevel2.play();
         document.querySelector( '.target-score ' ).innerText = 0;
         birdAction.gameTimer = 0;
 
@@ -105,16 +114,16 @@ var birdAction = {
          * If you choose 2 meaning 4 birds will be sent
          * @type {number}
          */
-        birdAction.birdNoToSend = 40;
+        birdAction.birdNoToSend = 20;
 
 
-        birdAction.birdNestDivNo = 40;
+        birdAction.birdNestDivNo = 20;
         /*
          * ids to be created from zero up until range
          */
         birdAction.randRange = birdAction.birdNestDivNo;
         birdAction.birdSpeed = 15000;
-        birdAction.requiredScore = birdAction.birdNoToSend * 100;
+        birdAction.requiredScore = birdAction.birdNoToSend * 10;
         birdAction.gameTimer = 90; // in secs
 
 
@@ -137,6 +146,10 @@ var birdAction = {
         birdAction.birdMoveNew();
         birdAction.gameTimerLevel2();
 
+    },
+
+    startLevelThree: function () {
+        alert( 'this is level three work in progress ');
     },
 
     birdMoveNew: function (event) {
@@ -476,6 +489,7 @@ var birdAction = {
          */
         birdAction.audioRainDrop.pause();
         birdAction.audioBirdFlap.pause();
+
         /**
          * Stop rain
          */
@@ -501,9 +515,13 @@ var birdAction = {
 
             if( birdManShot === true ){
                 birdAction.score = 0;
+                var manScreamAudio = document.getElementById( 'man-scream' );
+                manScreamAudio.play();
+
                 $( '<p></p>', {
-                    text: 'Oops! You killed the BIRDMAN . Any progress Made is lost.Please go back to the home screen and restart',
-                    class: 'birdman-killed'
+                    text: 'Oops! You killed the BIRDMAN . Any progress Made is lost. Please go back to the home screen and restart',
+                    class: 'bird-man-killed',
+                    color: 'red'
                 } ).prependTo( gameOverScore );
             }else{
                 var couldNotScoreEl = document.createElement( 'p' ),
@@ -541,6 +559,10 @@ var birdAction = {
                 text: 'Congratulations You have made it to the Next level.',
                 class: 'congrats-text'
             } ).prependTo( gameOverScore );
+            document.querySelector( '.level2-start-button' ).classList.add( 'display' );
+            document.querySelector( '.level3-start-button' ).classList.remove( 'display' );
+            $( 'button.level3-start-button' ).on( 'click', birdAction.startLevelThree );
+
 
         }else{
 
@@ -569,10 +591,6 @@ var birdAction = {
         birdAction.score = 0;
         birdAction.gameTimer = 0;
 
-        /**
-         * Start Rain Music
-         */
-        birdAction.audioRainDrop.play();
         birdAction.audioBirdFlap.play();
         /**
          * Start rain
