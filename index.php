@@ -18,6 +18,7 @@
 </head>
 <body>
 <section class="rain">
+
     <div class="before-game-start">
         <div class="start-button">
             <button class="level1-start-button">Start the Game</button>
@@ -48,24 +49,6 @@
             <div class="right-bird-nest"></div>
         </content>
         <footer class="footer"></footer>
-        <audio id="audio" >
-            <source src="sounds/Gunsound.mp3" type="audio/mp3">
-        </audio>
-        <audio id="bird-flapping">
-            <source src="sounds/bird-flapping.mp3" type="audio/mp3">
-        </audio>
-        <audio id="rain-falling">
-            <source src="sounds/Rain-fall-background.mp3" type="audio/mp3">
-        </audio>
-        <audio id="music-before-start">
-            <source src="sounds/Music-before-game-start.mp3" type="audio/mp3">
-        </audio>
-        <audio id="man-scream">
-            <source src="sounds/man-scream.mp3" type="audio/mp3">
-        </audio>
-        <audio id="background-music-level2">
-            <source src="sounds/background-music-level2.mp3" type="audio/mp3">
-        </audio>
 
     </div>
 </section>
@@ -74,6 +57,34 @@
     <p class="game-over-score">0</p>
     <button class="level2-start-button">Play Level Two</button>
     <button class="level3-start-button display">Play Level Three</button>
+</div>
+
+<div class="audio-div">
+    <audio id="audio" >
+        <source src="sounds/Gunsound.mp3" type="audio/mp3">
+    </audio>
+    <audio id="bird-flapping">
+        <source src="sounds/bird-flapping.mp3" type="audio/mp3">
+    </audio>
+    <audio id="rain-falling">
+        <source src="sounds/Rain-fall-background.mp3" type="audio/mp3">
+    </audio>
+    <audio id="music-before-start">
+        <source src="sounds/Music-before-game-start.mp3" type="audio/mp3">
+    </audio>
+    <audio id="man-scream">
+        <source src="sounds/man-scream.mp3" type="audio/mp3">
+    </audio>
+    <audio id="background-music-level2">
+        <source src="sounds/background-music-level2.mp3" type="audio/mp3">
+    </audio>
+    <audio id="background-music-level3">
+        <source src="sounds/background-music-level3.mp3" type="audio/mp3">
+    </audio>
+    <audio id="thunderstorm-clip">
+        <source src="sounds/loud-thunder.mp3" type="audio/mp3">
+
+    </audio>
 </div>
 <script src="jquery.js"></script>
 <script src="javascript.js"></script>

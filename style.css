@@ -45,6 +45,7 @@ body{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
 .main-content{
     position: absolute;
 }
@@ -77,6 +78,8 @@ img{
     transition: 0.05s;
 }
 
+
+
 .look-left.gun-image{
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
@@ -87,6 +90,12 @@ img{
 }
 .man-bird-image{
     width: 300px;
+}
+
+.dragon-entry-green{
+    width: 500px;
+    position: relative;
+
 }
 /**
 Before Game starts
@@ -156,10 +165,16 @@ left and right bird-nest for birds
 }
 
 /**
-footer
+level-three-div
  */
-footer{
+
+.level-three-div {
+    text-align: right;
+    position: absolute;
+    right: -350px;
 }
+
+
 
 .animated {
     animation-duration: 0.5s;
