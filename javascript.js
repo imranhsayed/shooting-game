@@ -15,6 +15,8 @@ var birdAction = {
     backgroundMusicLevel1: null,
     backgroundMusicLevel2: null,
     backgroundMusicLevel3: null,
+    thunderstormMusic: null,
+    angryDragonScream:null,
     gunImage: null,
     gunImageSrc: 'images/manshooting.png',
     birdImageLeft: null,
@@ -35,6 +37,7 @@ var birdAction = {
     birdNoToSend: 0,
     randRange: 10,
     birdSpeed: 10000,
+    health: null,
 
     init: function () {
 
@@ -151,14 +154,27 @@ var birdAction = {
     },
 
     startLevelThree: function () {
-        if ( false === $( '.left-bird-nest' ).hasClass( 'display')   ){
-            document.querySelector( '.left-bird-nest' ).classList.add( 'display');
-            document.querySelector( '.right-bird-nest' ).classList.add( 'display');
+        birdAction.gameTimer = 25;
+        if ( false === $( '.left-bird-nest' ).hasClass( 'display' )   ){
+            document.querySelector( '.left-bird-nest' ).remove();
+            document.querySelector( '.right-bird-nest' ).remove();
 
         }
+        document.querySelector( '.gun-image' ).classList.add( 'display' );
+        document.querySelector( '.score-div' ).classList.add( 'display' );
+        document.querySelector( '.time-remaining' ).classList.add( 'display' );
+
+
+
         birdAction.backgroundMusicLevel2.pause();
-        var thunderstormMusic = document.getElementById( 'thunderstorm-clip' );
-        thunderstormMusic.play();
+        birdAction.thunderstormMusic = document.getElementById( 'thunderstorm-clip' ),
+        birdAction.angryDragonScream = document.getElementById( 'angry-dragon' );
+        birdAction.thunderstormMusic.play();
+        birdAction.angryDragonScream.addEventListener( 'ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+        birdAction.angryDragonScream.play();
 
         document.querySelector( '.content' ).style.float = 'right';
         /**
@@ -180,6 +196,19 @@ var birdAction = {
                     this.play();
                 }, false);
                 birdAction.backgroundMusicLevel3.play();
+                document.querySelector( '.gun-image' ).classList.remove( 'display');
+                $( '<p></p>', {
+                    class: 'dragon-health-name',
+                    text: 'Dragon Health Bar'
+                }).appendTo( '.header' );
+                $( '<progress></progress>', {
+                    id: 'health',
+                    value: '200',
+                    max:'400',
+                }).appendTo( '.header' );
+                document.querySelector( '.time-remaining' ).classList.remove( 'display' );
+                var dragonEntryGreen = document.querySelector( '.dragon-entry-green' );
+                dragonEntryGreen.addEventListener( 'click', birdAction.dragonHitGreen )
 
                 clearInterval( shortLightening );
                 return;
@@ -195,8 +224,8 @@ var birdAction = {
                 } ).animate(
                     {
                         'position': 'absolute',
-                        'top': '100px',
-                        'right': '500px'
+                        'top': '0px',
+                        'right': '350px'
                     }, 10000
                 )
                     .prependTo( '.content' );
@@ -215,6 +244,8 @@ var birdAction = {
         if ( false === $( '.game-over' ).hasClass( 'display')   ){
                 document.querySelector( '.game-over' ).classList.add( 'display');
         }
+
+        birdAction.gameTimerLevel3();
 
     },
 
@@ -547,6 +578,34 @@ var birdAction = {
         },1000);
     },
 
+    gameTimerLevel3: function () {
+        birdAction.t = birdAction.gameTimer;
+        var scoreIntervalCheck = setInterval( function () {
+
+            birdAction.t = birdAction.t - 1;
+            var timeLeftP = document.querySelector( '.time-left' );
+            timeLeftP.innerText =  birdAction.t ;
+            if( 20 > birdAction.t ){
+                timeLeftP.style.color = 'orange';
+                timeLeftP.style.fontSize = '80px';
+            }
+            if( 10 > birdAction.t ){
+
+                timeLeftP.classList.add( 'nine-sec-to-go' );
+            }
+            if( 0 === birdAction.t ){
+                birdAction.gameOverLevel3( birdAction.t );
+                clearInterval( scoreIntervalCheck );
+                return;
+            }
+
+            if( ( birdAction.health.value ===  0 ) && ( 0 < birdAction.t ) )  {
+                birdAction.gameOverLevel3( birdAction.t );
+                clearInterval( scoreIntervalCheck );
+            }
+        },1000);
+
+    },
 
     gameOverLevel1: function ( birdManShot ) {
 
@@ -647,7 +706,31 @@ var birdAction = {
         document.querySelector( '.game-over').classList.remove( 'display');
 
     },
+    gameOverLevel3: function () {
+        birdAction.angryDragonScream.pause();
+        document.querySelector( '.dragon-entry-green' ).remove();
+        document.querySelector( 'section' ).classList.remove( 'rain' );
+        var timeTookToFinish = birdAction.gameTimer - birdAction.t,
+            gameOverDiv = document.querySelector( '.game-over');
 
+
+
+            if( ( birdAction.health.value ===  0 ) && ( 0 < birdAction.t ) )  {
+
+            $( '<p></p>', {
+                text: 'Congratulations You have completed all three levels.You Killed the Dragon in '+ timeTookToFinish + ' secs',
+                class: 'congrats-text'
+            } ).prependTo( gameOverDiv );
+            document.querySelector( '.level2-start-button' ).classList.add( 'display' );
+            document.querySelector( '.game-over').classList.remove( 'display' );
+            document.querySelector( '.level3-start-button' ).classList.remove( 'display' );
+            $( 'button.level3-start-button' ).on( 'click', birdAction.startLevelThree );
+        }
+
+
+
+
+    },
 
     gameRestartLevel1: function () {
         location.reload();
@@ -666,8 +749,22 @@ var birdAction = {
         document.querySelector( '.game-over').classList.add( 'display');
         birdAction.startLevelTwo();
     },
-    dragonHit: function () {
-
+    dragonHitGreen: function () {
+        var audio = document.getElementById( 'audio' );
+            birdAction.health = document.getElementById( "health" );
+        audio.play();
+        birdAction.health.value += 5;
+        var w, r, imgW, imgR ;
+        imgW = parseInt( window.getComputedStyle( document.querySelector( '.dragon-entry-green' ) ).width);
+        console.log( 'imgWidth= ',imgW );
+        imgR = parseInt( window.getComputedStyle( document.querySelector( '.dragon-entry-green' ) ).right);
+        if( 820 > imgW ){
+            w = imgW + 20;
+            r = imgR - 20;
+            document.querySelector( '.dragon-entry-green' ).style.width = w + 'px';
+            document.querySelector( '.dragon-entry-green' ).style.right = r + 'px';
+            return;
+        }
     }
 };
 

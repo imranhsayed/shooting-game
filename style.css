@@ -127,7 +127,7 @@ Header
 
 .header p {
     margin: 5px;
-    padding: 0px;
+    padding: 1px;
     letter-spacing: 3px;
     font-family: ;
 }
@@ -210,4 +210,29 @@ level-three-div
 
 .bird-man-killed{
     color: red;
+}
+
+/**
+Styling health bar
+ */
+progress {
+    height: 15px;
+    border: 0px none;
+    background-color: grey;
+    color: white;
+}
+
+progress::-webkit-progress-bar {
+    background-color: grey;
+}
+progress::-webkit-progress-value {
+    background-color: green;
+}
+
+progress::-moz-progress-bar {
+    background-color: green;
+}
+
+progress:after {
+    content: attr(value)'%';
 }

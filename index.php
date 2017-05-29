@@ -31,7 +31,7 @@
     </div>
 
     <div class="main-content ">
-        <header class="header">
+        <header class="header ">
             <div class="time-remaining">
                 <p>Time Remaining</p>
                 <p class="time-left"></p>
@@ -42,7 +42,6 @@
                 <p>Your Score</p>
                 <p class="score-box">0</p>
             </div>
-
         </header>
         <content class="content">
             <div class="left-bird-nest"></div>
@@ -83,7 +82,9 @@
     </audio>
     <audio id="thunderstorm-clip">
         <source src="sounds/loud-thunder.mp3" type="audio/mp3">
-
+    </audio>
+    <audio id="angry-dragon">
+        <source src="sounds/angry-dragon.mp3" type="audio/mp3">
     </audio>
 </div>
 <script src="jquery.js"></script>
