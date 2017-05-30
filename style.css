@@ -97,6 +97,31 @@ img{
     position: relative;
 
 }
+.dragon-entry-brown{
+    width: 400px;
+    position: relative;
+}
+.dragon-entry-dark-green{
+    width: 700px;
+    position: relative;
+
+}
+.dragon-fire-left{
+    width: 500px;
+    position: relative;
+}
+.dragon-fire-right{
+    width: 500px;
+    position: relative;
+}
+.dragon-fire{
+    width: 500px;
+    position: relative;
+}
+.dragon-final{
+    width: 700px;
+    position: relative;
+}
 /**
 Before Game starts
  */
