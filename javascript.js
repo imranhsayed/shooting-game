@@ -75,7 +75,7 @@ var birdAction = {
          */
         birdAction.randRange = birdAction.birdNestDivNo;
         birdAction.birdSpeed = 20000;
-        birdAction.requiredScore = birdAction.birdNoToSend * 10;
+        birdAction.requiredScore = birdAction.birdNoToSend * 100;
         birdAction.gameTimer = 60; // in secs
 
         birdAction.createRain();
@@ -121,16 +121,16 @@ var birdAction = {
          * If you choose 2 meaning 4 birds will be sent
          * @type {number}
          */
-        birdAction.birdNoToSend = 20;
+        birdAction.birdNoToSend = 40;
 
 
-        birdAction.birdNestDivNo = 20;
+        birdAction.birdNestDivNo = 40;
         /*
          * ids to be created from zero up until range
          */
         birdAction.randRange = birdAction.birdNestDivNo;
         birdAction.birdSpeed = 15000;
-        birdAction.requiredScore = birdAction.birdNoToSend * 10;
+        birdAction.requiredScore = birdAction.birdNoToSend * 100;
         birdAction.gameTimer = 90; // in secs
 
 
@@ -148,7 +148,7 @@ var birdAction = {
     },
 
     startLevelThree: function () {
-        birdAction.gameTimer = 120;
+        birdAction.gameTimer = 90;
         if ( true === $( '.content div').first( ).hasClass( 'left-bird-nest' ) && false === $( '.left-bird-nest' ).hasClass( 'display' )   ){
             document.querySelector( '.left-bird-nest' ).remove();
             document.querySelector( '.right-bird-nest' ).remove();
@@ -832,11 +832,11 @@ var birdAction = {
                         .animate(
                             {
                                 'position': 'absolute',
-                                'left': '-300px',
+                                'left': '-700px',
                                 'bottom': '1500px'
-                            }, 10000
+                            }, 7000
                         )
-                        .fadeOut( 9000 );
+                        .fadeOut( 7000 );
                     birdAction.dragonImageEl = document.querySelector( '.dragon-entry-dark-green');
                     birdAction.dragonImageEl.addEventListener( 'click', birdAction.dragonHitStronger );
                 }
@@ -857,7 +857,7 @@ var birdAction = {
                             {
                                 'position': 'absolute',
                                 'top': '-240px',
-                                'left': '-350px'
+                                'left': '-900px'
                             }, 2000
                         )
                         .fadeOut( 5000 );
@@ -927,14 +927,14 @@ var birdAction = {
                                 'right': '800px'
                             }, 10000
                         )
-                        .fadeOut( 10000 );
+                        .fadeOut( 9000 );
 
                     birdAction.dragonImageEl = document.querySelector( '.dragon-final');
                     birdAction.dragonImageEl.addEventListener( 'click', birdAction.dragonHitVulnerable );
                 }
             }
 
-            if ( timeInterval > 100 ){
+            if ( timeInterval > 80 ){
                 console.log( 'Timeint at completion = ', timeInterval );
 
                 $( '.dragon-final' ).remove();
