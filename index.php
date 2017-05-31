@@ -7,7 +7,7 @@
  */
 ?>
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -21,10 +21,21 @@
 
     <div class="before-game-start">
         <div class="start-button">
-            <button class="level1-start-button">Start the Game</button>
+            <button class="level1-start-button">Start the Game</button></br>
+            <button class="level1-read-instructions">Read Game Instructions</button>
         </div>
         <h1>Bird Shooting Game</h1>
-
+        <div class="level1-instructions-div display">
+            <h1>Instructions</h1>
+            <p><strong>a-</strong>As the name says ,its a Bird Shooting Game so you need to shoot the birds to score points.
+                Every level of the game has a preset target points that you need to score in order to complete the
+                level and move on to the next one.The game gets challenging as you progress from one level to another.
+            </p>
+            <p><strong>b-</strong>You need to achieve the required score within the preset time each level has.
+                Look at the top of the screen to know what is the target score for the level and
+                how much time is remaining to complete the Game .
+            </p>
+        </div>
         <div class="bird-game-start-gif">
             <img src="images/many=birds-flying.gif" alt="">
         </div>
@@ -55,7 +66,7 @@
 <div class="game-over display ">
     <p class="game-over-score">0</p>
     <button class="level2-start-button">Play Level Two</button>
-    <button class="level3-start-button display">Play Level Three</button>
+    <button class="level3-start-button display">Play Level-3: The Angry Dragon</button>
 </div>
 
 <div class="audio-div">

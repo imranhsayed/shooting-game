@@ -12,6 +12,8 @@ body {
     background:#0D343A;
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(#000000)  );
     background: -moz-linear-gradient(top, rgba(13,52,58,1) 0%, rgba(0,0,0,1) 100%);
+    background-image: url( 'images/game-start-background.jpg' );
+
 
     overflow:hidden;}
 
@@ -39,6 +41,11 @@ body {
 /**
 Common css
  */
+
+p{
+    text-shadow: 2px 2px black;
+
+}
 
 body{
     /*background-image: url( 'images/night-jungle-background.jpg' );*/
@@ -122,12 +129,25 @@ img{
     width: 700px;
     position: relative;
 }
+
+.sleeping-dragon{
+    width: 300px;
+    margin: -35px;
+}
 /**
 Before Game starts
  */
 .before-game-start{
     text-align: center;
-    padding-top: 200px;
+    padding-top: 150px;
+}
+.level1-instructions-div{
+    text-align: center;
+    margin: 0 auto;
+    width: 800px;
+    color: white;
+    font-size: 15px;
+    letter-spacing: 2px;
 }
 .bird-game-start-gif img{
     width: 500px;
@@ -136,6 +156,7 @@ h1{
     color: rgba(205, 220, 57, 0.97);
     font-family: cursive;
     font-size: 30px;
+    margin: 5px;
 }
 
 /**
@@ -154,7 +175,6 @@ Header
     margin: 5px;
     padding: 1px;
     letter-spacing: 3px;
-    font-family: ;
 }
 
 /**
@@ -226,16 +246,36 @@ level-three-div
     padding-top: 200px;
     text-align: center;
 }
+.twenty-sec-to-go{
+    font-size: 80px;
+    color: orange;
+}
 
 .nine-sec-to-go{
     color: red;
-    font-size: 500px;
+    font-size: 120px;
     opacity: 0.5;
 }
 
 .bird-man-killed{
     color: red;
+
 }
+.bird-man-tip{
+    font-size: 20px;
+    color: #ffffff;
+    letter-spacing: 2px;
+}
+.dragon-killing-tip{
+    font-size: 20px;
+    letter-spacing: 2px;
+    color: #aed1d1;
+}
+.dragon-story{
+    color: #acced6;
+    font-size: 25px;
+}
+
 
 /**
 Styling health bar
@@ -260,4 +300,15 @@ progress::-moz-progress-bar {
 
 progress:after {
     content: attr(value)'%';
+}
+.game-over-score{
+    width: 1000px;
+    text-align: center;
+    font-size: 30px;
+    margin: 0 auto;
+}
+.bird-tip{
+    font-size: 20px;
+    color: #CDDC39;
+    letter-spacing: 1px;
 }
