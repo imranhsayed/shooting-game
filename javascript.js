@@ -45,7 +45,10 @@ var birdAction = {
         birdAction.body = document.querySelector( 'body' );
         birdAction.mainSection = document.getElementById( 'main-section' );
         birdAction.gunShotAudio = document.getElementById( 'gun-shot-audio' );
+        birdAction.birdKilledSound = document.getElementById( 'bird-killed-sound' );
         birdAction.gameOverScoreDiv = document.querySelector( '.game-over-score' );
+        birdAction.level2StartButton = document.querySelector( '.level2-start-button' );
+        birdAction.level3StartButton = document.querySelector( '.level3-start-button' );
         document.querySelector( '.main-content' ).classList.add( 'display' );
         birdAction.backgroundMusicLevel1 = document.getElementById( 'music-before-start' );
         birdAction.backgroundMusicLevel2 = document.getElementById( 'background-music-level2' );
@@ -163,7 +166,7 @@ var birdAction = {
             document.querySelector( 'progress' ).classList.remove( 'blue-health' );
         }
 
-        document.querySelector( '.gun-image' ).classList.add( 'display' );
+        birdAction.gunImage.classList.add( 'display' );
         document.querySelector( '.score-div' ).classList.add( 'display' );
         document.querySelector( '.time-remaining' ).classList.add( 'display' );
         birdAction.backgroundMusicLevel2.pause();
@@ -196,7 +199,7 @@ var birdAction = {
                     this.play();
                 }, false);
                 birdAction.backgroundMusicLevel3.play();
-                document.querySelector( '.gun-image' ).classList.remove( 'display' );
+                birdAction.gunImage.classList.remove( 'display' );
 
                 if( true === $( '.header' ).hasClass( 'display' ) ){
                     document.querySelector( '.header' ).classList.remove( 'display' );
@@ -412,6 +415,9 @@ var birdAction = {
         if( $( event.target ).hasClass( 'man-bird-image' ) ){
             birdManShot = 1;
             birdAction.gameOverLevel1( birdManShot );
+        }else{
+            birdAction.birdKilledSound.volume = 0.08;
+            birdAction.birdKilledSound.play();
         }
         birdAction.totalBirdsShot.push( birdHitId );
         event.target.setAttribute( 'src', 'images/blood-splatter.jpg' );
@@ -633,7 +639,11 @@ var birdAction = {
     },
 
     gameOverLevel1: function ( birdManShot ) {
-           var timeTookToFinish = birdAction.gameTimer - birdAction.timer;
+        var timeTookToFinish = birdAction.gameTimer - birdAction.timer,
+            pTags = '<p></p>',
+            manScreamAudio = document.getElementById( 'man-scream' ),
+            couldNotScoreEl,couldNotScoreText;
+
         /**
          * Stop Rain Music
          */
@@ -647,32 +657,28 @@ var birdAction = {
         birdAction.mainSection.classList.add( 'display' );
 
         if( birdAction.score >= birdAction.requiredScore ){
-
             birdAction.gameOverScoreDiv.innerText = 'You Scored ' + birdAction.score + ' pts ' + 'in '
                 + timeTookToFinish + ' secs';
-            $( '<p></p>', {
+            $( pTags, {
                 text: 'Congratulations You have made it to the Next level.',
                 class: 'congrats-text'
             } ).prependTo( birdAction.gameOverScoreDiv );
-            document.querySelector( '.game-over').classList.remove( 'display');
-
+            document.querySelector( '.game-over').classList.remove( 'display' );
 
         }else{
-
-
                if( 1 === birdManShot ){
                 birdAction.score = 0;
                 birdAction.gameOverScoreDiv.classList.add( 'birdman-came' );
-                var manScreamAudio = document.getElementById( 'man-scream' );
                 manScreamAudio.play();
 
-                $( '<p></p>', {
+                $( pTags, {
                     text: 'Oops! You killed the BIRDMAN . Any progress Made is lost. Please go back to the home screen and restart.' +
                     'Your Scored Points have changed to :- ',
                     class: 'bird-man-killed',
                     color: 'red'
                 } ).prependTo( birdAction.gameOverScoreDiv );
-                $( '<p></p>', {
+
+                $( pTags, {
                     text: 'BIRDMAN: The man who has wings is called Birdman.' +
                     ' He may or may not come in any level.But when he does ensure that you don’t shoot him.' +
                     ' He is your friend and under no circumstances should be killed. ' +
@@ -682,30 +688,35 @@ var birdAction = {
                     class: 'bird-man-tip',
                     color: 'black'
                 } ).prependTo( birdAction.gameOverScoreDiv );
-                   $( '.level2-start-button' ).replaceWith( '<button class="level1-start-button">Go to Home Screen and Start Again</button>' );
+
+                   $( birdAction.level2StartButton )
+                       .replaceWith( '<button class="level1-start-button">Go to Home Screen and Start Again</button>' );
                    $( 'button.level1-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
-                   document.querySelector( '.game-over').classList.remove( 'display');
+                   document.querySelector( '.game-over').classList.remove( 'display' );
                    return;
             }else{
                     if( false === $( birdAction.gameOverScoreDiv ).hasClass( 'birdman-came' ) ){
-                        birdAction.gameOverScoreDiv.innerText = 'You Scored ' + birdAction.score + ' pts ' + 'in '
-                            + birdAction.gameTimer + ' secs';
-                        var couldNotScoreEl = document.createElement('p'),
-                            couldNotScoreText = document.createTextNode('Sorry you could not score the required target. Please Try Again');
-                        couldNotScoreEl.appendChild(couldNotScoreText);
-                        birdAction.gameOverScoreDiv.appendChild(couldNotScoreEl);
-                        $( '.level2-start-button' ).replaceWith( '<button class="level1-start-button">Go to Home Screen and Start Again</button>' );
+                        birdAction.gameOverScoreDiv.innerText = 'You Scored ' + birdAction.score
+                            + ' pts ' + 'in ' + birdAction.gameTimer + ' secs';
+                        couldNotScoreEl = document.createElement( 'p' );
+                        couldNotScoreText = document.createTextNode('Sorry you could not score the required target. Please Try Again');
+                        couldNotScoreEl.appendChild( couldNotScoreText );
+                        birdAction.gameOverScoreDiv.appendChild( couldNotScoreEl );
+                        $( birdAction.level2StartButton )
+                            .replaceWith( '<button class="level1-start-button">Go to Home Screen and Start Again</button>' );
                         $( 'button.level1-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
-                        document.querySelector( '.game-over').classList.remove( 'display');
+                        document.querySelector( '.game-over' ).classList.remove( 'display' );
                         return;
                     }
             }
-
         }
-
     },
 
     gameOverLevel2: function () {
+        var pTags = '<p></p>',
+            timeTookToFinish = birdAction.gameTimer - birdAction.timer,
+            couldNotScoreEl,couldNotScoreText;
+
         /**
          * Stop Rain Music
          */
@@ -717,17 +728,17 @@ var birdAction = {
          */
         birdAction.mainSection.classList.remove( 'rain' );
         birdAction.mainSection.classList.add( 'display' );
-        var timeTookToFinish = birdAction.gameTimer - birdAction.timer;
 
         if( birdAction.score >= birdAction.requiredScore ){
 
             birdAction.gameOverScoreDiv.innerText = 'You Scored ' + birdAction.score + ' pts ' + 'in '
                 + timeTookToFinish + ' secs';
-            $( '<p></p>', {
+            $( pTags, {
                 text: 'Congratulations You have made it to the Next level. You have unlocked Level3 : The Angry Dragon',
                 class: 'congrats-text'
             } ).prependTo( birdAction.gameOverScoreDiv );
-            $( '<p></p>', {
+
+            $( pTags, {
                 text: 'About the Dragon: This dragon has been sleeping in his castle in the jungle for years.' +
                 ' However your shooting business has disturbed his sleep. He is now awake and is ' +
                 'very angry. You must find a way to put him back to sleep. The Dragon changes colors and has the power to ' +
@@ -736,10 +747,10 @@ var birdAction = {
                 ' then the trick to beat him will be shared with you.',
                 class: 'dragon-story'
             } ).appendTo( birdAction.gameOverScoreDiv );
-            document.querySelector( '.level2-start-button' ).classList.add( 'display' );
-            document.querySelector( '.level3-start-button' ).classList.remove( 'display' );
-            $( 'button.level3-start-button' ).on( 'click', birdAction.startLevelThree );
 
+            birdAction.level2StartButton.classList.add( 'display' );
+            birdAction.level3StartButton.classList.remove( 'display' );
+            $( 'button.level3-start-button' ).on( 'click', birdAction.startLevelThree );
 
         }else{
 
@@ -747,46 +758,49 @@ var birdAction = {
 
                 birdAction.gameOverScoreDiv.innerText = 'You Scored ' + birdAction.score + ' pts ' + 'in '
                     + birdAction.gameTimer + ' secs';
-                var couldNotScoreEl = document.createElement('p'),
-                    couldNotScoreText = document.createTextNode('Sorry you could not score the required target. Please Try Again'),
-                    birdTipEl = document.createElement('p'),
-                    birdTipText = document.createTextNode('Tip : Try Shooting the birds which are about to leave the game play area ' +
+                    couldNotScoreEl = document.createElement( 'p' ),
+                    couldNotScoreText = document.createTextNode('Sorry you could not score the required target. Please Try Again' ),
+                    birdTipEl = document.createElement( 'p' ),
+                    birdTipText = document.createTextNode( 'Tip : Try Shooting the birds which are about to leave the game play area ' +
                         'to ensure you don’t miss onto them. The others who still have time to reach the end can be shot later.' +
                         ' Some birds are very smart and would keep flying at the bottom for a short period and then disappear. While a few will' +
                         ' fly in groups together making it more challenging for you to hit them. So be alert so that they are not missed.'
                     );
+
                 birdTipEl.appendChild( birdTipText );
                 birdTipEl.setAttribute( 'class', 'bird-tip' );
                 couldNotScoreEl.appendChild( couldNotScoreText );
                 birdAction.gameOverScoreDiv.appendChild( couldNotScoreEl );
                 birdAction.gameOverScoreDiv.appendChild( birdTipEl );
 
-                $('.level2-start-button').replaceWith('<button class="level2-start-button">Start Again</button>');
-                $('button.level2-start-button').on('click', birdAction.gameRestartLevel2);
+                $( birdAction.level2StartButton ).replaceWith( '<button class="level2-start-button">ReStart</button>' );
+                $( 'button.level2-start-button' ).on( 'click', birdAction.gameRestartLevel2 );
             }
-
         }
-
-        document.querySelector( '.game-over').classList.remove( 'display');
-
+        document.querySelector( '.game-over' ).classList.remove( 'display' );
     },
+
     gameOverLevel3: function () {
+        var timeTookToFinish, gameOverDiv,couldNotScoreEl
+            ,couldNotScoreText,dragonKillingTipEl,dragonKillingTipText,
+            pTags = '<p></p>',
+            creditsDiv = document.querySelector( '.credits' );
+
         birdAction.angryDragonScream.pause();
-        document.querySelector( '.gun-image' ).classList.add( 'display' );
+        birdAction.gunImage.classList.add( 'display' );
         if( $( '.content' ).children().hasClass( 'dragon-entry-green' ) ){
             document.querySelector( '.dragon-entry-green' ).remove();
         }
         birdAction.stopRain();
         document.querySelector( '.header' ).classList.add( 'display' );
 
-        var timeTookToFinish = birdAction.gameTimer - birdAction.t,
+            timeTookToFinish = birdAction.gameTimer - birdAction.timer;
             gameOverDiv = document.querySelector( '.game-over');
 
             if( ( 0 === birdAction.health.value ) && ( 0 < birdAction.timer ) )  {
                 birdAction.originalCursor();
                 birdAction.gameOverScoreDiv.textContent = "";
-                var creditsDiv = document.querySelector( '.credits' );
-                document.querySelector( '.level3-start-button' ).classList.add( 'display' );
+                birdAction.level3StartButton.classList.add( 'display' );
                 creditsDiv.classList.add( 'wrapper' );
                 creditsDiv.classList.remove( 'display' );
                 setTimeout( function () {
@@ -797,70 +811,61 @@ var birdAction = {
                         src: 'images/dragon-sleeping.gif',
                         class: 'sleeping-dragon'
                     } ).prependTo( gameOverDiv );
-                    $( '<p></p>', {
+
+                    $( pTags, {
                         text: 'Congratulations You have completed all three levels.You have put the Dragon back to Sleep in '
                         + timeTookToFinish + ' secs. ' +' Go back to the home Screen and Restart the Game',
                         class: 'congrats-text'
                     } ).prependTo( gameOverDiv );
+
                     birdAction.gameOverScoreDiv.textContent = "";
-                    $( '.level3-start-button' ).replaceWith( '<button class="level2-start-button">Go to Home Screen</button>' );
+                    $( birdAction.level3StartButton ).replaceWith( '<button class="level2-start-button">Go to Home Screen</button>' );
                     $( 'button.level2-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
-                },40000);
+                }, 40000 );
 
             }else{
 
-                var couldNotScoreEl = document.createElement( 'p' ),
-                    couldNotScoreText = document.createTextNode( 'Sorry you could not put the Dragon to Sleep in Required Time. Please Try Again' ),
-                    dragonKillingTipEl = document.createElement('p'),
-                    dragonKillingTipText = document.createTextNode('Tip on How to put the Dragon back to Sleep : The dragons outer skin ' +
-                        'is very strong and your bullets cannot harm him. If you shoot him he will eat the fire' +
-                        ' from your bullets and get stronger and bigger. So how do we put him back to sleep. ' +
-                        'The dragon at some stage will spit fire and start becoming red. Once he has spit out all his fire ' +
-                        'and becomes completely red. His skin becomes softer and vulnerable because of heat .' +
-                        'Your bullets have tranquilizers. This is the time you need to attack him and put him ' +
-                        'back to sleep. Best of Luck This Time!'
-                    );
+                couldNotScoreEl = document.createElement( 'p' );
+                couldNotScoreText = document.createTextNode( 'Sorry you could not put the Dragon to Sleep in Required Time. Please Try Again' );
+                dragonKillingTipEl = document.createElement( 'p' );
+                dragonKillingTipText = document.createTextNode( 'Tip on How to put the Dragon back to Sleep : The dragons outer skin ' +
+                    'is very strong and your bullets cannot harm him. If you shoot him he will eat the fire' +
+                    ' from your bullets and get stronger and bigger. So how do we put him back to sleep. ' +
+                    'The dragon at some stage will spit fire and start becoming red. Once he has spit out all his fire ' +
+                    'and becomes completely red. His skin becomes softer and vulnerable because of heat .' +
+                    'Your bullets have tranquilizers. This is the time you need to attack him and put him ' +
+                    'back to sleep. Best of Luck This Time!'
+                );
                 dragonKillingTipEl.appendChild( dragonKillingTipText );
                 dragonKillingTipEl.setAttribute( 'class', 'dragon-killing-tip' );
                 couldNotScoreEl.appendChild( couldNotScoreText );
                 birdAction.gameOverScoreDiv.textContent = "";
                 birdAction.gameOverScoreDiv.appendChild( couldNotScoreEl );
                 birdAction.gameOverScoreDiv.appendChild( dragonKillingTipEl );
-                document.querySelector( '.level2-start-button' ).classList.add( 'display' );
-                document.querySelector( '.level3-start-button' ).classList.remove( 'display' );
+                birdAction.level2StartButton.classList.add( 'display' );
+                birdAction.level3StartButton.classList.remove( 'display' );
                 document.querySelector( 'progress' ).remove();
                 document.querySelector( '.dragon-health-name' ).remove();
-
             }
         document.querySelector( '.game-over').classList.remove( 'display' );
-
-
-
-
-
     },
 
     gameRestartLevel1: function () {
         location.reload();
-
     },
+
     gameRestartLevel2: function () {
         birdAction.score = 0;
         birdAction.gameTimer = 0;
-
         birdAction.audioBirdFlap.play();
-        /**
-         * Start rain
-         */
-        birdAction.mainSection.classList.add( 'rain' );
-        birdAction.mainSection.classList.remove( 'display' );
-        document.querySelector( '.game-over').classList.add( 'display');
+        document.querySelector( '.game-over' ).classList.add( 'display' );
         birdAction.startLevelTwo();
     },
-    newDragonEntry: function () {
 
-        var timeInterval = 0;
-        var newDragonEntryInterval = setInterval( function () {
+    newDragonEntry: function () {
+        var timeInterval = 0,
+            imgTags = '<img></img>',
+            newDragonEntryInterval = setInterval( function () {
             timeInterval += 1;
             /**
              * After 15 secs from the start of Level3 Game
@@ -869,13 +874,13 @@ var birdAction = {
                 $( '.dragon-entry-green' ).fadeOut( 2000 );
             }
             if ( timeInterval > 10 ){
-                if( false === $( '.content').children().hasClass( 'dragon-entry-brown') ){
+                if( false === $( '.content' ).children().hasClass( 'dragon-entry-brown') ){
                     $( '.dragon-entry-green' ).remove();
                     $( '<img></img>', {
                         src: 'images/dragon-entry-brown.png',
                         class: 'dragon-entry-brown'
 
-                    } ).fadeIn(1000)
+                    } ).fadeIn( 1000 )
                         .delay( 2000 )
                         .prependTo( '.content' )
                         .animate(
@@ -885,14 +890,14 @@ var birdAction = {
                                 'right': '1500px'
                             }, 9000
                         ).fadeOut( 5000 );
-                    birdAction.dragonImageEl = document.querySelector( '.dragon-entry-brown');
+                    birdAction.dragonImageEl = document.querySelector( '.dragon-entry-brown' );
                     birdAction.dragonImageEl.addEventListener( 'click', birdAction.dragonHitStronger );
                 }
             }
             if ( timeInterval > 21 ){
                 $( '.dragon-entry-brown' ).remove();
-                if( false === $( '.content').children().hasClass( 'dragon-entry-dark-green') ){
-                    $( '<img></img>', {
+                if( false === $( '.content' ).children().hasClass( 'dragon-entry-dark-green' ) ){
+                    $( imgTags, {
                         src: 'images/dragon-entry-dark-green.gif',
                         class: 'dragon-entry-dark-green'
 
@@ -907,19 +912,18 @@ var birdAction = {
                             }, 7000
                         )
                         .fadeOut( 7000 );
-                    birdAction.dragonImageEl = document.querySelector( '.dragon-entry-dark-green');
+                    birdAction.dragonImageEl = document.querySelector( '.dragon-entry-dark-green' );
                     birdAction.dragonImageEl.addEventListener( 'click', birdAction.dragonHitStronger );
                 }
-
             }
             if( timeInterval > 32 ){
                 $( '.dragon-entry-dark-green' ).remove();
-                if( false === $( '.content').children().hasClass( 'dragon-fire-left') ){
-                    $( '<img></img>', {
+                if( false === $( '.content' ).children().hasClass( 'dragon-fire-left' ) ){
+                    $( imgTags, {
                         src: 'images/dragon-fire-left.gif',
                         class: 'dragon-fire-left'
 
-                    } ).fadeIn(1000)
+                    } ).fadeIn( 1000 )
                         .prependTo( '.content' )
                         .animate(
                             {
@@ -933,12 +937,12 @@ var birdAction = {
             }
             if( timeInterval > 40 ){
                 $( '.dragon-fire-left' ).remove();
-                if( false === $( '.content').children().hasClass( 'dragon-fire-right') ){
-                    $( '<img></img>', {
+                if( false === $( '.content' ).children().hasClass( 'dragon-fire-right' ) ){
+                    $( imgTags, {
                         src: 'images/dragon-fire-right.gif',
                         class: 'dragon-fire-right'
 
-                    } ).fadeIn(1000)
+                    } ).fadeIn( 1000 )
                         .prependTo( '.content' )
                         .animate(
                             {
@@ -949,17 +953,15 @@ var birdAction = {
                         )
                         .fadeOut( 5000 );
                 }
-
             }
-
             if( timeInterval > 47 ){
                 $( '.dragon-fire-right' ).remove();
-                if( false === $( '.content').children().hasClass( 'dragon-fire') ){
-                    $( '<img></img>', {
+                if( false === $( '.content').children().hasClass( 'dragon-fire' ) ){
+                    $( imgTags, {
                         src: 'images/dragon-fire.gif',
                         class: 'dragon-fire'
 
-                    } ).fadeIn(1000)
+                    } ).fadeIn( 1000 )
                         .prependTo( '.content' )
                         .animate(
                             {
@@ -976,12 +978,12 @@ var birdAction = {
              */
             if( timeInterval > 55 ){
                 $( '.dragon-fire' ).remove();
-                if( false === $( '.content').children().hasClass( 'dragon-final') ){
-                    $( '<img></img>', {
+                if( false === $( '.content').children().hasClass( 'dragon-final' ) ){
+                    $( imgTags, {
                         src: 'images/dragon-final.gif',
                         class: 'dragon-final'
 
-                    } ).fadeIn(1000)
+                    } ).fadeIn( 1000 )
                         .prependTo( '.content' )
                         .animate(
                             {
@@ -992,25 +994,25 @@ var birdAction = {
                         )
                         .fadeOut( 9000 );
 
-                    birdAction.dragonImageEl = document.querySelector( '.dragon-final');
+                    birdAction.dragonImageEl = document.querySelector( '.dragon-final' );
                     birdAction.dragonImageEl.addEventListener( 'click', birdAction.dragonHitVulnerable );
                 }
             }
-
             if ( timeInterval > 80 ){
                 $( '.dragon-final' ).remove();
                 clearInterval( newDragonEntryInterval );
                 return;
             }
-        }, 1000);
+        }, 1000 );
     },
+
     dragonHitStronger: function () {
+        var w, r, imgW, imgR ;
         birdAction.health = document.getElementById( "health" );
         birdAction.gunShotAudio.play();
         birdAction.health.value += 5;
-        var w, r, imgW, imgR ;
-        imgW = parseInt( window.getComputedStyle( birdAction.dragonImageEl ).width);
-        imgR = parseInt( window.getComputedStyle( birdAction.dragonImageEl ).right);
+        imgW = parseInt( window.getComputedStyle( birdAction.dragonImageEl ).width );
+        imgR = parseInt( window.getComputedStyle( birdAction.dragonImageEl ).right );
         if( 820 > imgW ){
             w = imgW + 20;
             r = imgR - 20;
@@ -1019,11 +1021,12 @@ var birdAction = {
             return;
         }
     },
+
     dragonHitVulnerable: function () {
         birdAction.gunShotAudio.play();
         birdAction.health.value -= 5;
-        $( birdAction.dragonImageEl ).fadeOut(200);
-        $( birdAction.dragonImageEl ).fadeIn(100);
+        $( birdAction.dragonImageEl ).fadeOut( 200 );
+        $( birdAction.dragonImageEl ).fadeIn( 100 );
     }
 };
 

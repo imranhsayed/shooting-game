@@ -17,6 +17,10 @@ body {
     overflow:hidden;
 }
 
+p, span, body {
+    font-family: 'Rock Salt', cursive;
+}
+
 .drop {
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(rgba(255,255,255,0.6))  );
     background: -moz-linear-gradient(top, rgba(13,52,58,1) 0%, rgba(255,255,255,.6) 100%);
@@ -149,12 +153,13 @@ Before Game starts
 }
 
 .bird-game-start-gif img{
-    width: 500px;
+    width: 250px;
+    margin-left: -100px;
 }
 
 h1{
     color: rgba(205, 220, 57, 0.97);
-    font-family: cursive;
+    /*font-family: cursive;*/
     font-size: 30px;
     margin: 5px;
 }
@@ -368,4 +373,48 @@ body {
     100% {
         top: -500%;
     }
+}
+
+.level1-start-button{
+    border-radius: 50%;
+    border: none;
+    padding: 0;
+    width: 120px;
+    height:120px;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 1px 7px 14px rgba(0, 0, 0, 0.7);
+}
+
+.orb-game-start{
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    background-image: url( "images/orb-game-start.gif-c200" );
+    background-size: 130px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.orb-game-start span{
+    font-size: 24px;
+    color: #d2ffff;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 44px;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+.flying-birds-multiple{
+    position: absolute;
+    top:20px;
+    margin: 0 auto;
+    left: 0;
+    right:0;
+    width: 1280px;
+    height:720px;
+    background-image: url( 'images/flying-birds-multi.gif' );
+    opacity: 0.2;
+    z-index: -1;
 }

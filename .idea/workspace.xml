@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e2cc712c-bf19-4a2d-a59d-2f33fcf2518e" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/images/night-jungle-background.jpg" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/images/many=birds-flying.gif" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/index.php" afterPath="$PROJECT_DIR$/index.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript.js" afterPath="$PROJECT_DIR$/javascript.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
@@ -26,28 +27,28 @@
       <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="409">
-              <caret line="94" column="33" lean-forward="false" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="33" />
+            <state relative-caret-position="192">
+              <caret line="8" column="84" lean-forward="false" selection-start-line="8" selection-start-column="84" selection-end-line="8" selection-end-column="84" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/style.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="231">
-              <caret line="345" column="7" lean-forward="false" selection-start-line="345" selection-start-column="7" selection-end-line="345" selection-end-column="7" />
+            <state relative-caret-position="97">
+              <caret line="399" column="20" lean-forward="true" selection-start-line="399" selection-start-column="20" selection-end-line="399" selection-end-column="20" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="javascript.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="javascript.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/javascript.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="57" column="6" lean-forward="true" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+            <state relative-caret-position="170">
+              <caret line="115" column="43" lean-forward="true" selection-start-line="115" selection-start-column="43" selection-end-line="115" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -65,18 +66,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>Music-before-game-start</find>
-      <find>music-before</find>
-      <find>music</find>
-      <find>creategun</find>
-      <find>imgFollowCursor</find>
-      <find>float</find>
-      <find>setIn</find>
-      <find>bird-man</find>
-      <find>before</find>
-      <find>game-over</find>
-      <find>bird-man-killed</find>
-      <find>health.value</find>
       <find>textc</find>
       <find>birdAction.t</find>
       <find>birdAction.t</find>
@@ -95,6 +84,18 @@
       <find>audio</find>
       <find>gameOverScore</find>
       <find>document.querySelector( '.game-over-score' )</find>
+      <find>document.querySelector( '.level2-start-button' )</find>
+      <find>document.querySelector( '.level3-start-button' )</find>
+      <find>'.level2-start-button'</find>
+      <find>gunIm</find>
+      <find>gun-image</find>
+      <find>create</find>
+      <find>createRa</find>
+      <find>createRain</find>
+      <find>many</find>
+      <find>bird-game-start-gif</find>
+      <find>bird-game</find>
+      <find>font-fa</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -103,10 +104,10 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/style.css" />
+        <option value="$PROJECT_DIR$/javascript.js" />
+        <option value="$PROJECT_DIR$/javascript.js" />
         <option value="$PROJECT_DIR$/index.php" />
-        <option value="$PROJECT_DIR$/javascript.js" />
-        <option value="$PROJECT_DIR$/javascript.js" />
+        <option value="$PROJECT_DIR$/style.css" />
       </list>
     </option>
   </component>
@@ -239,12 +240,12 @@
       <workItem from="1496062599943" duration="218000" />
       <workItem from="1496064848921" duration="730000" />
       <workItem from="1496069482667" duration="36946000" />
-      <workItem from="1496236514614" duration="10808000" />
+      <workItem from="1496236514614" duration="19436000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="118457000" />
+    <option name="totallyTimeSpent" value="127085000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-5" y="23" width="1472" height="873" extended-state="0" />
@@ -416,26 +417,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/style.css">
+    <entry file="file://$PROJECT_DIR$/javascript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="231">
-          <caret line="345" column="7" lean-forward="false" selection-start-line="345" selection-start-column="7" selection-end-line="345" selection-end-column="7" />
+        <state relative-caret-position="170">
+          <caret line="115" column="43" lean-forward="true" selection-start-line="115" selection-start-column="43" selection-end-line="115" selection-end-column="43" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="409">
-          <caret line="94" column="33" lean-forward="false" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="33" />
+        <state relative-caret-position="192">
+          <caret line="8" column="84" lean-forward="false" selection-start-line="8" selection-start-column="84" selection-end-line="8" selection-end-column="84" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/javascript.js">
+    <entry file="file://$PROJECT_DIR$/style.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="57" column="6" lean-forward="true" selection-start-line="57" selection-start-column="6" selection-end-line="57" selection-end-column="6" />
+        <state relative-caret-position="97">
+          <caret line="399" column="20" lean-forward="true" selection-start-line="399" selection-start-column="20" selection-end-line="399" selection-end-column="20" />
           <folding />
         </state>
       </provider>
