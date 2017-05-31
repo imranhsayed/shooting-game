@@ -3,20 +3,19 @@ CSS for Rain
  */
 html{
     height:100%;
-    margin: -10px;
+    margin: 0;
+    padding: 0;
 }
 body {
-    /*background-image: url( 'images/landscape.png' );*/
     margin-top: 0;
-
     background:#0D343A;
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(#000000)  );
     background: -moz-linear-gradient(top, rgba(13,52,58,1) 0%, rgba(0,0,0,1) 100%);
     background-image: url( 'images/game-start-background.jpg' );
-
-
-    overflow:hidden;}
-
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
+}
 
 .drop {
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(rgba(255,255,255,0.6))  );
@@ -27,7 +26,6 @@ body {
     bottom:200px;
     -webkit-animation: fall .63s linear infinite;
     -moz-animation: fall .63s linear infinite;
-
 }
 
 /* animate the drops*/
@@ -44,13 +42,6 @@ Common css
 
 p{
     text-shadow: 2px 2px black;
-
-}
-
-body{
-    /*background-image: url( 'images/night-jungle-background.jpg' );*/
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 .main-content{
@@ -85,8 +76,6 @@ img{
     transition: 0.05s;
 }
 
-
-
 .look-left.gun-image{
     -moz-transform: scaleX(-1);
     -o-transform: scaleX(-1);
@@ -95,6 +84,7 @@ img{
     filter: FlipH;
     -ms-filter: "FlipH";
 }
+
 .man-bird-image{
     width: 300px;
 }
@@ -104,27 +94,33 @@ img{
     position: relative;
 
 }
+
 .dragon-entry-brown{
     width: 400px;
     position: relative;
 }
+
 .dragon-entry-dark-green{
     width: 700px;
     position: relative;
 
 }
+
 .dragon-fire-left{
     width: 500px;
     position: relative;
 }
+
 .dragon-fire-right{
     width: 500px;
     position: relative;
 }
+
 .dragon-fire{
     width: 500px;
     position: relative;
 }
+
 .dragon-final{
     width: 700px;
     position: relative;
@@ -134,6 +130,7 @@ img{
     width: 300px;
     margin: -35px;
 }
+
 /**
 Before Game starts
  */
@@ -141,6 +138,7 @@ Before Game starts
     text-align: center;
     padding-top: 150px;
 }
+
 .level1-instructions-div{
     text-align: center;
     margin: 0 auto;
@@ -149,9 +147,11 @@ Before Game starts
     font-size: 15px;
     letter-spacing: 2px;
 }
+
 .bird-game-start-gif img{
     width: 500px;
 }
+
 h1{
     color: rgba(205, 220, 57, 0.97);
     font-family: cursive;
@@ -278,8 +278,8 @@ level-three-div
 
 
 /**
-Styling health bar
- */
+    Styling health bar
+*/
 progress {
     height: 15px;
     border: 0px none;
@@ -323,8 +323,6 @@ progress:after {
 CSS for credits game ending
  */
 * {
-    /*margin: 0;*/
-    /*padding: 0;*/
     box-sizing: border-box;
 }
 
@@ -370,3 +368,4 @@ body {
     100% {
         top: -500%;
     }
+}
