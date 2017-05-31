@@ -293,6 +293,12 @@ progress::-webkit-progress-bar {
 progress::-webkit-progress-value {
     background-color: green;
 }
+.red-health::-webkit-progress-value {
+    background-color: red;
+}
+.blue-health::-webkit-progress-value {
+    background-color: #0c56ff;
+}
 
 progress::-moz-progress-bar {
     background-color: green;
@@ -312,3 +318,55 @@ progress:after {
     color: #CDDC39;
     letter-spacing: 1px;
 }
+
+/**
+CSS for credits game ending
+ */
+* {
+    /*margin: 0;*/
+    /*padding: 0;*/
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+}
+
+.wrapper {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    width: 400px;
+    margin-left: -200px;
+    font: 300 30px/1 'Open Sans Condensed', sans-serif;
+    text-align: center;
+    color: #ffffff;
+    animation: 70s credits linear infinite;
+}
+
+.movie {
+    margin-bottom: 50px;
+    font-size: 50px;
+}
+
+.job {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.name {
+    margin-bottom: 50px;
+    font-size: 35px;
+}
+
+@keyframes credits {
+    0% {
+        top: 100%;
+    }
+    100% {
+        top: -500%;
+    }

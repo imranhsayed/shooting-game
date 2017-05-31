@@ -1,0 +1,32 @@
+
+progress {
+    height: 15px;
+    border: 0px none;
+    background-color: grey;
+    color: red;
+}
+
+progress::-webkit-progress-bar {
+    background-color: grey;
+}
+progress::-webkit-progress-value {
+    background-color: green;
+}
+
+progress::-moz-progress-bar {
+    background-color: green;
+}
+
+progress:after {
+    content: attr(value)'%';
+}
+
+.game-credits{
+    text-align: center;
+    margin: 0 auto;
+    width: 800px;
+    font-size:30px;
+}
+strong{
+    color: #1c72ff;
+}

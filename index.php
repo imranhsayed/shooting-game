@@ -61,6 +61,35 @@
         <footer class="footer"></footer>
 
     </div>
+    <div class='credits wrapper display'>
+        <div class='movie'>Bird Shooting Game</div>
+        <div class='job'>developed by</div>
+        <div class='name'>Ghafir Sayed</div></br>
+        <div class='job'>produced by</div>
+        <div class='name'>Ghafir Sayed</div></br>
+        <div class='job'>Code Reviewer</div>
+        <div class='name'>Mohammad Taqui Sayed</div>
+        <div class='job'>CSS Reviewer and Editor</div>
+        <div class='name'>Mahvash Fatima</div>
+        <div class='job'>Story</div>
+        <div class='name'>Ghafir Sayed</div>
+        <div class='job'>Game Idea</div>
+        <div class='name'>Mahvash Fatima</div>
+        <div class='job'>Music</div>
+        <div class='name'>Ghafir Sayed</div>
+        <div class='job'>Background Images & Character Reviewer</div>
+        <div class='name'>Mahvash Fatima</div>
+        <div class='job'>Game Reviewers</div>
+        <div class='name'>Faraz Sayed <br>&<br> Wamiq Sayed</div>
+        <div class='job'>Game Player & Tester</div>
+        <div class='name'>Zoya Sayed <br>&<br> Elma Sayed</div>
+        <div class='job'>Contributors</div>
+        <div class='name'>Mohammad Taqui Sayed <br>&<br> Mahvash Fatima</div>
+        <div class='job'>Blessed by</div>
+        <div class='name'>Raees Fatima <br>&<br>  Abul Sayed</div>
+        <div class='job'>From Game Cast & Crew</div>
+        <div class='name'>Thank You for Playing</div>
+    </div>
 </section>
 
 <div class="game-over display ">

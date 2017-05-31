@@ -158,6 +158,13 @@ var birdAction = {
             document.querySelector( '.right-bird-nest' ).remove();
 
         }
+        if( true === $( 'progress' ).hasClass( 'red-health' )){
+            document.querySelector( 'progress').classList.remove( 'red-health' );
+        }
+        if( true === $( 'progress' ).hasClass( 'blue-health' )){
+            document.querySelector( 'progress').classList.remove( 'blue-health' );
+        }
+
         document.querySelector( '.gun-image' ).classList.add( 'display' );
         document.querySelector( '.score-div' ).classList.add( 'display' );
         document.querySelector( '.time-remaining' ).classList.add( 'display' );
@@ -640,6 +647,22 @@ var birdAction = {
                 return;
             }
 
+            if( 60 > birdAction.health.value ){
+                if( false === $( 'progress' ).hasClass( 'red-health' )){
+                    document.querySelector( 'progress').classList.add( 'red-health' );
+                }
+            }
+            if( 200 < birdAction.health.value ){
+                if( false === $( 'progress' ).hasClass( 'blue-health' )){
+                    document.querySelector( 'progress').classList.add( 'blue-health' );
+                }
+            }
+            if( 200 >= birdAction.health.value ){
+                if( true === $( 'progress' ).hasClass( 'blue-health' )){
+                    document.querySelector( 'progress').classList.remove( 'blue-health' );
+                }
+            }
+
             if( ( 0 ===  birdAction.health.value ) && ( 0 < birdAction.t ) )  {
                 birdAction.gameOverLevel3( birdAction.t );
                 clearInterval( scoreIntervalCheck );
@@ -744,14 +767,15 @@ var birdAction = {
             gameOverScore.innerText = 'You Scored ' + birdAction.score + ' pts ' + 'in '
                 + timeTookToFinish + ' secs';
             $( '<p></p>', {
-                text: 'Congratulations You have made it to the Next level. You have unlocked the Level3 : The Angry Dragon',
+                text: 'Congratulations You have made it to the Next level. You have unlocked Level3 : The Angry Dragon',
                 class: 'congrats-text'
             } ).prependTo( gameOverScore );
             $( '<p></p>', {
                 text: 'About the Dragon: This dragon has been sleeping in his castle in the jungle for years.' +
                 ' However your shooting business has disturbed his sleep. He is now awake and is ' +
-                'very angry. You must find a way to put him back to sleep. Its tricky to beat the Dragon.' +
-                ' However, I leave this in your able hands to accept the challenge to beat him. If you are not able to ,' +
+                'very angry. You must find a way to put him back to sleep. The Dragon changes colors and has the power to ' +
+                'become invisible. Its tricky to beat the Dragon.' +
+                ' However, I leave this in your able hands to accept the challenge and beat him. If you are not able to ,' +
                 ' then the trick to beat him will be shared with you.',
                 class: 'dragon-story'
             } ).appendTo( gameOverScore );
@@ -802,20 +826,30 @@ var birdAction = {
             gameOverScore = document.querySelector( '.game-over-score');
 
             if( ( birdAction.health.value ===  0 ) && ( 0 < birdAction.t ) )  {
-
-            $( '<img></img>', {
-                src: 'images/dragon-sleeping.gif',
-                class: 'sleeping-dragon'
-            } ).prependTo( gameOverDiv );
-            $( '<p></p>', {
-                text: 'Congratulations You have completed all three levels.You have put the Dragon back to Sleep in '
-                        + timeTookToFinish + ' secs. ' +' Go back to the home Screen and Restart the Game',
-                class: 'congrats-text'
-            } ).prependTo( gameOverDiv );
                 document.querySelector( '.game-over-score' ).textContent = "";
-                $( '.level3-start-button' ).replaceWith( '<button class="level2-start-button">Go to Home Screen</button>' );
-            $( 'button.level2-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
-        }else{
+                var creditsDiv = document.querySelector( '.credits' );
+                document.querySelector( '.level3-start-button' ).classList.add( 'display' );
+                creditsDiv.classList.add( 'wrapper' );
+                creditsDiv.classList.remove( 'display' );
+                setTimeout( function () {
+                    creditsDiv.classList.add( 'display' );
+                    creditsDiv.classList.remove( 'wrapper' );
+
+                    $( '<img></img>', {
+                        src: 'images/dragon-sleeping.gif',
+                        class: 'sleeping-dragon'
+                    } ).prependTo( gameOverDiv );
+                    $( '<p></p>', {
+                        text: 'Congratulations You have completed all three levels.You have put the Dragon back to Sleep in '
+                        + timeTookToFinish + ' secs. ' +' Go back to the home Screen and Restart the Game',
+                        class: 'congrats-text'
+                    } ).prependTo( gameOverDiv );
+                    document.querySelector( '.game-over-score' ).textContent = "";
+                    $( '.level3-start-button' ).replaceWith( '<button class="level2-start-button">Go to Home Screen</button>' );
+                    $( 'button.level2-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
+                },50000);
+
+            }else{
 
                 var couldNotScoreEl = document.createElement( 'p' ),
                     couldNotScoreText = document.createTextNode( 'Sorry you could not put the Dragon to Sleep in Required Time. Please Try Again' ),
@@ -839,7 +873,6 @@ var birdAction = {
                 document.querySelector( 'progress' ).remove();
                 document.querySelector( '.dragon-health-name' ).remove();
 
-                // $( 'button.level3-start-button' ).on( 'click', birdAction.startLevelThree );
             }
         document.querySelector( '.game-over').classList.remove( 'display' );
 
@@ -1044,8 +1077,9 @@ var birdAction = {
     },
     dragonHitVulnerable: function () {
         birdAction.health.value -= 5;
-        $( birdAction.dragonImageEl ).fadeOut(100);
+        $( birdAction.dragonImageEl ).fadeOut(200);
         $( birdAction.dragonImageEl ).fadeIn(100);
+
     }
 };
 
