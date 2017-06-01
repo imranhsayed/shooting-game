@@ -11,11 +11,9 @@ var birdAction = {
     requiredScore: 0,
     nbRainDrop: 300,
     audioBirdFlap: null,
-    audioRainDrop: null,
     backgroundMusicLevel1: null,
     backgroundMusicLevel2: null,
     backgroundMusicLevel3: null,
-    thunderstormMusic: null,
     angryDragonScream:null,
     dragonImageEl: 'images/dragon-entry-green.gif',
     gunImage: null,
@@ -40,32 +38,56 @@ var birdAction = {
     birdSpeed: 10000,
     health: 200,
 
+    /**
+     * Queries elements from the DOM and stores their value in reusable variables
+     * Plays game start music in a loop
+     * Adds event listeners for Start Button to start Level 1 and level 2
+     * Adds event listener for Gun Image to follow the cursor
+     */
     init: function () {
 
         birdAction.body = document.querySelector( 'body' );
+        birdAction.header = document.querySelector( '.header' );
         birdAction.mainSection = document.getElementById( 'main-section' );
+        birdAction.content = document.querySelector( '.content' );
+        birdAction.leftBirdNestDiv = document.querySelector( '.left-bird-nest' );
+        birdAction.rightBirdNestDiv = document.querySelector( '.right-bird-nest' );
+        birdAction.gameOverdiv = document.querySelector( '.game-over' );
+        birdAction.pTags = '<p></p>';
+        birdAction.imgTags = '<img></img>';
+        birdAction.audioRainDrop = document.getElementById( 'rain-falling' );
         birdAction.gunShotAudio = document.getElementById( 'gun-shot-audio' );
         birdAction.birdKilledSound = document.getElementById( 'bird-killed-sound' );
         birdAction.gameOverScoreDiv = document.querySelector( '.game-over-score' );
+        birdAction.level1StartButton = document.querySelector( '.level1-start-button' );
         birdAction.level2StartButton = document.querySelector( '.level2-start-button' );
         birdAction.level3StartButton = document.querySelector( '.level3-start-button' );
         document.querySelector( '.main-content' ).classList.add( 'display' );
         birdAction.backgroundMusicLevel1 = document.getElementById( 'music-before-start' );
         birdAction.backgroundMusicLevel2 = document.getElementById( 'background-music-level2' );
         birdAction.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
+        birdAction.backgroundMusicLevel1.addEventListener( 'ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false );
         birdAction.backgroundMusicLevel1.play();
-        $( '.level1-read-instructions' ).on( 'click', birdAction.gameInstructions );
-        $( 'button.level1-start-button' ).on( 'click', birdAction.startLevelOne );
-        $( 'button.level2-start-button' ).on( 'click', birdAction.startLevelTwo );
-        $( 'body' ).on( 'mousemove', birdAction.imgFollowCursor );
+        $( birdAction.level1StartButton ).on( 'click', birdAction.startLevelOne );
+        $( birdAction.level2StartButton ).on( 'click', birdAction.startLevelTwo );
+        $( birdAction.body ).on( 'mousemove', birdAction.imgFollowCursor );
     },
 
-    gameInstructions: function () {
-        $( '.level1-instructions-div' ).slideToggle( 2000 ).delay( 50000).slideToggle( 3000 );
-    },
-
+    /**
+     * Sets Value of birdInterval,No of Birds to be Sent,No of Divs to be created
+     * left and right from which birds will come out randomly.
+     * BirdSpeed which tells how long the bird will take fly from start to window top.
+     * Required Score to be achieved to clear the level.
+     * Calls createRain() to start Rain.
+     * Plays Rain drop audio.
+     * Adds background image for Level1
+     * Calls birdsMove() to make the birds fly
+     * Calls gameTimerLevel1() to start the game Timer.
+     */
     startLevelOne: function(){
-        var body = document.querySelector( 'body');
         /**
          * meaning after how many seconds next bird will be sent
          * @type {number}
@@ -90,16 +112,17 @@ var birdAction = {
         birdAction.gameTimer = 60; // in secs
 
         birdAction.createRain();
-        birdAction.audioRainDrop = document.getElementById( 'rain-falling' );
         birdAction.audioRainDrop.play();
-        body.style.backgroundImage = "url( 'images/level1-background.jpg' )";
-        birdAction.birdMoveNew();
+        birdAction.body.style.backgroundImage = "url( 'images/level1-background.jpg' )";
+        birdAction.birdsMove();
         birdAction.gameTimerLevel1();
     },
+    /**
+     *
+     */
     startLevelTwo: function(){
-        var timeLeftP = document.querySelector( '.time-left' );
-        var birdsDivs = $( '.birds-div' );
-        var body = document.querySelector( 'body');
+        var timeLeftP = document.querySelector( '.time-left' ),
+            birdsDivs = $( '.birds-div' );
 
         birdAction.backgroundMusicLevel1.pause();
         birdAction.gameOverScoreDiv.textContent = "";
@@ -138,31 +161,32 @@ var birdAction = {
 
         birdAction.mainSection.classList.remove( 'display' );
         birdAction.stopRain();
-        document.querySelector( '.game-over' ).classList.add( 'display' );
-        body.style.backgroundImage = "url( 'images/landscape.gif' )";
-        birdAction.birdMoveNew();
+        birdAction.gameOverdiv.classList.add( 'display' );
+        birdAction.body.style.backgroundImage = "url( 'images/landscape.gif' )";
+        birdAction.birdsMove();
         birdAction.gameTimerLevel2();
     },
 
     startLevelThree: function () {
-        var progress;
-        var body = document.querySelector( 'body');
-        var lightening = 0;
-        var dragonEntryGreen;
+        var progress,
+            lightening = 0,
+            headerChildren = $( 'header' ).children(),
+            thunderstormMusic = document.getElementById( 'thunderstorm-clip' ),
+            dragonEntryGreen;
         birdAction.gameTimer = 90;
 
         birdAction.originalCursor();
-        if ( true === $( '.content' ).find( 'div' ).first( ).hasClass( 'left-bird-nest' )
-            && false === $( '.left-bird-nest' ).hasClass( 'display' ) ){
-            document.querySelector( '.left-bird-nest' ).remove();
-            document.querySelector( '.right-bird-nest' ).remove();
+        if ( true === $( birdAction.content ).find( 'div' ).first( ).hasClass( 'left-bird-nest' )
+            && false === $( birdAction.leftBirdNestDiv ).hasClass( 'display' ) ){
+            birdAction.leftBirdNestDiv.remove();
+            birdAction.rightBirdNestDiv.remove();
         }
 
-        if( true === $( 'header' ).children().hasClass( 'red-health' ) ){
+        if( true === headerChildren.hasClass( 'red-health' ) ){
             document.querySelector( 'progress' ).classList.remove( 'red-health' );
         }
 
-        if( true === $( 'header' ).children().hasClass( 'blue-health' ) ){
+        if( true === headerChildren.hasClass( 'blue-health' ) ){
             document.querySelector( 'progress' ).classList.remove( 'blue-health' );
         }
 
@@ -170,15 +194,14 @@ var birdAction = {
         document.querySelector( '.score-div' ).classList.add( 'display' );
         document.querySelector( '.time-remaining' ).classList.add( 'display' );
         birdAction.backgroundMusicLevel2.pause();
-        birdAction.thunderstormMusic = document.getElementById( 'thunderstorm-clip' );
         birdAction.angryDragonScream = document.getElementById( 'angry-dragon' );
-        birdAction.thunderstormMusic.play();
+        thunderstormMusic.play();
         birdAction.angryDragonScream.addEventListener( 'ended', function() {
             this.currentTime = 0;
             this.play();
         }, false );
         birdAction.angryDragonScream.play();
-        document.querySelector( '.content' ).style.float = 'right';
+        birdAction.content.style.float = 'right';
         /**
          * Short lightening effect
          * @type {Element}
@@ -190,7 +213,7 @@ var birdAction = {
              */
             if ( lightening > 10 ){
                 birdAction.changeCursor();
-                body.style.backgroundImage = "url( 'images/dark-castle.gif' )";
+                birdAction.body.style.backgroundImage = "url( 'images/dark-castle.gif' )";
                 /**
                  * looping through the music
                  */
@@ -201,20 +224,20 @@ var birdAction = {
                 birdAction.backgroundMusicLevel3.play();
                 birdAction.gunImage.classList.remove( 'display' );
 
-                if( true === $( '.header' ).hasClass( 'display' ) ){
-                    document.querySelector( '.header' ).classList.remove( 'display' );
+                if( true === $( birdAction.header ).hasClass( 'display' ) ){
+                    birdAction.header.classList.remove( 'display' );
                 }
-                    if( false === $( '.header' ).children().hasClass( 'progress-class' ) ){
+                    if( false === $( birdAction.header ).children().hasClass( 'progress-class' ) ){
                         $( '<p></p>', {
                             class: 'dragon-health-name',
                             text: 'Dragon Health Bar'
-                        }).appendTo( '.header' );
+                        }).appendTo( birdAction.header );
                         $( '<progress></progress>', {
                             id: 'health',
                             class: 'progress-class',
                             value: '200',
                             max:'400'
-                        }).appendTo( '.header' );
+                        }).appendTo( birdAction.header );
                     }
                 progress = $( 'progress' );
                 dragonEntryGreen = document.querySelector( '.dragon-entry-green' );
@@ -226,11 +249,11 @@ var birdAction = {
                 clearInterval( shortLightening );
                 return;
             }
-            if( body.style.backgroundImage != "url( 'images/lightening-img.gif' )" ){
-                body.style.backgroundImage = "url( 'images/lightening-img.gif' )";
+            if( birdAction.body.style.backgroundImage != "url( 'images/lightening-img.gif' )" ){
+                birdAction.body.style.backgroundImage = "url( 'images/lightening-img.gif' )";
             }
-            if( false === $( '.content' ).children().hasClass( 'dragon-entry-green') ){
-                $( '<img></img>', {
+            if( false === $( birdAction.content ).children().hasClass( 'dragon-entry-green') ){
+                $( birdAction.imgTags, {
                     src: 'images/dragon-entry-green.gif',
                     class: 'dragon-entry-green'
                 } ).animate(
@@ -240,16 +263,16 @@ var birdAction = {
                         'right': '350px'
                     }, 10000
                 )
-                    .prependTo( '.content' );
+                    .prependTo( birdAction.content );
             }
 
         },1000 );
 
-        if ( false === $( '.game-over' ).hasClass( 'display' ) ){
-                document.querySelector( '.game-over' ).classList.add( 'display' );
+        if ( false === $( birdAction.gameOverdiv ).hasClass( 'display' ) ){
+                birdAction.gameOverdiv.classList.add( 'display' );
         }
         birdAction.gameTimerLevel3();
-        if ( true === $( '#main-section' ).hasClass( 'display' ) ){
+        if ( true === $( birdAction.mainSection ).hasClass( 'display' ) ){
             birdAction.mainSection.classList.remove( 'display' );
         }
 
@@ -258,8 +281,8 @@ var birdAction = {
 
     },
 
-    birdMoveNew: function (event) {
-        var z = 0, k = 0,
+    birdsMove: function (event) {
+        var z = 0,
             leftDiv = document.querySelector( '.left-bird-nest' ),
             rightDiv = document.querySelector( '.right-bird-nest' );
         document.querySelector( '.main-content' ).classList.remove( 'display' );
@@ -275,8 +298,8 @@ var birdAction = {
         /**
          * Making bird nest divs
           */
-        if( $( leftDiv ).children().length === 0 &&
-            $( rightDiv ).children().length === 0 ) {
+        if( $( birdAction.leftBirdNestDiv ).children().length === 0 &&
+            $( birdAction.rightBirdNestDiv ).children().length === 0 ) {
             for( var i = 0; i < birdAction.birdNestDivNo; i++  ){
                 var divLeftBird = document.createElement( 'div' ),
                     divRightBird = document.createElement( 'div' ),
@@ -409,8 +432,8 @@ var birdAction = {
     },
 
     birdDisappear: function ( event ) {
-        var birdManShot;
-        var birdHitId = event.target.parentNode.getAttribute( 'id' );
+        var birdManShot,
+            birdHitId = event.target.parentNode.getAttribute( 'id' );
 
         if( $( event.target ).hasClass( 'man-bird-image' ) ){
             birdManShot = 1;
@@ -427,10 +450,12 @@ var birdAction = {
         event.target.parentNode.classList.add( 'fadeOut' );
         birdAction.score = birdAction.score + 100;
         birdAction.addScore();
+        event.target.style.pointerEvents = 'none';
     },
 
     addScore: function () {
-        birdAction.scoreBox.innerText = document.querySelector( '.score-box' );
+        birdAction.scoreBox = document.querySelector( '.score-box' );
+        birdAction.scoreBox.innerText = birdAction.score;
     },
 
     changeCursor: function () {
@@ -501,11 +526,10 @@ var birdAction = {
     },
 
     stopRain: function () {
-        var mainSection = $( '#main-section' );
-        if( mainSection.hasClass( 'rain' ) ){
+        if( false === $(birdAction.mainSection).hasClass( 'rain' ) ){
             birdAction.mainSection.classList.remove( 'rain' );
         }
-        if( 0 != mainSection.find( 'div.drop' ).length ){
+        if( 0 != $(birdAction.mainSection).find( 'div.drop' ).length ){
             for( var i = 1; i < birdAction.nbRainDrop; i++ ){
                 document.getElementById( 'drop' + i  ).remove();
             }
@@ -521,10 +545,10 @@ var birdAction = {
             birdAction.timer = birdAction.timer - 1;
             timeLeftP.innerText =  birdAction.timer ;
 
-            if( 20 > birdAction.timer ){
+            if( 19 === birdAction.timer ){
                 timeLeftP.classList.add( 'twenty-sec-to-go' );
             }
-            if( 10 > birdAction.timer ){
+            if( 9 === birdAction.timer ){
                 timeLeftP.classList.remove( 'twenty-sec-to-go' );
                 timeLeftP.classList.add( 'nine-sec-to-go' );
             }
@@ -640,7 +664,6 @@ var birdAction = {
 
     gameOverLevel1: function ( birdManShot ) {
         var timeTookToFinish = birdAction.gameTimer - birdAction.timer,
-            pTags = '<p></p>',
             manScreamAudio = document.getElementById( 'man-scream' ),
             couldNotScoreEl,couldNotScoreText;
 
@@ -659,11 +682,11 @@ var birdAction = {
         if( birdAction.score >= birdAction.requiredScore ){
             birdAction.gameOverScoreDiv.innerText = 'You Scored ' + birdAction.score + ' pts ' + 'in '
                 + timeTookToFinish + ' secs';
-            $( pTags, {
+            $( birdAction.pTags, {
                 text: 'Congratulations You have made it to the Next level.',
                 class: 'congrats-text'
             } ).prependTo( birdAction.gameOverScoreDiv );
-            document.querySelector( '.game-over').classList.remove( 'display' );
+            birdAction.gameOverdiv.classList.remove( 'display' );
 
         }else{
                if( 1 === birdManShot ){
@@ -671,14 +694,14 @@ var birdAction = {
                 birdAction.gameOverScoreDiv.classList.add( 'birdman-came' );
                 manScreamAudio.play();
 
-                $( pTags, {
+                $( birdAction.pTags, {
                     text: 'Oops! You killed the BIRDMAN . Any progress Made is lost. Please go back to the home screen and restart.' +
                     'Your Scored Points have changed to :- ',
                     class: 'bird-man-killed',
                     color: 'red'
                 } ).prependTo( birdAction.gameOverScoreDiv );
 
-                $( pTags, {
+                $( birdAction.pTags, {
                     text: 'BIRDMAN: The man who has wings is called Birdman.' +
                     ' He may or may not come in any level.But when he does ensure that you don’t shoot him.' +
                     ' He is your friend and under no circumstances should be killed. ' +
@@ -690,9 +713,10 @@ var birdAction = {
                 } ).prependTo( birdAction.gameOverScoreDiv );
 
                    $( birdAction.level2StartButton )
-                       .replaceWith( '<button class="level1-start-button">Go to Home Screen and Start Again</button>' );
-                   $( 'button.level1-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
-                   document.querySelector( '.game-over').classList.remove( 'display' );
+                       .replaceWith( birdAction.level1StartButton );
+                   $( birdAction.level1StartButton ).on( 'click', birdAction.gameRestartLevel1 );
+                   birdAction.level1StartButton.classList.remove( 'display' );
+                   birdAction.gameOverdiv.classList.remove( 'display' );
                    return;
             }else{
                     if( false === $( birdAction.gameOverScoreDiv ).hasClass( 'birdman-came' ) ){
@@ -703,9 +727,10 @@ var birdAction = {
                         couldNotScoreEl.appendChild( couldNotScoreText );
                         birdAction.gameOverScoreDiv.appendChild( couldNotScoreEl );
                         $( birdAction.level2StartButton )
-                            .replaceWith( '<button class="level1-start-button">Go to Home Screen and Start Again</button>' );
-                        $( 'button.level1-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
-                        document.querySelector( '.game-over' ).classList.remove( 'display' );
+                            .replaceWith( birdAction.level1StartButton );
+                        $( birdAction.level1StartButton ).on( 'click', birdAction.gameRestartLevel1 );
+                        birdAction.level1StartButton.classList.remove( 'display' );
+                        birdAction.gameOverdiv.classList.remove( 'display' );
                         return;
                     }
             }
@@ -713,8 +738,7 @@ var birdAction = {
     },
 
     gameOverLevel2: function () {
-        var pTags = '<p></p>',
-            timeTookToFinish = birdAction.gameTimer - birdAction.timer,
+        var timeTookToFinish = birdAction.gameTimer - birdAction.timer,
             couldNotScoreEl,couldNotScoreText;
 
         /**
@@ -733,12 +757,12 @@ var birdAction = {
 
             birdAction.gameOverScoreDiv.innerText = 'You Scored ' + birdAction.score + ' pts ' + 'in '
                 + timeTookToFinish + ' secs';
-            $( pTags, {
+            $( birdAction.pTags, {
                 text: 'Congratulations You have made it to the Next level. You have unlocked Level3 : The Angry Dragon',
                 class: 'congrats-text'
             } ).prependTo( birdAction.gameOverScoreDiv );
 
-            $( pTags, {
+            $( birdAction.pTags, {
                 text: 'About the Dragon: This dragon has been sleeping in his castle in the jungle for years.' +
                 ' However your shooting business has disturbed his sleep. He is now awake and is ' +
                 'very angry. You must find a way to put him back to sleep. The Dragon changes colors and has the power to ' +
@@ -750,7 +774,7 @@ var birdAction = {
 
             birdAction.level2StartButton.classList.add( 'display' );
             birdAction.level3StartButton.classList.remove( 'display' );
-            $( 'button.level3-start-button' ).on( 'click', birdAction.startLevelThree );
+            $( birdAction.level3StartButton ).on( 'click', birdAction.startLevelThree );
 
         }else{
 
@@ -774,28 +798,25 @@ var birdAction = {
                 birdAction.gameOverScoreDiv.appendChild( birdTipEl );
 
                 $( birdAction.level2StartButton ).replaceWith( '<button class="level2-start-button">ReStart</button>' );
-                $( 'button.level2-start-button' ).on( 'click', birdAction.gameRestartLevel2 );
+                $( birdAction.level2StartButton ).on( 'click', birdAction.gameRestartLevel2 );
             }
         }
-        document.querySelector( '.game-over' ).classList.remove( 'display' );
+        birdAction.gameOverdiv.classList.remove( 'display' );
     },
 
     gameOverLevel3: function () {
-        var timeTookToFinish, gameOverDiv,couldNotScoreEl
-            ,couldNotScoreText,dragonKillingTipEl,dragonKillingTipText,
-            pTags = '<p></p>',
+        var timeTookToFinish, couldNotScoreEl
+            ,couldNotScoreText, dragonKillingTipEl, dragonKillingTipText,
             creditsDiv = document.querySelector( '.credits' );
 
         birdAction.angryDragonScream.pause();
         birdAction.gunImage.classList.add( 'display' );
-        if( $( '.content' ).children().hasClass( 'dragon-entry-green' ) ){
+        if( $( birdAction.content ).children().hasClass( 'dragon-entry-green' ) ){
             document.querySelector( '.dragon-entry-green' ).remove();
         }
         birdAction.stopRain();
-        document.querySelector( '.header' ).classList.add( 'display' );
-
-            timeTookToFinish = birdAction.gameTimer - birdAction.timer;
-            gameOverDiv = document.querySelector( '.game-over');
+        birdAction.header.classList.add( 'display' );
+        timeTookToFinish = birdAction.gameTimer - birdAction.timer;
 
             if( ( 0 === birdAction.health.value ) && ( 0 < birdAction.timer ) )  {
                 birdAction.originalCursor();
@@ -807,20 +828,21 @@ var birdAction = {
                     creditsDiv.classList.add( 'display' );
                     creditsDiv.classList.remove( 'wrapper' );
 
-                    $( '<img></img>', {
+                    $( birdAction.imgTags, {
                         src: 'images/dragon-sleeping.gif',
                         class: 'sleeping-dragon'
-                    } ).prependTo( gameOverDiv );
+                    } ).prependTo( birdAction.gameOverdiv );
 
-                    $( pTags, {
+                    $( birdAction.pTags, {
                         text: 'Congratulations You have completed all three levels.You have put the Dragon back to Sleep in '
                         + timeTookToFinish + ' secs. ' +' Go back to the home Screen and Restart the Game',
                         class: 'congrats-text'
-                    } ).prependTo( gameOverDiv );
+                    } ).prependTo( birdAction.gameOverdiv );
 
                     birdAction.gameOverScoreDiv.textContent = "";
-                    $( birdAction.level3StartButton ).replaceWith( '<button class="level2-start-button">Go to Home Screen</button>' );
-                    $( 'button.level2-start-button' ).on( 'click', birdAction.gameRestartLevel1 );
+                    $( birdAction.level3StartButton ).replaceWith( birdAction.level1StartButton );
+                    birdAction.level1StartButton.classList.remove();
+                    $( birdAction.level2StartButton ).on( 'click', birdAction.gameRestartLevel1 );
                 }, 40000 );
 
             }else{
@@ -847,7 +869,7 @@ var birdAction = {
                 document.querySelector( 'progress' ).remove();
                 document.querySelector( '.dragon-health-name' ).remove();
             }
-        document.querySelector( '.game-over').classList.remove( 'display' );
+        birdAction.gameOverdiv.classList.remove( 'display' );
     },
 
     gameRestartLevel1: function () {
@@ -858,31 +880,32 @@ var birdAction = {
         birdAction.score = 0;
         birdAction.gameTimer = 0;
         birdAction.audioBirdFlap.play();
-        document.querySelector( '.game-over' ).classList.add( 'display' );
+        birdAction.gameOverdiv.classList.add( 'display' );
         birdAction.startLevelTwo();
     },
 
     newDragonEntry: function () {
         var timeInterval = 0,
-            imgTags = '<img></img>',
+            dragonEntryGreenImg = $( '.dragon-entry-green' ),
+            dragonImgTags = '<img></img>',
             newDragonEntryInterval = setInterval( function () {
             timeInterval += 1;
             /**
              * After 15 secs from the start of Level3 Game
              */
-            if ( timeInterval > 5 ){
-                $( '.dragon-entry-green' ).fadeOut( 2000 );
+            if ( timeInterval === 5 ){
+                dragonEntryGreenImg.fadeOut( 2000 );
             }
-            if ( timeInterval > 10 ){
-                if( false === $( '.content' ).children().hasClass( 'dragon-entry-brown') ){
-                    $( '.dragon-entry-green' ).remove();
-                    $( '<img></img>', {
+            if ( timeInterval === 10 ){
+                if( false === $( birdAction.content ).children().hasClass( 'dragon-entry-brown') ){
+                    dragonEntryGreenImg.remove();
+                    $( dragonImgTags, {
                         src: 'images/dragon-entry-brown.png',
                         class: 'dragon-entry-brown'
 
                     } ).fadeIn( 1000 )
                         .delay( 2000 )
-                        .prependTo( '.content' )
+                        .prependTo( birdAction.content )
                         .animate(
                             {
                                 'position': 'absolute',
@@ -894,16 +917,16 @@ var birdAction = {
                     birdAction.dragonImageEl.addEventListener( 'click', birdAction.dragonHitStronger );
                 }
             }
-            if ( timeInterval > 21 ){
+            if ( timeInterval === 21 ){
                 $( '.dragon-entry-brown' ).remove();
-                if( false === $( '.content' ).children().hasClass( 'dragon-entry-dark-green' ) ){
-                    $( imgTags, {
+                if( false === $( birdAction.content ).children().hasClass( 'dragon-entry-dark-green' ) ){
+                    $( dragonImgTags, {
                         src: 'images/dragon-entry-dark-green.gif',
                         class: 'dragon-entry-dark-green'
 
                     } ).fadeIn(1000)
                         .delay( 2000 )
-                        .prependTo( '.content' )
+                        .prependTo( birdAction.content )
                         .animate(
                             {
                                 'position': 'absolute',
@@ -916,15 +939,15 @@ var birdAction = {
                     birdAction.dragonImageEl.addEventListener( 'click', birdAction.dragonHitStronger );
                 }
             }
-            if( timeInterval > 32 ){
+            if( timeInterval === 32 ){
                 $( '.dragon-entry-dark-green' ).remove();
-                if( false === $( '.content' ).children().hasClass( 'dragon-fire-left' ) ){
-                    $( imgTags, {
+                if( false === $( birdAction.content ).children().hasClass( 'dragon-fire-left' ) ){
+                    $( dragonImgTags, {
                         src: 'images/dragon-fire-left.gif',
                         class: 'dragon-fire-left'
 
                     } ).fadeIn( 1000 )
-                        .prependTo( '.content' )
+                        .prependTo( birdAction.content )
                         .animate(
                             {
                                 'position': 'absolute',
@@ -935,15 +958,15 @@ var birdAction = {
                         .fadeOut( 5000 );
                 }
             }
-            if( timeInterval > 40 ){
+            if( timeInterval === 40 ){
                 $( '.dragon-fire-left' ).remove();
-                if( false === $( '.content' ).children().hasClass( 'dragon-fire-right' ) ){
-                    $( imgTags, {
+                if( false === $( birdAction.content ).children().hasClass( 'dragon-fire-right' ) ){
+                    $( dragonImgTags, {
                         src: 'images/dragon-fire-right.gif',
                         class: 'dragon-fire-right'
 
                     } ).fadeIn( 1000 )
-                        .prependTo( '.content' )
+                        .prependTo( birdAction.content )
                         .animate(
                             {
                                 'position': 'absolute',
@@ -954,15 +977,15 @@ var birdAction = {
                         .fadeOut( 5000 );
                 }
             }
-            if( timeInterval > 47 ){
+            if( timeInterval === 47 ){
                 $( '.dragon-fire-right' ).remove();
-                if( false === $( '.content').children().hasClass( 'dragon-fire' ) ){
-                    $( imgTags, {
+                if( false === $( birdAction.content ).children().hasClass( 'dragon-fire' ) ){
+                    $( dragonImgTags, {
                         src: 'images/dragon-fire.gif',
                         class: 'dragon-fire'
 
                     } ).fadeIn( 1000 )
-                        .prependTo( '.content' )
+                        .prependTo( birdAction.content )
                         .animate(
                             {
                                 'position': 'absolute',
@@ -976,15 +999,15 @@ var birdAction = {
             /**
              * Dragon Red Vulnerable
              */
-            if( timeInterval > 55 ){
+            if( timeInterval === 55 ){
                 $( '.dragon-fire' ).remove();
-                if( false === $( '.content').children().hasClass( 'dragon-final' ) ){
-                    $( imgTags, {
+                if( false === $( birdAction.content ).children().hasClass( 'dragon-final' ) ){
+                    $( dragonImgTags, {
                         src: 'images/dragon-final.gif',
                         class: 'dragon-final'
 
                     } ).fadeIn( 1000 )
-                        .prependTo( '.content' )
+                        .prependTo( birdAction.content )
                         .animate(
                             {
                                 'position': 'absolute',
