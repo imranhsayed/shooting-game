@@ -59,6 +59,7 @@ var birdAction = {
         birdAction.audioRainDrop = document.getElementById( 'rain-falling' );
         birdAction.gunShotAudio = document.getElementById( 'gun-shot-audio' );
         birdAction.birdKilledSound = document.getElementById( 'bird-killed-sound' );
+        birdAction.thunderstormMusic = document.getElementById( 'thunderstorm-clip' );
         birdAction.gameOverScoreDiv = document.querySelector( '.game-over-score' );
         birdAction.level1StartButton = document.querySelector( '.level1-start-button' );
         birdAction.level2StartButton = document.querySelector( '.level2-start-button' );
@@ -94,16 +95,13 @@ var birdAction = {
          * @type {number}
          */
         birdAction.birdInterval = 3000;
-
         /**
          * birdNoToSend is in multiples of 2 .
          * If you choose 2 meaning 4 birds will be sent
          * @type {number}
          */
         birdAction.birdNoToSend = 20;
-
         birdAction.birdNestDivNo = 20;
-
         /*
          * ids to be created from zero up until range
          */
@@ -118,32 +116,47 @@ var birdAction = {
         birdAction.birdsMove();
         birdAction.gameTimerLevel1();
     },
+
     /**
-     *
+     * Stops rain and Level1 background Music and starts playing Level2 background Music
+     * Sets background image for Level 2
+     * Clears the previously stored content from the gameOverScoreDiv
+     * Sets the score  and gameTimer to 0.
+     * Calls updateScore() to add the scores when the birds are shot.
+     * Removes class .nine-sec-to-go that might have been added from Level1.
+     * Checks if there were any previous bird images from level1 that have not been
+     * removed and removes them using birdsDivs.remove()
+     * Sets Value of birdInterval,No of Birds to be Sent,No of Divs to be created
+     * left and right from which birds will come out randomly
+     * Calls updateScore() to update the scores in the Score box to zero.
+     * Sets the source value of bird images to birdImgSourceLeft and birdImgSourceRight
+     * Hides gameOverDiv and displays main-section
+     * Calls birdsMove() to make the birds fly
+     * Calls gameTimerLevel2() to start the game Timer.
      */
     startLevelTwo: function(){
         var birdsDivs = $( '.birds-div' );
 
+        birdAction.stopRain();
+        birdAction.body.style.backgroundImage = "url( 'images/landscape.gif' )";
         birdAction.backgroundMusicLevel1.pause();
-        birdAction.gameOverScoreDiv.textContent = "";
         birdAction.backgroundMusicLevel2.play();
+        birdAction.gameOverScoreDiv.textContent = "";
         document.querySelector( '.target-score ' ).innerText = 0;
         birdAction.gameTimer = 0;
         birdAction.score = 0; // update score back to zero for level two
-        birdAction.addScore();
-        birdAction.timeLeftP.classList.remove( 'nine-sec-to-go' );
-
+        birdAction.updateScore();
+        if( $( birdAction.timeLeftP).hasClass( 'nine-sec-to-go') ){
+            birdAction.timeLeftP.classList.remove( 'nine-sec-to-go' );
+        }
         if ( birdsDivs.children().length ){
             birdsDivs.remove();
         }
-        birdAction.birdImgSourceLeft = 'images/level2-bird-left.gif';
-        birdAction.birdImgSourceRight = 'images/level2-bird-right.gif';
         /**
          * meaning after how many seconds next bird will be sent
          * @type {number}
          */
         birdAction.birdInterval = 2000;
-
         /**
          * birdNoToSend is in multiples of 4 .
          * If you choose 2 meaning 4 birds will be sent
@@ -158,44 +171,61 @@ var birdAction = {
         birdAction.birdSpeed = 15000;
         birdAction.requiredScore = birdAction.birdNoToSend * 10;
         birdAction.gameTimer = 90; // in secs
-
+        birdAction.birdImgSourceLeft = 'images/level2-bird-left.gif';
+        birdAction.birdImgSourceRight = 'images/level2-bird-right.gif';
         birdAction.mainSection.classList.remove( 'display' );
-        birdAction.stopRain();
         birdAction.gameOverdiv.classList.add( 'display' );
-        birdAction.body.style.backgroundImage = "url( 'images/landscape.gif' )";
         birdAction.birdsMove();
         birdAction.gameTimerLevel2();
     },
 
+    /**
+     * Creates variables for progress health-bar, lighteningIntervalCounter,
+     * header-div children and dragonEntryGreen image.
+     * Sets gameTimer to 90secs.
+     * Checks if bird images from previous level exist and removes them
+     * Checks of the classes red-health and blue-health exist from the first time
+     * you played the game and removes them.
+     * Calls birdAction.originalCursor() to change the cursor back to default and
+     * hides the gun image during dragon Entry while lightening strikes.
+     * Hides score-div and time remaining.
+     * Plays thunderstorm Music. Plays angryDragon Music in a loop.
+     * Sets the Image of the dragon to float right
+     * Creates an InterVal for 80 secs for Dragon Entry and exit.
+     * For 10 secs lightening strikes and dragon roars.
+     * After 10 secs changes cursor to gun-target img, re-displays gun img
+     * changes background img ,starts playing level3 music in a loop,
+     * Checks if progress-div for health bar already exits ,if not creates one,
+     * displays header
+     */
     startLevelThree: function () {
         var progress,
-            lightening = 0,
+            lighteningIntervalCounter = 0,
             headerChildren = $( 'header' ).children(),
-            thunderstormMusic = document.getElementById( 'thunderstorm-clip' ),
             dragonEntryGreen;
         birdAction.gameTimer = 90;
 
-        birdAction.originalCursor();
         if ( true === $( birdAction.content ).find( 'div' ).first( ).hasClass( 'left-bird-nest' )
             && false === $( birdAction.leftBirdNestDiv ).hasClass( 'display' ) ){
             birdAction.leftBirdNestDiv.remove();
             birdAction.rightBirdNestDiv.remove();
         }
-
         if( true === headerChildren.hasClass( 'red-health' ) ){
             document.querySelector( 'progress' ).classList.remove( 'red-health' );
         }
-
         if( true === headerChildren.hasClass( 'blue-health' ) ){
             document.querySelector( 'progress' ).classList.remove( 'blue-health' );
         }
-
+        /**
+         * Short lightening effect
+         */
+        birdAction.originalCursor();
         birdAction.gunImage.classList.add( 'display' );
         document.querySelector( '.score-div' ).classList.add( 'display' );
         document.querySelector( '.time-remaining' ).classList.add( 'display' );
         birdAction.backgroundMusicLevel2.pause();
         birdAction.angryDragonScream = document.getElementById( 'angry-dragon' );
-        thunderstormMusic.play();
+        birdAction.thunderstormMusic.play();
         birdAction.angryDragonScream.addEventListener( 'ended', function() {
             this.currentTime = 0;
             this.play();
@@ -203,30 +233,24 @@ var birdAction = {
         birdAction.angryDragonScream.play();
         birdAction.content.style.float = 'right';
         /**
-         * Short lightening effect
-         * @type {Element}
+         * Interval for Dragon entry an exit
+         * @type {number}
          */
-        var shortLightening = setInterval( function () {
-            lightening = lightening + 1;
+        var dragonEntryInterval = setInterval( function () {
+            lighteningIntervalCounter = lighteningIntervalCounter + 1;
             /**
-             *  Till 10 secs
+             *  after 10 secs
              */
-            if ( lightening > 10 ){
+            if ( lighteningIntervalCounter > 10 ){
                 birdAction.changeCursor();
+                birdAction.gunImage.classList.remove( 'display' );
                 birdAction.body.style.backgroundImage = "url( 'images/dark-castle.gif' )";
-                /**
-                 * looping through the music
-                 */
                 birdAction.backgroundMusicLevel3.addEventListener( 'ended', function() {
                     this.currentTime = 0;
                     this.play();
                 }, false);
                 birdAction.backgroundMusicLevel3.play();
-                birdAction.gunImage.classList.remove( 'display' );
 
-                if( true === $( birdAction.header ).hasClass( 'display' ) ){
-                    birdAction.header.classList.remove( 'display' );
-                }
                     if( false === $( birdAction.header ).children().hasClass( 'progress-class' ) ){
                         $( '<p></p>', {
                             class: 'dragon-health-name',
@@ -239,6 +263,9 @@ var birdAction = {
                             max:'400'
                         }).appendTo( birdAction.header );
                     }
+                    if( true === $( birdAction.header ).hasClass( 'display' ) ){
+                        birdAction.header.classList.remove( 'display' );
+                    }
                 progress = $( 'progress' );
                 dragonEntryGreen = document.querySelector( '.dragon-entry-green' );
                 birdAction.dragonImageEl = dragonEntryGreen;
@@ -246,7 +273,7 @@ var birdAction = {
                 document.querySelector( '.time-remaining' ).classList.remove( 'display' );
                 dragonEntryGreen.addEventListener( 'click', birdAction.dragonHitStronger );
                 birdAction.newDragonEntry();
-                clearInterval( shortLightening );
+                clearInterval( dragonEntryInterval );
                 return;
             }
             if( birdAction.body.style.backgroundImage != "url( 'images/lightening-img.gif' )" ){
@@ -449,11 +476,11 @@ var birdAction = {
         event.target.parentNode.classList.add( 'animated' );
         event.target.parentNode.classList.add( 'fadeOut' );
         birdAction.score = birdAction.score + 100;
-        birdAction.addScore();
+        birdAction.updateScore();
         event.target.style.pointerEvents = 'none';
     },
 
-    addScore: function () {
+    updateScore: function () {
         birdAction.scoreBox = document.querySelector( '.score-box' );
         birdAction.scoreBox.innerText = birdAction.score;
     },
@@ -463,7 +490,7 @@ var birdAction = {
     },
 
     originalCursor: function () {
-        birdAction.body.style.cursor = 'auto';
+        birdAction.body.style.cursor = 'default';
     },
 
     createGunImage: function () {
@@ -767,7 +794,7 @@ var birdAction = {
                 'very angry. You must find a way to put him back to sleep. The Dragon changes colors and has the power to ' +
                 'become invisible. Its tricky to beat the Dragon.' +
                 ' However, I leave this in your able hands to accept the challenge and beat him. If you are not able to ,' +
-                ' then the trick to beat him will be shared with you.',
+                ' then the trick to beat him will be shared with you.Click on Level3 to Unleash the dragon.',
                 class: 'dragon-story'
             } ).appendTo( birdAction.gameOverScoreDiv );
 
@@ -840,9 +867,9 @@ var birdAction = {
                     } ).prependTo( birdAction.gameOverdiv );
 
                     birdAction.gameOverScoreDiv.textContent = "";
-                    $( birdAction.level3StartButton ).replaceWith( birdAction.level2StartButton );
-                    birdAction.level2StartButton.classList.remove( 'display');
-                    $( birdAction.level2StartButton ).on( 'click', birdAction.gameRestartLevel1 );
+                    $( birdAction.level3StartButton ).replaceWith( birdAction.level1StartButton );
+                    birdAction.level1StartButton.classList.remove( 'display');
+                    $( birdAction.level1StartButton ).on( 'click', birdAction.gameRestartLevel1 );
                 }, 40000 );
 
             }else{
@@ -853,8 +880,8 @@ var birdAction = {
                 dragonKillingTipText = document.createTextNode( 'Tip on How to put the Dragon back to Sleep : The dragons outer skin ' +
                     'is very strong and your bullets cannot harm him. If you shoot him he will eat the fire' +
                     ' from your bullets and get stronger and bigger. So how do we put him back to sleep. ' +
-                    'The dragon at some stage will spit fire and start becoming red. Once he has spit out all his fire ' +
-                    'and becomes completely red. His skin becomes softer and vulnerable because of heat .' +
+                    'The dragon at some stage will spit fire and start becoming red. ' +
+                    'When he spits fire ,his skin becomes softer and vulnerable because of heat .' +
                     'Your bullets have tranquilizers. This is the time you need to attack him and put him ' +
                     'back to sleep. Best of Luck This Time!'
                 );

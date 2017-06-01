@@ -17,9 +17,9 @@ body {
     overflow:hidden;
 }
 
-p, span, body {
-    font-family: 'Rock Salt', cursive;
-}
+/*p, span, body {*/
+    /*font-family: 'Nosifer';*/
+/*}*/
 
 .drop {
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(rgba(255,255,255,0.6))  );
@@ -52,9 +52,10 @@ p{
     position: absolute;
 }
 button {
+    font-family: 'Bangers';
     margin: 10px 0;
     padding: 10px 10px 10px 10px;
-    font-size: 15px;
+    font-size: 36px;
 }
 .display{
     display: none;
@@ -160,10 +161,12 @@ Before Game starts
 }
 
 h1{
-    color: rgba(205, 220, 57, 0.97);
-    /*font-family: cursive;*/
-    font-size: 30px;
+    font-family: 'Nosifer';
+    color: #af111c;
     margin: 5px;
+    font-size: 50px;
+    text-shadow: 2px 1px 1px #000;
+    margin-top: 20px;
 }
 
 /**
@@ -176,12 +179,13 @@ Header
     overflow: hidden;
     text-align: center;
     padding: 30px;
+    text-transform: uppercase;
 }
 
 .header p {
     margin: 5px;
     padding: 1px;
-    letter-spacing: 3px;
+    letter-spacing: 5px;
 }
 
 /**
@@ -399,18 +403,20 @@ body {
 }
 
 .orb-game-start span{
-    font-size: 24px;
-    color: #d2ffff;
+    font-size: 36px;
+    letter-spacing: 3px;
     font-weight: bold;
     text-align: center;
     margin-top: 44px;
     display: inline-block;
     text-transform: uppercase;
+    color: rgb(255, 255, 255);
+    text-shadow: -3px -1px 1px #000;
 }
 
-.level2-start-button span, .level3-start-button span{
-    font-size: 15px;
-}
+/*.level2-start-button span, .level3-start-button span{*/
+    /*font-size: 15px;*/
+/*}*/
 
 .flying-birds-multiple{
     position: absolute;
@@ -430,8 +436,19 @@ body {
     font-size: 15px;
     animation: 160s credits linear infinite;
     opacity: 0.5;
+    letter-spacing: 2px;
 }
-.level1-instructions-right p{
-    font-family:"Courier New";
+
+.level1-instructions-right h1 {
+    font-size: 30px;
+}
+
+.level1-instructions-right p {
     margin-bottom: 30px;
+    font-family: 'Chewy';
 }
+
+.body, .header {
+    font-family: 'Chewy';
+}
+
