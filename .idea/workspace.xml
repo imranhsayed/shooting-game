@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="e2cc712c-bf19-4a2d-a59d-2f33fcf2518e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javascript.js" afterPath="$PROJECT_DIR$/javascript.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/style.css" afterPath="$PROJECT_DIR$/style.css" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -44,8 +43,8 @@
       <file leaf-file-name="javascript.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javascript.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="1026" column="42" lean-forward="false" selection-start-line="1026" selection-start-column="42" selection-end-line="1026" selection-end-column="42" />
+            <state relative-caret-position="535">
+              <caret line="1217" column="44" lean-forward="false" selection-start-line="1217" selection-start-column="44" selection-end-line="1217" selection-end-column="44" />
               <folding />
             </state>
           </provider>
@@ -63,7 +62,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>&lt;img&gt;&lt;/img&gt;</find>
       <find>bird-game</find>
       <find>scoreBox</find>
       <find>birdaction.main</find>
@@ -93,6 +91,7 @@
       <find>dragonEntryGreen</find>
       <find>orig</find>
       <find>header</find>
+      <find>z</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -238,12 +237,12 @@
       <workItem from="1496064848921" duration="730000" />
       <workItem from="1496069482667" duration="36946000" />
       <workItem from="1496236514614" duration="19551000" />
-      <workItem from="1496267425796" duration="24802000" />
+      <workItem from="1496267425796" duration="31440000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="152002000" />
+    <option name="totallyTimeSpent" value="158640000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-5" y="23" width="1472" height="873" extended-state="0" />
@@ -464,8 +463,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javascript.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="1026" column="42" lean-forward="false" selection-start-line="1026" selection-start-column="42" selection-end-line="1026" selection-end-column="42" />
+        <state relative-caret-position="535">
+          <caret line="1217" column="44" lean-forward="false" selection-start-line="1217" selection-start-column="44" selection-end-line="1217" selection-end-column="44" />
           <folding />
         </state>
       </provider>

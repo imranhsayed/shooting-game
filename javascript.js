@@ -10,7 +10,6 @@ var birdAction = {
     scoreBox: 0,
     requiredScore: 0,
     nbRainDrop: 300,
-    audioBirdFlap: null,
     backgroundMusicLevel1: null,
     backgroundMusicLevel2: null,
     backgroundMusicLevel3: null,
@@ -43,6 +42,8 @@ var birdAction = {
      * Plays game start music in a loop
      * Adds event listeners for Start Button to start Level 1 and level 2
      * Adds event listener for Gun Image to follow the cursor
+     *
+     * @return {void}
      */
     init: function () {
 
@@ -50,6 +51,7 @@ var birdAction = {
         birdAction.header = document.querySelector( '.header' );
         birdAction.mainSection = document.getElementById( 'main-section' );
         birdAction.content = document.querySelector( '.content' );
+        birdAction.button = document.querySelector( 'button' );
         birdAction.leftBirdNestDiv = document.querySelector( '.left-bird-nest' );
         birdAction.rightBirdNestDiv = document.querySelector( '.right-bird-nest' );
         birdAction.gameOverdiv = document.querySelector( '.game-over' );
@@ -58,6 +60,7 @@ var birdAction = {
         birdAction.imgTags = '<img></img>';
         birdAction.audioRainDrop = document.getElementById( 'rain-falling' );
         birdAction.gunShotAudio = document.getElementById( 'gun-shot-audio' );
+        birdAction.audioBirdFlap = document.getElementById( 'bird-flapping' );
         birdAction.birdKilledSound = document.getElementById( 'bird-killed-sound' );
         birdAction.thunderstormMusic = document.getElementById( 'thunderstorm-clip' );
         birdAction.gameOverScoreDiv = document.querySelector( '.game-over-score' );
@@ -86,8 +89,11 @@ var birdAction = {
      * Calls createRain() to start Rain.
      * Plays Rain drop audio.
      * Adds background image for Level1
+     * Hides before-game-starts div
      * Calls birdsMove() to make the birds fly
      * Calls gameTimerLevel1() to start the game Timer.
+     *
+     * @return {void}
      */
     startLevelOne: function(){
         /**
@@ -113,6 +119,7 @@ var birdAction = {
         birdAction.createRain();
         birdAction.audioRainDrop.play();
         birdAction.body.style.backgroundImage = "url( 'images/level1-background.jpg' )";
+        document.querySelector( '.before-game-start').classList.add( 'display' );
         birdAction.birdsMove();
         birdAction.gameTimerLevel1();
     },
@@ -133,6 +140,8 @@ var birdAction = {
      * Hides gameOverDiv and displays main-section
      * Calls birdsMove() to make the birds fly
      * Calls gameTimerLevel2() to start the game Timer.
+     *
+     * @return {void}
      */
     startLevelTwo: function(){
         var birdsDivs = $( '.birds-div' );
@@ -180,26 +189,25 @@ var birdAction = {
     },
 
     /**
-     * Creates variables for progress health-bar, lighteningIntervalCounter,
-     * header-div children and dragonEntryGreen image.
      * Sets gameTimer to 90secs.
-     * Checks if bird images from previous level exist and removes them
-     * Checks of the classes red-health and blue-health exist from the first time
-     * you played the game and removes them.
-     * Calls birdAction.originalCursor() to change the cursor back to default and
-     * hides the gun image during dragon Entry while lightening strikes.
+     * Removes bird images from previous level
+     * Removes classes red-health and blue-health if they exist
+     * Hides game over div, creates Rain
+     * Starts gameTimer
+     * Changes the cursor back to default
+     * Hides the gun image while lightening strikes.
      * Hides score-div and time remaining.
-     * Plays thunderstorm Music. Plays angryDragon Music in a loop.
+     * Plays thunderstorm Music and angryDragon Music
      * Sets the Image of the dragon to float right
      * Creates an InterVal for 80 secs for Dragon Entry and exit.
-     * For 10 secs lightening strikes and dragon roars.
+     * Creates dragon image and animates it position for 10 secs
      * After 10 secs changes cursor to gun-target img, re-displays gun img
-     * changes background img ,starts playing level3 music in a loop,
-     * Checks if progress-div for health bar already exits ,if not creates one,
-     * displays header, displays time remaining, adds event listener to dragon img
-     * to increase his health when hit, clears the interval which was applied for
-     * actions to be performed after 10 secs.
+     * Changes background img ,starts playing level3 music
+     * Creates progress-div for health bar ,
+     * Displays header,time remaining, adds event listener to dragon img
+     * to increase his health when hit,
      *
+     * @return {void}
      */
     startLevelThree: function () {
         var progress,
@@ -219,14 +227,24 @@ var birdAction = {
         if( true === headerChildren.hasClass( 'blue-health' ) ){
             document.querySelector( 'progress' ).classList.remove( 'blue-health' );
         }
-        /**
-         * Short lightening effect
-         */
+        if ( false === $( birdAction.gameOverdiv ).hasClass( 'display' ) ){
+            birdAction.gameOverdiv.classList.add( 'display' );
+        }
+        if ( true === $( birdAction.mainSection ).hasClass( 'display' ) ){
+            birdAction.mainSection.classList.remove( 'display' );
+        }
+
+        birdAction.mainSection.classList.add( 'rain' );
+        birdAction.createRain();
+        birdAction.gameTimerLevel3();
         birdAction.originalCursor();
         birdAction.gunImage.classList.add( 'display' );
         document.querySelector( '.score-div' ).classList.add( 'display' );
         document.querySelector( '.time-remaining' ).classList.add( 'display' );
         birdAction.backgroundMusicLevel2.pause();
+        /**
+         * Short lightening effect
+         */
         birdAction.angryDragonScream = document.getElementById( 'angry-dragon' );
         birdAction.thunderstormMusic.play();
         birdAction.angryDragonScream.addEventListener( 'ended', function() {
@@ -299,28 +317,35 @@ var birdAction = {
 
         },1000 );
 
-        if ( false === $( birdAction.gameOverdiv ).hasClass( 'display' ) ){
-                birdAction.gameOverdiv.classList.add( 'display' );
-        }
-        birdAction.gameTimerLevel3();
-        if ( true === $( birdAction.mainSection ).hasClass( 'display' ) ){
-            birdAction.mainSection.classList.remove( 'display' );
-        }
-
-        birdAction.mainSection.classList.add( 'rain' );
-        birdAction.createRain();
-
     },
 
-    birdsMove: function (event) {
-        var z = 0,
+    /**
+     * Declares variables birdIntervalCounter,leftDiv and rightDiv for inserting
+     * bird images randomly.
+     * Re-displays  main-content div.
+     * Plays birdFlap audio, hides buttons. Calls changeCursor() to change the
+     * cursor to gun-aim img.
+     * Creates gun-img if it already does not exist
+     * Creates required no of divs inside leftBirdNestDiv and rightBirdNestDiv.
+     * Gives ids to left and right divs
+     * Sets Interval for required time.
+     * Inside the interval we call createBirdsLeft() and createBirdsRight() to
+     * create the birds img dynamically and insert them inside the divs we just created
+     * Then animate their position to make them fly randomly.
+     * And remove them from DOM once they reach the top of the window
+     * There are conditions inside Set intervals to check
+     * when the timer is 0 or user achieves the required target ,exit out of the interval
+     *
+     * @return {void}
+     */
+    birdsMove: function () {
+        var birdIntervalCounter = 0,
             leftDiv = document.querySelector( '.left-bird-nest' ),
             rightDiv = document.querySelector( '.right-bird-nest' );
+
         document.querySelector( '.main-content' ).classList.remove( 'display' );
-        document.querySelector( '.before-game-start').classList.add( 'display' );
-        birdAction.audioBirdFlap = document.getElementById( 'bird-flapping' );
         birdAction.audioBirdFlap.play();
-        document.querySelector( 'button' ).classList.add( 'display' );
+        birdAction.button.classList.add( 'display' );
         birdAction.changeCursor();
 
         if ( null === birdAction.gunImage ) {
@@ -342,12 +367,11 @@ var birdAction = {
                 divRightBird.setAttribute( 'class', 'birds-div' );
                 rightDiv.appendChild( divRightBird );
                 leftDiv.appendChild( divLeftBird );
-
                 }
         }
 
         var interval = setInterval( function () {
-            if ( z > birdAction.birdNoToSend ){
+            if ( birdIntervalCounter > birdAction.birdNoToSend ){
                 clearInterval( interval );
                 return;
             }
@@ -389,14 +413,25 @@ var birdAction = {
                     }
                 }
             );
-            z = z + 1;
+            birdIntervalCounter = birdIntervalCounter + 1;
         },birdAction.birdInterval );
     },
 
+    /**
+     *Calls createRandomIdLeft() and randomIdCheckerLeft()
+     * Check if random id already exists, if not make a new one
+     * Then searches DOM for the div that has that random id.
+     * It then creates an img element for the bird and inserts the image in that
+     * div with that random id ( if the div does not have the img already)
+     * Also checks if the random id is 5 , then inserts birdman img and adds a
+     * class to it.
+     *
+     * @return {void}
+     */
     createBirdsLeft: function () {
         var leftBirdNest;
         /*
-         Checking if random id already exists, if yes make a new one.
+         Checking if random id already exists, if no make a new one.
          */
         birdAction.createRandomIdLeft();
         birdAction.randomIdCheckerLeft();
@@ -418,6 +453,12 @@ var birdAction = {
         }
     },
 
+    /**
+     * Does Same as the createBirdsLeft except it does it for the right divs
+     * and does not inserts bird-man img
+     *
+     * @return {void}
+     */
     createBirdsRight: function () {
         var rightBirdNest;
         /**
@@ -444,6 +485,13 @@ var birdAction = {
         birdAction.randRight = birdAction.birdNestDivNo + Math.floor( Math.random() * birdAction.randRange );
     },
 
+    /**
+     * Checks if  the id does not exist in the array, if not creates an id
+     * and pushes the same id into the arrayLeftDivId so that it can be checked
+     * again while creating a new id
+     *
+     * @return {void}
+     */
     randomIdCheckerLeft: function () {
         var itemCheck = $.inArray( 'id' + birdAction.randLeft, birdAction.arrayLeftDivId );
         if ( -1 !== itemCheck ){
@@ -453,6 +501,13 @@ var birdAction = {
         }
     },
 
+    /**
+     * Checks if  the id does not exist in the array, if not creates an id
+     * and pushes the same id into the arrayRightDivId so that it can be checked
+     * again while creating a new id
+     *
+     * @return {void}
+     */
     randomIdCheckerRight: function () {
         var itemCheck = $.inArray( 'id' + birdAction.randRight, birdAction.arrayRightDivId );
         if( -1 !== itemCheck ){
@@ -462,6 +517,19 @@ var birdAction = {
         }
     },
 
+    /**
+     * It is called when the bird or bird-man is shot.
+     * Checks if the bird-man has been shot, if yes then calls gameOverLevel1()
+     * Plays birdKilledSound.
+     * Plays gunShotAudio.
+     * Finds the id of the bird div shot and pushes into the totalBirdShot Array
+     * Changes the bird image to blood-splatter img when it is shot using setAttribute
+     * Adds class of animated and fadeout to fadeout the birds when shot
+     * Adds the score and calls update score to update the score into score-box
+     *
+     * @param {object} event Event passed through click.
+     * @return {void}
+     */
     birdDisappear: function ( event ) {
         var birdManShot,
             birdHitId = event.target.parentNode.getAttribute( 'id' );
@@ -506,6 +574,11 @@ var birdAction = {
         gameArea.appendChild( birdAction.gunImage );
 
     },
+
+    /**
+     * Makes the gun image follow the cursor
+     * @param event
+     */
     imgFollowCursor: function ( event ) {
         var left, top;
         if ( event.pageX > ( window.innerWidth / 2 ) ) {
@@ -567,6 +640,17 @@ var birdAction = {
         }
     },
 
+    /**
+     * Sets the timer to GameTimer and inserts that value into timer-box
+     * Sets an interval for the gameTimer period which keep replacing the
+     * current time into time-box.
+     * Checks conditions to change the color of  the time if time value goes below
+     * 20s and 10s and also removes classes which were already added to change the color
+     * If the user achieves the score higher or equal to whats required or
+     * if time lapses it calls gameOver()
+     *
+     * @return {void}
+     */
     gameTimerLevel1: function ( ) {
 
          birdAction.timer = birdAction.gameTimer;
@@ -601,6 +685,11 @@ var birdAction = {
         }, 1000 );
     },
 
+    /**
+     * Same as gameTimerLevel1
+     *
+     * @return {void}
+     */
     gameTimerLevel2: function () {
         birdAction.timer = birdAction.gameTimer;
         birdAction.timeLeftP.innerText =  birdAction.timer;
@@ -639,6 +728,13 @@ var birdAction = {
         },1000);
     },
 
+    /**
+     * Sets the Game timer .
+     * Creates an interval to run the time within which checks condition when the time
+     * lapses or dragon health value reduces to 0 calls gameOverLevel3()
+     *
+     * @return {void}
+     */
     gameTimerLevel3: function () {
         birdAction.timer = birdAction.gameTimer;
         var scoreIntervalCheck = setInterval( function () {
@@ -692,6 +788,16 @@ var birdAction = {
 
     },
 
+    /**
+     * Checks the time and score and asks user to restart the level if birdman shot
+     * Stops the level1 music,rain
+     * Hides the main-section and displays message and performs action basis
+     * if user has cleared the level or failed to do so
+     *
+     * @param birdManShot
+     *
+     * @return {void}
+     */
     gameOverLevel1: function ( birdManShot ) {
         var timeTookToFinish = birdAction.gameTimer - birdAction.timer,
             manScreamAudio = document.getElementById( 'man-scream' ),
@@ -767,6 +873,13 @@ var birdAction = {
         }
     },
 
+    /**
+     * Stops the level2 music
+     * Hides the main-section and displays message and performs action basis
+     * if user has cleared the level or failed to do so
+     *
+     * @return {void}
+     */
     gameOverLevel2: function () {
         var timeTookToFinish = birdAction.gameTimer - birdAction.timer,
             couldNotScoreEl,couldNotScoreText;
@@ -826,15 +939,20 @@ var birdAction = {
                 couldNotScoreEl.appendChild( couldNotScoreText );
                 birdAction.gameOverScoreDiv.appendChild( couldNotScoreEl );
                 birdAction.gameOverScoreDiv.appendChild( birdTipEl );
-
-                // $( birdAction.level2StartButton ).replaceWith( birdAction.level2StartButton );
-                // birdAction.level2StartButton.classList.remove( display);
                 $( birdAction.level2StartButton ).on( 'click', birdAction.gameRestartLevel2 );
             }
         }
         birdAction.gameOverdiv.classList.remove( 'display' );
     },
 
+    /**
+     * Checks the time taken to complete the level
+     * Stops the level3 music,rain
+     * Hides the header,gun-image and displays message and performs action basis
+     * if user has cleared the level or failed to do so
+     *
+     * @return {void}
+     */
     gameOverLevel3: function () {
         var timeTookToFinish, couldNotScoreEl
             ,couldNotScoreText, dragonKillingTipEl, dragonKillingTipText,
@@ -915,6 +1033,12 @@ var birdAction = {
         birdAction.startLevelTwo();
     },
 
+    /**
+     * Creates Images of different dragons and animates their position within
+     * a time interval
+     *
+     * @return {void}
+     */
     newDragonEntry: function () {
         var timeInterval = 0,
             dragonEntryGreenImg = $( '.dragon-entry-green' ),
@@ -1066,27 +1190,41 @@ var birdAction = {
         }, 1000 );
     },
 
-    dragonHitStronger: function () {
+    /**
+     * Increases the value of the health progressbar and increases the size of
+     * dragon image when img is clicked
+     *
+     * @param event
+     * @return {void}
+     */
+    dragonHitStronger: function ( event ) {
         var w, r, imgW, imgR ;
         birdAction.health = document.getElementById( "health" );
         birdAction.gunShotAudio.play();
         birdAction.health.value += 5;
-        imgW = parseInt( window.getComputedStyle( birdAction.dragonImageEl ).width );
-        imgR = parseInt( window.getComputedStyle( birdAction.dragonImageEl ).right );
+        imgW = parseInt( window.getComputedStyle( event.target ).width );
+        imgR = parseInt( window.getComputedStyle( event.target ).right );
         if( 820 > imgW ){
             w = imgW + 20;
             r = imgR - 20;
-            birdAction.dragonImageEl.style.width = w + 'px';
-            birdAction.dragonImageEl.style.right = r + 'px';
+            event.target.style.width = w + 'px';
+            event.target.style.right = r + 'px';
             return;
         }
     },
 
-    dragonHitVulnerable: function () {
+    /**
+     * Decreases the value of the health progressbar and tha image
+     * fades out and fades in .Plays gunshot
+     *
+     * @param event
+     * @return {void}
+     */
+    dragonHitVulnerable: function ( event ) {
         birdAction.gunShotAudio.play();
         birdAction.health.value -= 1;
-        $( birdAction.dragonImageEl ).fadeOut( 200 );
-        $( birdAction.dragonImageEl ).fadeIn( 100 );
+        $( event.target ).fadeOut( 200 );
+        $( event.target ).fadeIn( 100 );
     }
 };
 
