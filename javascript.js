@@ -196,7 +196,10 @@ var birdAction = {
      * After 10 secs changes cursor to gun-target img, re-displays gun img
      * changes background img ,starts playing level3 music in a loop,
      * Checks if progress-div for health bar already exits ,if not creates one,
-     * displays header
+     * displays header, displays time remaining, adds event listener to dragon img
+     * to increase his health when hit, clears the interval which was applied for
+     * actions to be performed after 10 secs.
+     *
      */
     startLevelThree: function () {
         var progress,
@@ -238,6 +241,22 @@ var birdAction = {
          */
         var dragonEntryInterval = setInterval( function () {
             lighteningIntervalCounter = lighteningIntervalCounter + 1;
+            if( birdAction.body.style.backgroundImage != "url( 'images/lightening-img.gif' )" ){
+                birdAction.body.style.backgroundImage = "url( 'images/lightening-img.gif' )";
+            }
+            if( false === $( birdAction.content ).children().hasClass( 'dragon-entry-green') ){
+                $( birdAction.imgTags, {
+                    src: 'images/dragon-entry-green.gif',
+                    class: 'dragon-entry-green'
+                } ).animate(
+                    {
+                        'position': 'absolute',
+                        'top': '0px',
+                        'right': '350px'
+                    }, 10000
+                )
+                    .prependTo( birdAction.content );
+            }
             /**
              *  after 10 secs
              */
@@ -276,22 +295,7 @@ var birdAction = {
                 clearInterval( dragonEntryInterval );
                 return;
             }
-            if( birdAction.body.style.backgroundImage != "url( 'images/lightening-img.gif' )" ){
-                birdAction.body.style.backgroundImage = "url( 'images/lightening-img.gif' )";
-            }
-            if( false === $( birdAction.content ).children().hasClass( 'dragon-entry-green') ){
-                $( birdAction.imgTags, {
-                    src: 'images/dragon-entry-green.gif',
-                    class: 'dragon-entry-green'
-                } ).animate(
-                    {
-                        'position': 'absolute',
-                        'top': '0px',
-                        'right': '350px'
-                    }, 10000
-                )
-                    .prependTo( birdAction.content );
-            }
+
 
         },1000 );
 
@@ -978,8 +982,8 @@ var birdAction = {
                         .animate(
                             {
                                 'position': 'absolute',
-                                'top': '-240px',
-                                'left': '-900px'
+                                'top': '-180px',
+                                'left': '-945px'
                             }, 2000
                         )
                         .fadeOut( 5000 );
@@ -999,8 +1003,8 @@ var birdAction = {
                         .animate(
                             {
                                 'position': 'absolute',
-                                'top': '-160px',
-                                'left': '-170px'
+                                'top': '-180px',
+                                'left': '-10px'
                             }, 2000
                         )
                         .fadeOut( 5000 );
@@ -1020,7 +1024,7 @@ var birdAction = {
                         .animate(
                             {
                                 'position': 'absolute',
-                                'top': '400px',
+                                'top': '350px',
                                 'right': '200px'
                             }, 5000
                         )
