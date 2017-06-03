@@ -404,6 +404,7 @@ body {
     background-size: 130px;
     background-repeat: no-repeat;
     background-position: center;
+    display: block;
 }
 
 .orb-game-start span{

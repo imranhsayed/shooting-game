@@ -15,7 +15,7 @@
         <div id="before-game-start" class="before-game-start">
             <div class="start-button">
                 <button class="level1-start-button">
-                    <div class="orb-game-start"><span>Start</span></div>
+                    <span class="orb-game-start"><span>Start</span></span>
                 </button>
             </div>
             <h1>Bird Shooting</h1>
