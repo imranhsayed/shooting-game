@@ -35,12 +35,15 @@ var birdShootingGame = (function( $ ) {
         birdsMissed: null,
         randLeft: null,
         randRight: null,
-        birdInterval: 100,
         birdNoToSend: 0,
         randRange: 10,
         birdSpeed: 10000,
         health: 200,
+        birdInterval: 100,
+        birdEntryInterval: false,
         dragonEntryInterval: null,
+        newDragonEntryInterval: false,
+        scoreIntervalCheck: false,
 
         /**
          * Queries elements from the DOM and stores their value in reusable variables
@@ -54,6 +57,7 @@ var birdShootingGame = (function( $ ) {
             game.setEl();
             game.events();
             game.mainContent.classList.add( 'display' );
+            game.loadingEl.classList.add( 'display' );
         },
 
         /**
@@ -74,6 +78,7 @@ var birdShootingGame = (function( $ ) {
          */
         setEl: function(){
             game.body = document.querySelector( 'body' );
+            game.loadingEl = document.querySelector( '.loading' );
             game.mainContent = document.querySelector( '.main-content' );
             game.header = document.querySelector( '.header' );
             game.mainSection = document.getElementById( 'main-section' );
@@ -96,6 +101,13 @@ var birdShootingGame = (function( $ ) {
             game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
             game.pTags = '<p>';
             game.imgTags = '<img>';
+        },
+
+        clearAllInterval : function () {
+            clearInterval( game.scoreIntervalCheck );
+            clearInterval( game.dragonEntryInterval );
+            clearInterval( game.birdEntryInterval );
+            clearInterval( game.newDragonEntryInterval );
         },
 
         /**
@@ -130,7 +142,7 @@ var birdShootingGame = (function( $ ) {
              */
             game.randRange = game.birdNestDivNo;
             game.birdSpeed = 20000;
-            game.requiredScore = game.birdNoToSend * 100 ;
+            game.requiredScore = game.birdNoToSend * 10 ;
             game.gameTimer = 90; // In secs.
 
             game.createRain();
@@ -163,7 +175,7 @@ var birdShootingGame = (function( $ ) {
         startLevelTwo: function(){
             var birdsDivs = $( '.birds-div' ),
                 timeLeftP = document.querySelector( '.time-left' );
-
+            game.clearAllInterval();
             game.stopRain();
             game.body.style.backgroundImage = "url( 'images/landscape.gif' )";
             game.backgroundMusicLevel1.pause();
@@ -198,8 +210,8 @@ var birdShootingGame = (function( $ ) {
              */
             game.randRange = game.birdNestDivNo;
             game.birdSpeed = 15000;
-            game.requiredScore = game.birdNoToSend * 70;
-            game.gameTimer = 120; // in secs
+            game.requiredScore = game.birdNoToSend * 10; // 70
+            game.gameTimer = 100; // in secs 120
             game.birdImgSourceLeft = 'images/level2-bird-left.gif';
             game.birdImgSourceRight = 'images/level2-bird-right.gif';
             game.mainSection.classList.remove( 'display' );
@@ -233,7 +245,7 @@ var birdShootingGame = (function( $ ) {
             var progress, headerChildren = $( 'header' ).children(),
                 contentHasLeftBirdNestClass,
                 nestDivHasClassDisplay;
-
+            game.clearAllInterval();
             game.gameTimer = 90;
             contentHasLeftBirdNestClass = $( game.content ).find( 'div' ).first().hasClass( 'left-bird-nest' );
             nestDivHasClassDisplay = $( game.leftBirdNestDiv ).hasClass( 'display' );
@@ -397,18 +409,18 @@ var birdShootingGame = (function( $ ) {
                 }
             }
 
-            var interval = setInterval( function () {
+            game.birdEntryInterval = setInterval( function () {
                 if ( birdIntervalCounter > game.birdNoToSend ){
-                    clearInterval( interval );
+                    clearInterval( game.birdEntryInterval );
                     return;
                 }
                 if ( 0 === game.timer ){
-                    clearInterval( interval );
+                    clearInterval( game.birdEntryInterval );
                     return;
                 }
                 if ( ( game.requiredScore <=  game.score ) &&
                     ( 0 < game.timer ) )  {
-                    clearInterval( interval );
+                    clearInterval( game.birdEntryInterval );
                     return;
                 }
 
@@ -654,7 +666,7 @@ var birdShootingGame = (function( $ ) {
              * Generate drops.
              */
             for ( var i = 1; i < game.nbRainDrop; i++ ) {
-                dropLeft = getRandomNumber( 0, 1600 );
+                dropLeft = getRandomNumber( 0, window.innerWidth );
                 dropTop = getRandomNumber( -1000, 1400 );
                 id = 'drop' + i;
 
@@ -690,7 +702,7 @@ var birdShootingGame = (function( $ ) {
          */
         gameTimerLevel1: function ( ) {
             var timeLeftP = document.querySelector( '.time-left' ),
-                runTimer, scoreIntervalCheck, scoreAchieved, scoreNotAchieved;
+                runTimer, scoreAchieved, scoreNotAchieved;
 
             game.timer = game.gameTimer;
             document.querySelector( '.target-score' ).innerText = String( game.requiredScore );
@@ -713,11 +725,11 @@ var birdShootingGame = (function( $ ) {
                 if ( scoreAchieved || scoreNotAchieved ){
                     $( timeLeftP ).remove( 'twenty-sec-to-go nine-sec-to-go' );
                     game.gameOverLevel1( game.timer );
-                    clearInterval( scoreIntervalCheck );
+                    clearInterval( game.scoreIntervalCheck );
                 }
             };
 
-            scoreIntervalCheck = setInterval( runTimer, 1000 );
+            game.scoreIntervalCheck = setInterval( runTimer, 1000 );
         },
 
         /**
@@ -726,46 +738,43 @@ var birdShootingGame = (function( $ ) {
          * @return {void}
          */
         gameTimerLevel2: function () {
-            var timeLeftP = document.querySelector( '.time-left' ), scoreIntervalCheck;
 
+            var timeLeftP = document.querySelector( '.time-left' ),
+                runTimer, scoreIntervalCheck, scoreAchieved, scoreNotAchieved, runTimerInterval;
+            clearInterval( game.scoreIntervalCheck );
+            runTimerInterval = 1000;
             game.timer = game.gameTimer;
-            timeLeftP.innerText =  game.timer;
-            document.querySelector( '.target-score ' ).innerText = game.requiredScore;
+            timeLeftP.innerText =  String( game.timer );
+            document.querySelector( '.target-score' ).innerText = String( game.requiredScore );
+            if( $( timeLeftP ).hasClass( 'twenty-sec-to-go' ) ){
+                timeLeftP.classList.remove( 'twenty-sec-to-go' );
+            }
+            if( $( timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
+                timeLeftP.classList.remove( 'nine-sec-to-go' );
+            }
+            runTimer = function () {
 
-            scoreIntervalCheck = setInterval( function () {
-                if( 0 < game.timer ){
-                    game.timer = game.timer - 1;
-                    timeLeftP.innerText =  game.timer;
-                }
+                timeLeftP.innerText = String( --game.timer );
+                scoreAchieved = game.requiredScore <= game.score && 0 <= game.timer;
+                scoreNotAchieved = game.requiredScore > game.score && 0 === game.timer;
 
-                if( $( timeLeftP ).hasClass( 'twenty-sec-to-go' ) ){
-                    timeLeftP.classList.remove( 'twenty-sec-to-go' );
-                }
-                if( $( timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
-                    timeLeftP.classList.remove( 'nine-sec-to-go' );
-                }
-                if( 20 === game.timer ){
+                if ( 19 === game.timer ){
                     timeLeftP.classList.add( 'twenty-sec-to-go' );
                 }
-                if( 10 === game.timer ){
+
+                if ( 9 === game.timer ){
                     timeLeftP.classList.remove( 'twenty-sec-to-go' );
                     timeLeftP.classList.add( 'nine-sec-to-go' );
                 }
-                if( 0 === game.timer ){
-                    if( $( timeLeftP ).hasClass( 'twenty-sec-to-go') ){
-                        timeLeftP.classList.remove( 'twenty-sec-to-go' );
-                    }
-                    timeLeftP.classList.remove( 'nine-sec-to-go' );
-                    game.gameOverLevel2( game.timer );
-                    clearInterval( scoreIntervalCheck );
-                    return;
-                }
-                if( ( game.requiredScore <=  game.score ) && ( 0 <= game.timer ) )  {
-                    game.gameOverLevel2( game.timer );
-                    clearInterval( scoreIntervalCheck );
-                }
 
-            },1000);
+                if ( scoreAchieved || scoreNotAchieved ){
+                    $( timeLeftP ).remove( 'twenty-sec-to-go nine-sec-to-go' );
+                    game.gameOverLevel2( game.timer );
+                    clearInterval( game.scoreIntervalCheck );
+                }
+            };
+
+            game.scoreIntervalCheck = setInterval( runTimer, runTimerInterval );
         },
 
         /**
@@ -777,18 +786,19 @@ var birdShootingGame = (function( $ ) {
          */
         gameTimerLevel3: function () {
             var timeLeftP = document.querySelector( '.time-left' );
+
             game.timer = game.gameTimer;
-            var scoreIntervalCheck = setInterval( function () {
+            if( $( timeLeftP ).hasClass( 'twenty-sec-to-go') ){
+                timeLeftP.classList.remove( 'twenty-sec-to-go' );
+            }
+            if( $( timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
+                timeLeftP.classList.remove( 'nine-sec-to-go' );
+            }
+             game.scoreIntervalCheck = setInterval( function () {
 
                 if( 0 < game.timer ){
                     game.timer = game.timer - 1;
                     timeLeftP.innerText =  game.timer;
-                }
-                if( $( timeLeftP ).hasClass( 'twenty-sec-to-go') ){
-                    timeLeftP.classList.remove( 'twenty-sec-to-go' );
-                }
-                if( $( timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
-                    timeLeftP.classList.remove( 'nine-sec-to-go' );
                 }
                 if( 20 === game.timer ){
                     timeLeftP.classList.add( 'twenty-sec-to-go' );
@@ -803,7 +813,7 @@ var birdShootingGame = (function( $ ) {
                     }
                     timeLeftP.classList.remove( 'nine-sec-to-go' );
                     game.gameOverLevel3( game.timer );
-                    clearInterval( scoreIntervalCheck );
+                    clearInterval( game.scoreIntervalCheck );
                     return;
                 }
 
@@ -825,7 +835,7 @@ var birdShootingGame = (function( $ ) {
 
                 if( ( 0 ===  game.health.value ) && ( 0 < game.timer ) ){
                     game.gameOverLevel3( game.timer );
-                    clearInterval( scoreIntervalCheck );
+                    clearInterval( game.scoreIntervalCheck );
                 }
             },1000);
         },
@@ -1004,6 +1014,7 @@ var birdShootingGame = (function( $ ) {
             timeTookToFinish = game.gameTimer - game.timer;
 
             if( ( 0 === game.health.value ) && ( 0 < game.timer ) )  {
+                $( '.dragon-final' ).remove();
                 game.originalCursor();
                 game.gameOverScoreDiv.textContent = "";
                 game.level3StartButton.classList.add( 'display' );
@@ -1034,6 +1045,7 @@ var birdShootingGame = (function( $ ) {
                 setTimeout( postDisplayCredits, 40000 );
 
             } else {
+                $( '.dragon-final' ).remove();
                 couldNotScoreEl = document.createElement( 'p' );
                 couldNotScoreText = document.createTextNode( 'Sorry you could not put the Dragon to Sleep in Required Time. Please Try Again' );
                 dragonKillingTipEl = document.createElement( 'p' );
@@ -1066,10 +1078,9 @@ var birdShootingGame = (function( $ ) {
 
         gameRestartLevel2: function () {
             game.score = 0;
-            game.gameTimer = 0;
             game.audioBirdFlap.play();
             game.gameOverdiv.classList.add( 'display' );
-            game.startLevelTwo();
+
         },
 
         /**
@@ -1081,8 +1092,9 @@ var birdShootingGame = (function( $ ) {
         newDragonEntry: function () {
             var timeInterval = 0,
                 dragonEntryGreenImg = $( '.dragon-entry-green' ),
-                dragonImgTags = '<img></img>',
-                newDragonEntryInterval = setInterval( function () {
+                dragonImgTags = '<img></img>';
+
+                game.newDragonEntryInterval = setInterval( function () {
                     timeInterval += 1;
                     /**
                      * After 15 secs from the start of Level3 Game
@@ -1223,7 +1235,7 @@ var birdShootingGame = (function( $ ) {
                     }
                     if ( timeInterval > 80 ){
                         $( '.dragon-final' ).remove();
-                        clearInterval( newDragonEntryInterval );
+                        clearInterval( game.newDragonEntryInterval );
                     }
                 }, 1000 );
         },
@@ -1269,4 +1281,6 @@ var birdShootingGame = (function( $ ) {
 
 })( jQuery );
 
-birdShootingGame.init();
+window.onload = function() {
+    birdShootingGame.init();
+};

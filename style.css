@@ -48,18 +48,24 @@ body {
 Common css
  */
 
+.loading{
+    color: #e2ff37;
+    text-align: center;
+}
 p{
     text-shadow: 2px 2px black;
 }
 
 .main-content{
     position: absolute;
+    width: 100%;
 }
 button {
     font-family: 'Bangers';
     margin: 10px 0;
     padding: 10px 10px 10px 10px;
     font-size: 36px;
+    outline: none;
 }
 .display{
     display: none;
@@ -177,8 +183,8 @@ h1{
 Header
  */
 .header{
-    width: 1436px;
-    /*min-height: 100px;*/
+    width: 100%;
+    margin:0 auto;
     color: #fff;
     overflow: hidden;
     text-align: center;

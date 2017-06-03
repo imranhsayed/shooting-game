@@ -11,6 +11,7 @@
 </head>
 <body>
     <section id="main-section" class="rain">
+        <h2 class="loading">Loading...</h2>
 
         <div id="before-game-start" class="before-game-start">
             <div class="start-button">
@@ -104,36 +105,62 @@
     </div>
 
     <div class="audio-div">
-        <audio id="gun-shot-audio" >
+        <audio id="gun-shot-audio" preload="" >
             <source src="sounds/Gunsound.mp3" type="audio/mp3">
         </audio>
-        <audio id="bird-killed-sound">
-            <source src="sounds/bird-killed-sound.mp3" type="audio/mp3">
+        <audio id="bird-killed-sound" preload="" >
+            <source src="sounds/bird-killed-sound.mp3" type="audio/mp3" preload="" >
         </audio>
-        <audio id="bird-flapping" loop >
+        <audio id="bird-flapping" preload="" loop >
             <source src="sounds/bird-flapping.mp3" type="audio/mp3">
         </audio>
-        <audio id="rain-falling">
+        <audio id="rain-falling" preload="" >
             <source src="sounds/Rain-fall-background.mp3" type="audio/mp3">
         </audio>
-        <audio id="music-before-start" loop autoplay >
+        <audio id="music-before-start" loop autoplay preload="" >
             <source src="sounds/Music-before-game-start.mp3" type="audio/mp3">
         </audio>
-        <audio id="man-scream">
+        <audio id="man-scream" preload="" >
             <source src="sounds/man-scream.mp3" type="audio/mp3">
         </audio>
-        <audio id="background-music-level2">
+        <audio id="background-music-level2" preload="" >
             <source src="sounds/background-music-level2.mp3" type="audio/mp3">
         </audio>
-        <audio id="background-music-level3">
+        <audio id="background-music-level3" preload="" >
             <source src="sounds/background-music-level3.mp3" type="audio/mp3">
         </audio>
-        <audio id="thunderstorm-clip">
+        <audio id="thunderstorm-clip" preload="" >
             <source src="sounds/loud-thunder.mp3" type="audio/mp3">
         </audio>
-        <audio id="angry-dragon">
+        <audio id="angry-dragon" preload="" >
             <source src="sounds/angry-dragon.mp3" type="audio/mp3">
         </audio>
+    </div>
+
+    <div class="all-images display" >
+        <img src="images/blood-splatter.jpg" alt="" class="">
+        <img src="images/dark-castle.gif" alt="" class="">
+        <img src="images/dragon-entry-brown.png" alt="" class="">
+        <img src="images/dragon-entry-dark-green.gif" alt="" class="">
+        <img src="images/dragon-entry-green.gif" alt="" class="">
+        <img src="images/dragon-final.gif" alt="" class="">
+        <img src="images/dragon-fire-left.gif" alt="" class="">
+        <img src="images/dragon-fire-right.gif" alt="" class="">
+        <img src="images/dragon-fire.gif" alt="" class="">
+        <img src="images/dragon-sleeping.gif" alt="" class="">
+        <img src="images/flying-birds-multi.gif" alt="" class="">
+        <img src="images/game-start-background.jpg" alt="" class="">
+        <img src="images/giphy-bird-left.gif" alt="" class="">
+        <img src="images/giphy-bird-right.gif" alt="" class="">
+        <img src="images/gun-aim.png" alt="" class="">
+        <img src="images/landscape.gif" alt="" class="">
+        <img src="images/level1-background.jpg" alt="" class="">
+        <img src="images/level2-bird-left.gif" alt="" class="">
+        <img src="images/level2-bird-right.gif" alt="" class="">
+        <img src="images/lightening-img.gif" alt="" class="">
+        <img src="images/man-flying.gif" alt="" class="">
+        <img src="images/manshooting.png" alt="" class="">
+        <img src="images/orb-game-start.gif-c200" alt="" class="">
     </div>
 
 <script src="jquery.js"></script>
