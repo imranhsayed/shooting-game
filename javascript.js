@@ -4,6 +4,7 @@
  */
 
 var birdShootingGame = (function( $ ) {
+    'use strict';
 
     var game = {
 
@@ -52,8 +53,7 @@ var birdShootingGame = (function( $ ) {
         init: function () {
             game.setEl();
             game.events();
-            document.querySelector( '.main-content' ).classList.add( 'display' );
-            game.backgroundMusicLevel1.play();
+            game.mainContent.classList.add( 'display' );
         },
 
         /**
@@ -62,11 +62,6 @@ var birdShootingGame = (function( $ ) {
          * @return {void}
          */
         events: function() {
-            game.backgroundMusicLevel1.addEventListener( 'ended', function() {
-                this.currentTime = 0;
-                this.play();
-            });
-
             $( game.level1StartButton ).on( 'click', game.startLevelOne );
             $( game.level2StartButton ).on( 'click', game.startLevelTwo );
             $( game.body ).on( 'mousemove', game.imgFollowCursor );
@@ -79,6 +74,7 @@ var birdShootingGame = (function( $ ) {
          */
         setEl: function(){
             game.body = document.querySelector( 'body' );
+            game.mainContent = document.querySelector( '.main-content' );
             game.header = document.querySelector( '.header' );
             game.mainSection = document.getElementById( 'main-section' );
             game.content = document.querySelector( '.content' );
@@ -118,15 +114,13 @@ var birdShootingGame = (function( $ ) {
          */
         startLevelOne: function(){
             /**
-             * meaning after how many seconds next bird will be sent
-             * @type {number}
+             * Meaning after how many seconds next bird will be sent.
              */
             game.birdInterval = 3000;
 
             /**
              * birdNoToSend is in multiples of 2 .
              * If you choose 2 meaning 4 birds will be sent
-             * @type {number}
              */
             game.birdNoToSend = 30;
             game.birdNestDivNo = 30;
@@ -136,7 +130,7 @@ var birdShootingGame = (function( $ ) {
              */
             game.randRange = game.birdNestDivNo;
             game.birdSpeed = 20000;
-            game.requiredScore = game.birdNoToSend * 10 ;
+            game.requiredScore = game.birdNoToSend * 100 ;
             game.gameTimer = 90; // In secs.
 
             game.createRain();
@@ -175,16 +169,15 @@ var birdShootingGame = (function( $ ) {
             game.backgroundMusicLevel1.pause();
             game.backgroundMusicLevel2.play();
             game.gameOverScoreDiv.textContent = "";
-            document.querySelector( '.target-score ' ).innerText = 0;
+            document.querySelector( '.target-score ' ).innerText = String( 0 );
             game.gameTimer = 0;
             game.score = 0; // update score back to zero for level two
             game.updateScore();
-            if( $( timeLeftP ).hasClass( 'nine-sec-to-go') ){
-                timeLeftP.classList.remove( 'nine-sec-to-go' );
-            }
-            if ( birdsDivs.children().length ){
-                birdsDivs.remove();
-            }
+            $( timeLeftP ).removeClass( 'nine-sec-to-go' );
+
+            birdsDivs.each( function () {
+                $( this ).remove();
+            } );
 
             /**
              * meaning after how many seconds next bird will be sent
@@ -205,7 +198,7 @@ var birdShootingGame = (function( $ ) {
              */
             game.randRange = game.birdNestDivNo;
             game.birdSpeed = 15000;
-            game.requiredScore = game.birdNoToSend * 50;
+            game.requiredScore = game.birdNoToSend * 70;
             game.gameTimer = 120; // in secs
             game.birdImgSourceLeft = 'images/level2-bird-left.gif';
             game.birdImgSourceRight = 'images/level2-bird-right.gif';
@@ -237,11 +230,9 @@ var birdShootingGame = (function( $ ) {
          * @return {void}
          */
         startLevelThree: function() {
-            var progress,
-                headerChildren = $( 'header' ).children(),
+            var progress, headerChildren = $( 'header' ).children(),
                 contentHasLeftBirdNestClass,
-                nestDivHasClassDisplay,
-                dragonEntryGreen;
+                nestDivHasClassDisplay;
 
             game.gameTimer = 90;
             contentHasLeftBirdNestClass = $( game.content ).find( 'div' ).first().hasClass( 'left-bird-nest' );
@@ -285,6 +276,8 @@ var birdShootingGame = (function( $ ) {
             game.angryDragonScream.play();
             game.content.style.float = 'right';
 
+            game.lighteningIntervalCounter = 0;
+
             /**
              * Interval for Dragon entry an exit
              * @type {number}
@@ -293,9 +286,9 @@ var birdShootingGame = (function( $ ) {
         },
 
         dragonEntry: function () {
-            var lighteningIntervalCounter = 0;
+            var progress,dragonEntryGreen ;
 
-            lighteningIntervalCounter = lighteningIntervalCounter + 1;
+            game.lighteningIntervalCounter++;
 
             if ( game.body.style.backgroundImage != "url( 'images/lightening-img.gif' )" ){
                 game.body.style.backgroundImage = "url( 'images/lightening-img.gif' )";
@@ -317,7 +310,7 @@ var birdShootingGame = (function( $ ) {
             /**
              * After 10 secs.
              */
-            if ( lighteningIntervalCounter > 10 ){
+            if ( game.lighteningIntervalCounter > 10 ){
                 game.changeCursor();
                 game.gunImage.classList.remove( 'display' );
                 game.body.style.backgroundImage = "url( 'images/dark-castle.gif' )";
@@ -377,7 +370,7 @@ var birdShootingGame = (function( $ ) {
                 leftDiv = document.querySelector( '.left-bird-nest' ),
                 rightDiv = document.querySelector( '.right-bird-nest' );
 
-            document.querySelector( '.main-content' ).classList.remove( 'display' );
+            game.mainContent.classList.remove( 'display' );
             game.audioBirdFlap.play();
             game.button.classList.add( 'display' );
             game.changeCursor();
@@ -604,7 +597,7 @@ var birdShootingGame = (function( $ ) {
 
         updateScore: function () {
             game.scoreBox = document.querySelector( '.score-box' );
-            game.scoreBox.innerText = game.score;
+            game.scoreBox.innerText = String( game.score );
         },
 
         changeCursor: function () {
@@ -647,43 +640,38 @@ var birdShootingGame = (function( $ ) {
         },
 
         createRain: function () {
-            var drop;
-            /**
-             * number of drops created.
-             * @type {number}
-             */
-            game.nbRainDrop = 300;
+            var drop, getRandomNumber, dropLeft, dropTop, id,
+                rainDiv = $( '.rain' );
 
             /**
-             * function to generate a random number range.
-             * @param minNum
-             * @param maxNum
-             * @return {*}
+             * Generate a random number.
              */
-            function randRange( minNum, maxNum ) {
-                return ( Math.floor( Math.random() * ( maxNum - minNum + 1 ) )
-                + minNum );
-            }
-            /**
-             * function to generate drops
-             */
-            for( i = 1; i < game.nbRainDrop ; i++ ) {
-                var dropLeft = randRange( 0, 1600 );
-                var dropTop = randRange( -1000, 1400 );
+            getRandomNumber = function( minNum, maxNum ) {
+                return Math.floor( Math.random() * ( maxNum - minNum + 1 ) ) + minNum;
+            };
 
-                $( '.rain' ).append( '<div class="drop" id="drop'+i+'"></div>' );
-                drop = $( '#drop' + i );
+            /**
+             * Generate drops.
+             */
+            for ( var i = 1; i < game.nbRainDrop; i++ ) {
+                dropLeft = getRandomNumber( 0, 1600 );
+                dropTop = getRandomNumber( -1000, 1400 );
+                id = 'drop' + i;
+
+                rainDiv.append( '<div class="drop" id="' + id + '"></div>' );
+                drop = $( '#' + id );
                 drop.css( 'left', dropLeft );
                 drop.css( 'top', dropTop );
             }
         },
 
         stopRain: function () {
-            if ( ! $(game.mainSection).hasClass( 'rain' ) ){
+            if ( ! $( game.mainSection ).hasClass( 'rain' ) ){
                 game.mainSection.classList.remove( 'rain' );
             }
-            if( 0 !== $( game.mainSection ).find( 'div.drop' ).length ){
-                for( var i = 1; i < game.nbRainDrop; i++ ){
+
+            if ( $( game.mainSection ).find( 'div.drop' ).length ){
+                for ( var i = 1; i < game.nbRainDrop; i++ ) {
                     document.getElementById( 'drop' + i  ).remove();
                 }
             }
@@ -701,38 +689,35 @@ var birdShootingGame = (function( $ ) {
          * @return {void}
          */
         gameTimerLevel1: function ( ) {
-            var timeLeftP = document.querySelector( '.time-left' );
+            var timeLeftP = document.querySelector( '.time-left' ),
+                runTimer, scoreIntervalCheck, scoreAchieved, scoreNotAchieved;
 
             game.timer = game.gameTimer;
-            document.querySelector( '.target-score ' ).innerText = game.requiredScore;
-            var scoreIntervalCheck = setInterval( function () {
+            document.querySelector( '.target-score' ).innerText = String( game.requiredScore );
 
-                game.timer = game.timer - 1;
-                timeLeftP.innerText =  game.timer ;
+            runTimer = function () {
 
-                if( 19 === game.timer ){
+                timeLeftP.innerText = String( --game.timer );
+                scoreAchieved = game.requiredScore <= game.score && 0 <= game.timer;
+                scoreNotAchieved = game.requiredScore > game.score && 0 === game.timer;
+
+                if ( 19 === game.timer ){
                     timeLeftP.classList.add( 'twenty-sec-to-go' );
                 }
-                if( 9 === game.timer ){
+
+                if ( 9 === game.timer ){
                     timeLeftP.classList.remove( 'twenty-sec-to-go' );
                     timeLeftP.classList.add( 'nine-sec-to-go' );
                 }
-                if( ( game.requiredScore >  game.score )
-                    && ( 0 === game.timer ) ){
-                    if( $( timeLeftP ).hasClass( 'twenty-sec-to-go' ) ){
-                        timeLeftP.classList.remove( 'twenty-sec-to-go' );
-                    }
-                    timeLeftP.classList.remove( 'nine-sec-to-go' );
-                    game.gameOverLevel1( game.timer );
-                    clearInterval( scoreIntervalCheck );
-                    return;
-                }
-                if( ( game.requiredScore <=  game.score )
-                    && ( 0 <= game.timer ) ) {
+
+                if ( scoreAchieved || scoreNotAchieved ){
+                    $( timeLeftP ).remove( 'twenty-sec-to-go nine-sec-to-go' );
                     game.gameOverLevel1( game.timer );
                     clearInterval( scoreIntervalCheck );
                 }
-            }, 1000 );
+            };
+
+            scoreIntervalCheck = setInterval( runTimer, 1000 );
         },
 
         /**
@@ -858,7 +843,7 @@ var birdShootingGame = (function( $ ) {
         gameOverLevel1: function ( birdManShot ) {
             var timeTookToFinish = game.gameTimer - game.timer,
                 manScreamAudio = document.getElementById( 'man-scream' ),
-                couldNotScoreEl,couldNotScoreText;
+                couldNotScoreEl, couldNotScoreText;
 
             /**
              * Stop Rain Music
@@ -882,13 +867,13 @@ var birdShootingGame = (function( $ ) {
                 game.gameOverdiv.classList.remove( 'display' );
 
             } else {
-                if( 1 === birdManShot ){
+                if ( 1 === birdManShot ){
                     game.score = 0;
                     game.gameOverScoreDiv.classList.add( 'birdman-came' );
                     manScreamAudio.play();
 
                     $( game.pTags, {
-                        text: 'Oops! You killed the BIRDMAN . Any progress Made is lost. Please go back to the home screen and restart.' +
+                        text: 'Oops! You killed the BIRDMAN. Any progress made is lost. Please go back to the home screen and restart.' +
                         'Your Scored Points have changed to :- ',
                         class: 'bird-man-killed',
                         color: 'red'
@@ -905,25 +890,22 @@ var birdShootingGame = (function( $ ) {
                         color: 'black'
                     } ).prependTo( game.gameOverScoreDiv );
 
-                    $( game.level2StartButton )
-                        .replaceWith( game.level1StartButton );
+                    $( game.level2StartButton ).replaceWith( game.level1StartButton );
                     $( game.level1StartButton ).on( 'click', game.gameRestartLevel1 );
                     game.level1StartButton.classList.remove( 'display' );
                     game.gameOverdiv.classList.remove( 'display' );
-                } else {
-                    if( false === $( game.gameOverScoreDiv ).hasClass( 'birdman-came' ) ){
-                        game.gameOverScoreDiv.innerText = 'You Scored ' + game.score
-                            + ' pts ' + 'in ' + game.gameTimer + ' secs';
-                        couldNotScoreEl = document.createElement( 'p' );
-                        couldNotScoreText = document.createTextNode('Sorry you could not score the required target. Please Try Again');
-                        couldNotScoreEl.appendChild( couldNotScoreText );
-                        game.gameOverScoreDiv.appendChild( couldNotScoreEl );
-                        $( game.level2StartButton )
-                            .replaceWith( game.level1StartButton );
-                        $( game.level1StartButton ).on( 'click', game.gameRestartLevel1 );
-                        game.level1StartButton.classList.remove( 'display' );
-                        game.gameOverdiv.classList.remove( 'display' );
-                    }
+
+                } else if ( ! $( game.gameOverScoreDiv ).hasClass( 'birdman-came' ) ) {
+                    game.gameOverScoreDiv.innerText = 'You Scored ' + game.score
+                        + ' pts ' + 'in ' + game.gameTimer + ' secs';
+                    couldNotScoreEl = document.createElement( 'p' );
+                    couldNotScoreText = document.createTextNode( 'Sorry you could not score the required target. Please Try Again' );
+                    couldNotScoreEl.appendChild( couldNotScoreText );
+                    game.gameOverScoreDiv.appendChild( couldNotScoreEl );
+                    $( game.level2StartButton ).replaceWith( game.level1StartButton );
+                    $( game.level1StartButton ).on( 'click', game.gameRestartLevel1 );
+                    game.level1StartButton.classList.remove( 'display' );
+                    game.gameOverdiv.classList.remove( 'display' );
                 }
             }
         },
@@ -937,7 +919,7 @@ var birdShootingGame = (function( $ ) {
          */
         gameOverLevel2: function () {
             var timeTookToFinish = game.gameTimer - game.timer,
-                couldNotScoreEl,couldNotScoreText;
+                couldNotScoreEl,couldNotScoreText, birdTipEl, birdTipText;
 
             /**
              * Stop Rain Music

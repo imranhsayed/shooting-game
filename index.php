@@ -110,13 +110,13 @@
         <audio id="bird-killed-sound">
             <source src="sounds/bird-killed-sound.mp3" type="audio/mp3">
         </audio>
-        <audio id="bird-flapping">
+        <audio id="bird-flapping" loop >
             <source src="sounds/bird-flapping.mp3" type="audio/mp3">
         </audio>
         <audio id="rain-falling">
             <source src="sounds/Rain-fall-background.mp3" type="audio/mp3">
         </audio>
-        <audio id="music-before-start">
+        <audio id="music-before-start" loop autoplay >
             <source src="sounds/Music-before-game-start.mp3" type="audio/mp3">
         </audio>
         <audio id="man-scream">
