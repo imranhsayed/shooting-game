@@ -1,6 +1,3 @@
-/**
- * Created by ghafir on 25/05/17.
- */
 
 var birdAction = {
 
@@ -55,7 +52,6 @@ var birdAction = {
         birdAction.leftBirdNestDiv = document.querySelector( '.left-bird-nest' );
         birdAction.rightBirdNestDiv = document.querySelector( '.right-bird-nest' );
         birdAction.gameOverdiv = document.querySelector( '.game-over' );
-        birdAction.timeLeftP = document.querySelector( '.time-left' );
         birdAction.pTags = '<p></p>';
         birdAction.imgTags = '<img></img>';
         birdAction.audioRainDrop = document.getElementById( 'rain-falling' );
@@ -106,15 +102,15 @@ var birdAction = {
          * If you choose 2 meaning 4 birds will be sent
          * @type {number}
          */
-        birdAction.birdNoToSend = 20;
-        birdAction.birdNestDivNo = 20;
+        birdAction.birdNoToSend = 30;
+        birdAction.birdNestDivNo = 30;
         /*
          * ids to be created from zero up until range
          */
         birdAction.randRange = birdAction.birdNestDivNo;
         birdAction.birdSpeed = 20000;
         birdAction.requiredScore = birdAction.birdNoToSend * 10 ;
-        birdAction.gameTimer = 60; // in secs
+        birdAction.gameTimer = 90; // in secs
 
         birdAction.createRain();
         birdAction.audioRainDrop.play();
@@ -144,7 +140,9 @@ var birdAction = {
      * @return {void}
      */
     startLevelTwo: function(){
-        var birdsDivs = $( '.birds-div' );
+        var birdsDivs = $( '.birds-div' ),
+            timeLeftP = document.querySelector( '.time-left' );
+
 
         birdAction.stopRain();
         birdAction.body.style.backgroundImage = "url( 'images/landscape.gif' )";
@@ -155,8 +153,8 @@ var birdAction = {
         birdAction.gameTimer = 0;
         birdAction.score = 0; // update score back to zero for level two
         birdAction.updateScore();
-        if( $( birdAction.timeLeftP).hasClass( 'nine-sec-to-go') ){
-            birdAction.timeLeftP.classList.remove( 'nine-sec-to-go' );
+        if( $( timeLeftP).hasClass( 'nine-sec-to-go') ){
+            timeLeftP.classList.remove( 'nine-sec-to-go' );
         }
         if ( birdsDivs.children().length ){
             birdsDivs.remove();
@@ -171,15 +169,15 @@ var birdAction = {
          * If you choose 2 meaning 4 birds will be sent
          * @type {number}
          */
-        birdAction.birdNoToSend = 40;
-        birdAction.birdNestDivNo = 40;
+        birdAction.birdNoToSend = 50;
+        birdAction.birdNestDivNo = 50;
         /*
          * ids to be created from zero up until range
          */
         birdAction.randRange = birdAction.birdNestDivNo;
         birdAction.birdSpeed = 15000;
-        birdAction.requiredScore = birdAction.birdNoToSend * 10;
-        birdAction.gameTimer = 90; // in secs
+        birdAction.requiredScore = birdAction.birdNoToSend * 70;
+        birdAction.gameTimer = 120; // in secs
         birdAction.birdImgSourceLeft = 'images/level2-bird-left.gif';
         birdAction.birdImgSourceRight = 'images/level2-bird-right.gif';
         birdAction.mainSection.classList.remove( 'display' );
@@ -594,7 +592,6 @@ var birdAction = {
             $( birdAction.gunImage ).css( 'left', left );
             $( birdAction.gunImage ).css( 'top', top );
         }
-
     },
 
     createRain: function () {
@@ -652,33 +649,34 @@ var birdAction = {
      * @return {void}
      */
     gameTimerLevel1: function ( ) {
+         var timeLeftP = document.querySelector( '.time-left' );
 
-         birdAction.timer = birdAction.gameTimer;
+        birdAction.timer = birdAction.gameTimer;
         document.querySelector( '.target-score ' ).innerText = birdAction.requiredScore;
         var scoreIntervalCheck = setInterval( function () {
 
             birdAction.timer = birdAction.timer - 1;
-            birdAction.timeLeftP.innerText =  birdAction.timer ;
+            timeLeftP.innerText =  birdAction.timer ;
 
             if( 19 === birdAction.timer ){
-                birdAction.timeLeftP.classList.add( 'twenty-sec-to-go' );
+                timeLeftP.classList.add( 'twenty-sec-to-go' );
             }
             if( 9 === birdAction.timer ){
-                birdAction.timeLeftP.classList.remove( 'twenty-sec-to-go' );
-                birdAction.timeLeftP.classList.add( 'nine-sec-to-go' );
+                timeLeftP.classList.remove( 'twenty-sec-to-go' );
+                timeLeftP.classList.add( 'nine-sec-to-go' );
             }
             if( ( birdAction.requiredScore >  birdAction.score )
                 && ( 0 === birdAction.timer ) ){
-                    if( $( birdAction.timeLeftP ).hasClass( 'twenty-sec-to-go' ) ){
-                        birdAction.timeLeftP.classList.remove( 'twenty-sec-to-go' );
+                    if( $( timeLeftP ).hasClass( 'twenty-sec-to-go' ) ){
+                        timeLeftP.classList.remove( 'twenty-sec-to-go' );
                     }
-                    birdAction.timeLeftP.classList.remove( 'nine-sec-to-go' );
+                    timeLeftP.classList.remove( 'nine-sec-to-go' );
                     birdAction.gameOverLevel1( birdAction.timer );
                     clearInterval( scoreIntervalCheck );
                     return;
             }
             if( ( birdAction.requiredScore <=  birdAction.score )
-                && ( 0 < birdAction.timer ) ) {
+                && ( 0 <= birdAction.timer ) ) {
                 birdAction.gameOverLevel1( birdAction.timer );
                 clearInterval( scoreIntervalCheck );
             }
@@ -691,37 +689,39 @@ var birdAction = {
      * @return {void}
      */
     gameTimerLevel2: function () {
+        var timeLeftP = document.querySelector( '.time-left' );
         birdAction.timer = birdAction.gameTimer;
-        birdAction.timeLeftP.innerText =  birdAction.timer;
+        timeLeftP.innerText =  birdAction.timer;
         document.querySelector( '.target-score ' ).innerText = birdAction.requiredScore;
         var scoreIntervalCheck = setInterval( function () {
-
+            if( 0 < birdAction.timer ){
             birdAction.timer = birdAction.timer - 1;
-            birdAction.timeLeftP.innerText =  birdAction.timer;
+            timeLeftP.innerText =  birdAction.timer;
+            }
 
-            if( $( birdAction.timeLeftP ).hasClass( 'twenty-sec-to-go' ) ){
-                birdAction.timeLeftP.classList.remove( 'twenty-sec-to-go' );
+            if( $( timeLeftP ).hasClass( 'twenty-sec-to-go' ) ){
+                timeLeftP.classList.remove( 'twenty-sec-to-go' );
             }
-            if( $( birdAction.timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
-                birdAction.timeLeftP.classList.remove( 'nine-sec-to-go' );
+            if( $( timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
+                timeLeftP.classList.remove( 'nine-sec-to-go' );
             }
-            if( 20 > birdAction.timer ){
-                birdAction.timeLeftP.classList.add( 'twenty-sec-to-go' );
+            if( 20 === birdAction.timer ){
+                timeLeftP.classList.add( 'twenty-sec-to-go' );
             }
-            if( 10 > birdAction.timer ){
-                birdAction.timeLeftP.classList.remove( 'twenty-sec-to-go' );
-                birdAction.timeLeftP.classList.add( 'nine-sec-to-go' );
+            if( 10 === birdAction.timer ){
+                timeLeftP.classList.remove( 'twenty-sec-to-go' );
+                timeLeftP.classList.add( 'nine-sec-to-go' );
             }
             if( 0 === birdAction.timer ){
-                if( $( birdAction.timeLeftP ).hasClass( 'twenty-sec-to-go') ){
-                    birdAction.timeLeftP.classList.remove( 'twenty-sec-to-go' );
+                if( $( timeLeftP ).hasClass( 'twenty-sec-to-go') ){
+                    timeLeftP.classList.remove( 'twenty-sec-to-go' );
                 }
-                birdAction.timeLeftP.classList.remove( 'nine-sec-to-go' );
+                timeLeftP.classList.remove( 'nine-sec-to-go' );
                 birdAction.gameOverLevel2( birdAction.timer );
                 clearInterval( scoreIntervalCheck );
                 return;
             }
-            if( ( birdAction.requiredScore <=  birdAction.score ) && ( 0 < birdAction.timer ) )  {
+            if( ( birdAction.requiredScore <=  birdAction.score ) && ( 0 <= birdAction.timer ) )  {
                 birdAction.gameOverLevel2( birdAction.timer );
                 clearInterval( scoreIntervalCheck );
             }
@@ -736,29 +736,32 @@ var birdAction = {
      * @return {void}
      */
     gameTimerLevel3: function () {
+        var timeLeftP = document.querySelector( '.time-left' );
         birdAction.timer = birdAction.gameTimer;
         var scoreIntervalCheck = setInterval( function () {
 
-            birdAction.timer = birdAction.timer - 1;
-            birdAction.timeLeftP.innerText =  birdAction.timer ;
-            if( $( birdAction.timeLeftP ).hasClass( 'twenty-sec-to-go') ){
-                birdAction.timeLeftP.classList.remove( 'twenty-sec-to-go' );
+            if( 0 < birdAction.timer ){
+                birdAction.timer = birdAction.timer - 1;
+                timeLeftP.innerText =  birdAction.timer;
             }
-            if( $( birdAction.timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
-                birdAction.timeLeftP.classList.remove( 'nine-sec-to-go' );
+            if( $( timeLeftP ).hasClass( 'twenty-sec-to-go') ){
+                timeLeftP.classList.remove( 'twenty-sec-to-go' );
             }
-            if( 20 > birdAction.timer ){
-                birdAction.timeLeftP.classList.add( 'twenty-sec-to-go' );
+            if( $( timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
+                timeLeftP.classList.remove( 'nine-sec-to-go' );
             }
-            if( 10 > birdAction.timer ){
-                birdAction.timeLeftP.classList.remove( 'twenty-sec-to-go' );
-                birdAction.timeLeftP.classList.add( 'nine-sec-to-go' );
+            if( 20 === birdAction.timer ){
+                timeLeftP.classList.add( 'twenty-sec-to-go' );
+            }
+            if( 10 === birdAction.timer ){
+                timeLeftP.classList.remove( 'twenty-sec-to-go' );
+                timeLeftP.classList.add( 'nine-sec-to-go' );
             }
             if( 0 === birdAction.timer ){
-                if( $( birdAction.timeLeftP ).hasClass( 'twenty-sec-to-go') ){
-                    birdAction.timeLeftP.classList.remove( 'twenty-sec-to-go' );
+                if( $( timeLeftP ).hasClass( 'twenty-sec-to-go') ){
+                    timeLeftP.classList.remove( 'twenty-sec-to-go' );
                 }
-                birdAction.timeLeftP.classList.remove( 'nine-sec-to-go' );
+                timeLeftP.classList.remove( 'nine-sec-to-go' );
                 birdAction.gameOverLevel3( birdAction.timer );
                 clearInterval( scoreIntervalCheck );
                 return;
