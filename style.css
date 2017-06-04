@@ -7,6 +7,7 @@ html{
     padding: 0;
 }
 body {
+    height: 100%;
     margin-top: 0;
     background:#0D343A;
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(#000000)  );
@@ -20,10 +21,9 @@ body {
     -ms-user-select: none;
     user-select: none;
 }
-
-/*p, span, body {*/
-    /*font-family: 'Nosifer';*/
-/*}*/
+.body, .header {
+    font-family: 'Chewy';
+}
 
 .drop {
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(rgba(255,255,255,0.6))  );
@@ -347,14 +347,6 @@ CSS for credits game ending
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
-}
-
-body {
-    overflow: hidden;
-}
-
 .wrapper {
     position: absolute;
     top: 100%;
@@ -459,7 +451,33 @@ body {
     font-family: 'Chewy';
 }
 
-.body, .header {
-    font-family: 'Chewy';
+@media only screen and ( max-width: 1024px ) {
+    body, .level1-instructions-right{
+        font-size: 10px;
+    }
+    h1{
+        font-size: 40px;
+    }
+    .gun-image{
+        display: none;
+    }
+    img{
+        width: 60px;
+    }
+    .blood-splat-img{
+        width: 70px;
+    }
+    .gun-aim{
+
+    }
+    .man-bird-image{
+        width: 300px;
+    }
+
+    .bird-game-start-gif img, .dragon-entry-green, .dragon-entry-brown,
+    .dragon-entry-dark-green, .dragon-fire-left, .dragon-fire-right,
+    .dragon-fire, .dragon-final, .sleeping-dragon{
+        width: 200px;
+    }
 }
 
