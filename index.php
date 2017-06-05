@@ -14,14 +14,14 @@
         <audio id="music-before-start" preload="" loop >
             <source src="sounds/background-music-level1.mp3" type="audio/mp3">
         </audio>
+        <audio id="background-music-level3" preload="" >
+            <source src="sounds/background-music-level3.mp3" type="audio/mp3">
+        </audio>
         <audio id="rain-falling" preload="" >
             <source src="sounds/rain-fall-background.mp3" type="audio/mp3">
         </audio>
         <audio id="background-music-level2" preload="" >
             <source src="sounds/background-music-level2.mp3" type="audio/mp3">
-        </audio>
-        <audio id="background-music-level3" preload="" >
-            <source src="sounds/background-music-level3.mp3" type="audio/mp3">
         </audio>
         <audio id="gun-shot-audio" preload="" >
             <source src="sounds/gun-sound.mp3" type="audio/mp3">
@@ -43,6 +43,7 @@
         </audio>
     </div>
     <div class="loading">
+        Please Wait...
     <img src="images/loading.gif" alt="Game Loading. Please wait"  >
     </div>
 

@@ -59,6 +59,7 @@ var birdShootingGame = (function( $ ) {
             game.mainContent.classList.add( 'display' );
             game.loadingEl.classList.add( 'display' );
             game.mainSection.classList.remove( 'display' );
+            game.body.style.minHeight = window.outerHeight;
         },
 
         /**
@@ -92,7 +93,6 @@ var birdShootingGame = (function( $ ) {
             game.leftBirdNestDiv = document.querySelector( '.left-bird-nest' );
             game.rightBirdNestDiv = document.querySelector( '.right-bird-nest' );
             game.gameOverdiv = document.querySelector( '.game-over' );
-            game.audioRainDrop = document.getElementById( 'rain-falling' );
             game.gunShotAudio = document.getElementById( 'gun-shot-audio' );
             game.audioBirdFlap = document.getElementById( 'bird-flapping' );
             game.birdKilledSound = document.getElementById( 'bird-killed-sound' );
@@ -176,6 +176,7 @@ var birdShootingGame = (function( $ ) {
             }, false );
             game.backgroundMusicLevel1.play();
             game.createRain();
+            game.audioRainDrop = document.getElementById( 'rain-falling' );
             game.audioRainDrop.play();
             game.body.classList.add( 'level1-background' );
             document.querySelector( '.before-game-start').classList.add( 'display' );
@@ -1051,6 +1052,7 @@ var birdShootingGame = (function( $ ) {
             timeTookToFinish = game.gameTimer - game.timer;
 
             if( ( 0 === game.health.value ) && ( 0 < game.timer ) )  {
+                $( '.dragon-fire' ).remove();
                 $( '.dragon-final' ).remove();
                 game.originalCursor();
                 game.gameOverScoreDiv.textContent = "";
@@ -1262,8 +1264,8 @@ var birdShootingGame = (function( $ ) {
                             .animate(
                                 {
                                     'position': 'absolute',
-                                    'bottom': '100px',
-                                    'right': '300px'
+                                    'bottom': '80px',
+                                    'right': '200px'
                                 }, 10000
                             )
                             .fadeOut( 9000 );

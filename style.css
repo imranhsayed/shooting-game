@@ -815,6 +815,8 @@ CSS for credits game ending
     background-size: cover;
     overflow:hidden;
     min-height: 100%;
+    position: fixed;
+    top:0;
 }
 .level2-background{
     background: url( "images/landscape.gif" );
@@ -822,7 +824,8 @@ CSS for credits game ending
     background-size: cover;
     overflow:hidden;
     min-height: 100%;
-
+    position: fixed;
+    top:0;
 }
 .level3-background{
     background: url( "images/dark-castle.gif" );
@@ -830,13 +833,20 @@ CSS for credits game ending
     background-size: cover;
     overflow:hidden;
     min-height: 100%;
-
+    position: fixed;
+    top:0;
 }
 .lightening-background{
     background: url( "images/lightening-img.gif" );
     background-repeat: no-repeat;
     background-size: cover;
     overflow:hidden;
-    height: 100%;
-
+    min-height: 100%;
+    position: fixed;
+    top:0;
+}
+body{
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
 }
