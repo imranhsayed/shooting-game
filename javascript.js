@@ -58,6 +58,7 @@ var birdShootingGame = (function( $ ) {
             game.events();
             game.mainContent.classList.add( 'display' );
             game.loadingEl.classList.add( 'display' );
+            alert( 'Welcome ! This game works at its best in landscape mode. Please switch to landscape mode')
         },
 
         /**
@@ -69,6 +70,11 @@ var birdShootingGame = (function( $ ) {
             $( game.level1StartButton ).on( 'click', game.startLevelOne );
             $( game.level2StartButton ).on( 'click', game.startLevelTwo );
             $( game.body ).on( 'mousemove', game.imgFollowCursor );
+            game.backgroundMusicLevel1.addEventListener( 'ended', function() {
+                this.currentTime = 0;
+                this.play();
+            }, false );
+            game.backgroundMusicLevel1.play();
         },
 
         /**
@@ -134,16 +140,16 @@ var birdShootingGame = (function( $ ) {
              * birdNoToSend is in multiples of 2 .
              * If you choose 2 meaning 4 birds will be sent
              */
-            game.birdNoToSend = 30;
-            game.birdNestDivNo = 30;
+            game.birdNoToSend = 50;
+            game.birdNestDivNo = 50;
 
             /*
              * ids to be created from zero up until range.
              */
             game.randRange = game.birdNestDivNo;
             game.birdSpeed = 20000;
-            game.requiredScore = game.birdNoToSend * 10 ;
-            game.gameTimer = 90; // In secs.
+            game.requiredScore = game.birdNoToSend * 110 ;
+            game.gameTimer = 100; // In secs
 
             game.createRain();
             game.audioRainDrop.play();
@@ -202,16 +208,16 @@ var birdShootingGame = (function( $ ) {
              * If you choose 2 meaning 4 birds will be sent
              * @type {number}
              */
-            game.birdNoToSend = 50;
-            game.birdNestDivNo = 50;
+            game.birdNoToSend = 60;
+            game.birdNestDivNo = 60;
 
             /*
              * ids to be created from zero up until range
              */
             game.randRange = game.birdNestDivNo;
             game.birdSpeed = 15000;
-            game.requiredScore = game.birdNoToSend * 10; // 70
-            game.gameTimer = 100; // in secs 120
+            game.requiredScore = game.birdNoToSend * 120;
+            game.gameTimer = 110; // in secs
             game.birdImgSourceLeft = 'images/level2-bird-left.gif';
             game.birdImgSourceRight = 'images/level2-bird-right.gif';
             game.mainSection.classList.remove( 'display' );
@@ -298,7 +304,8 @@ var birdShootingGame = (function( $ ) {
         },
 
         dragonEntry: function () {
-            var progress,dragonEntryGreen ;
+            var progress,dragonEntryGreen ,
+                dragonRightPos = ( window.outerWidth / 4 ) ;
 
             game.lighteningIntervalCounter++;
 
@@ -313,7 +320,7 @@ var birdShootingGame = (function( $ ) {
                     {
                         'position': 'absolute',
                         'top': '0px',
-                        'right': '350px'
+                        'right': dragonRightPos // was orignially set to 350px
                     }, 10000
                 )
                 .prependTo( game.content );
@@ -666,7 +673,7 @@ var birdShootingGame = (function( $ ) {
              * Generate drops.
              */
             for ( var i = 1; i < game.nbRainDrop; i++ ) {
-                dropLeft = getRandomNumber( 0, window.innerWidth );
+                dropLeft = getRandomNumber( 0, window.outerWidth );
                 dropTop = getRandomNumber( -1000, 1400 );
                 id = 'drop' + i;
 
@@ -1148,6 +1155,7 @@ var birdShootingGame = (function( $ ) {
                     if( timeInterval === 32 ){
                         $( '.dragon-entry-dark-green' ).remove();
                         if( false === $( game.content ).children().hasClass( 'dragon-fire-left' ) ){
+                            var dragFireLeftRightPos = window.outerWidth/1.5;
                             $( dragonImgTags, {
                                 src: 'images/dragon-fire-left.gif',
                                 class: 'dragon-fire-left'
@@ -1157,8 +1165,8 @@ var birdShootingGame = (function( $ ) {
                                 .animate(
                                     {
                                         'position': 'absolute',
-                                        'top': '-180px',
-                                        'left': '-945px'
+                                        'top': 0,
+                                        'right': dragFireLeftRightPos
                                     }, 2000
                                 )
                                 .fadeOut( 5000 );
@@ -1169,6 +1177,7 @@ var birdShootingGame = (function( $ ) {
                     if( timeInterval === 40 ){
                         $( '.dragon-fire-left' ).remove();
                         if( false === $( game.content ).children().hasClass( 'dragon-fire-right' ) ){
+                            var dragFireRightBotPos = window.outerHeight/4.2;
                             $( dragonImgTags, {
                                 src: 'images/dragon-fire-right.gif',
                                 class: 'dragon-fire-right'
@@ -1178,8 +1187,8 @@ var birdShootingGame = (function( $ ) {
                                 .animate(
                                     {
                                         'position': 'absolute',
-                                        'top': '-180px',
-                                        'left': '-10px'
+                                        'bottom': dragFireRightBotPos,
+                                        'right': 0
                                     }, 2000
                                 )
                                 .fadeOut( 5000 );
@@ -1199,7 +1208,7 @@ var birdShootingGame = (function( $ ) {
                                 .animate(
                                     {
                                         'position': 'absolute',
-                                        'top': '350px',
+                                        'top': '120px',
                                         'right': '200px'
                                     }, 5000
                                 )
@@ -1223,8 +1232,8 @@ var birdShootingGame = (function( $ ) {
                                 .animate(
                                     {
                                         'position': 'absolute',
-                                        'bottom': '300px',
-                                        'right': '800px'
+                                        'bottom': '100px',
+                                        'right': '400px'
                                     }, 10000
                                 )
                                 .fadeOut( 9000 );

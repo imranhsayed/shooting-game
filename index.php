@@ -22,6 +22,9 @@
             <h1>Bird Shooting</h1>
             <div class="level1-instructions-right wrapper">
                 <h1>Instructions</h1>
+                <p>This game works at its best in landscape mode.</p>
+                <p>So if you are using a mobile device or tablet
+                   request you to please switch to landscape mode before start playing the game.</p>
                 <p>As the name says ,its a Bird Shooting Game </p>
                 <p>So you need to shoot the birds to score points.</p>
                 <p>Every level of the game has a preset target points</p>
@@ -35,6 +38,9 @@
                 <p>It will also tell you how much time is remaining to complete the Game.</p>
                 <p>You will see some Tips between each level if you fail to complete it</p>
                 <p>Ensure you go through those Tips.</p>
+                <p>Some birds will be easy to shoot while the others will try to dodge you when you try to
+                hit them.</p>
+
 
             </div>
             <div class="bird-game-start-gif">
@@ -66,19 +72,19 @@
         <section id="credits" class='credits wrapper display'>
             <div class='movie'>Bird Shooting Game</div>
             <div class='job'>developed by</div>
-            <div class='name'>Ghafir Sayed</div><br>
+            <div class='name'>Imran Sayed</div><br>
             <div class='job'>produced by</div>
-            <div class='name'>Ghafir Sayed</div><br>
+            <div class='name'>Imran Sayed</div><br>
             <div class='job'>Code Reviewer</div>
             <div class='name'>Sayed Taqui</div>
             <div class='job'>CSS Reviewer and Editor</div>
             <div class='name'>Mahvash Fatima</div>
             <div class='job'>Story</div>
-            <div class='name'>Ghafir Sayed</div>
+            <div class='name'>Imran Sayed</div>
             <div class='job'>Game Idea</div>
             <div class='name'>Mahvash Fatima</div>
             <div class='job'>Music</div>
-            <div class='name'>Ghafir Sayed</div>
+            <div class='name'>Imran Sayed</div>
             <div class='job'>Background Images & Character Reviewer</div>
             <div class='name'>Mahvash Fatima</div>
             <div class='job'>Game Reviewers</div>
@@ -91,6 +97,8 @@
             <div class='name'>Raees Fatima <br>&<br>  Abul Sayed</div>
             <div class='job'>From Game Cast & Crew</div>
             <div class='name'>Thank You for Playing</div>
+            <div class='job'>For any questions you can contact me at : </div>
+            <div class='name'>imran_2000_smart@yahoo.co.in</div>
         </section>
     </section>
 
@@ -117,7 +125,7 @@
         <audio id="rain-falling" preload="" >
             <source src="sounds/Rain-fall-background.mp3" type="audio/mp3">
         </audio>
-        <audio id="music-before-start" loop autoplay preload="" >
+        <audio id="music-before-start" loop preload="" >
             <source src="sounds/Music-before-game-start.mp3" type="audio/mp3">
         </audio>
         <audio id="man-scream" preload="" >

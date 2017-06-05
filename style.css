@@ -1,3 +1,4 @@
+
 /**
 CSS for Rain
  */
@@ -20,6 +21,8 @@ body {
     -moz-user-select: -moz-none;
     -ms-user-select: none;
     user-select: none;
+    letter-spacing: 2px;
+    font-size: 15px;
 }
 .body, .header {
     font-family: 'Chewy';
@@ -143,7 +146,6 @@ img{
 
 .sleeping-dragon{
     width: 300px;
-    margin: -35px;
 }
 
 /**
@@ -160,7 +162,6 @@ Before Game starts
     width: 800px;
     color: white;
     font-size: 15px;
-    letter-spacing: 2px;
 }
 
 .bird-game-start-gif img{
@@ -195,7 +196,6 @@ Header
 .header p {
     margin: 5px;
     padding: 1px;
-    letter-spacing: 5px;
 }
 
 /**
@@ -220,12 +220,11 @@ left and right bird-nest for birds
 }
 
 .left-bird-nest div{
-    min-height: 50px;
+    min-height: 20px;
 }
 .right-bird-nest div{
-    min-height: 50px;
+    min-height: 20px;
 }
-
 .health-box img{
     width: 30px;
 }
@@ -239,8 +238,6 @@ level-three-div
     position: absolute;
     right: -350px;
 }
-
-
 
 .animated {
     animation-duration: 0.5s;
@@ -263,9 +260,13 @@ level-three-div
 
 .game-over{
     color: #ffffff;
-    font-size: 30px;
-    padding-top: 200px;
+    font-size: 20px;
+    padding-top: 15%;
     text-align: center;
+    margin: 0 auto;
+}
+.game-over p{
+    line-height: 20px;
 }
 .twenty-sec-to-go{
     font-size: 80px;
@@ -283,18 +284,13 @@ level-three-div
 
 }
 .bird-man-tip{
-    font-size: 15px;
     color: #ffffff;
-    letter-spacing: 2px;
 }
 .dragon-killing-tip{
-    font-size: 15px;
-    letter-spacing: 2px;
     color: #aed1d1;
 }
 .dragon-story{
     color: #acced6;
-    font-size: 15px;
 }
 
 
@@ -329,15 +325,11 @@ progress:after {
     content: attr(value)'%';
 }
 .game-over-score{
-    width: 1000px;
     text-align: center;
-    font-size: 30px;
     margin: 0 auto;
 }
 .bird-tip{
-    font-size: 20px;
     color: #CDDC39;
-    letter-spacing: 1px;
 }
 
 /**
@@ -406,8 +398,7 @@ CSS for credits game ending
 }
 
 .orb-game-start span{
-    font-size: 36px;
-    letter-spacing: 3px;
+    font-size: 25px;
     font-weight: bold;
     text-align: center;
     margin-top: 44px;
@@ -415,6 +406,7 @@ CSS for credits game ending
     text-transform: uppercase;
     color: rgb(255, 255, 255);
     text-shadow: -3px -1px 1px #000;
+    letter-spacing: 2px;
 }
 
 /*.level2-start-button span, .level3-start-button span{*/
@@ -439,7 +431,6 @@ CSS for credits game ending
     font-size: 15px;
     animation: 160s credits linear infinite;
     opacity: 0.5;
-    letter-spacing: 2px;
 }
 
 .level1-instructions-right h1 {
@@ -451,33 +442,324 @@ CSS for credits game ending
     font-family: 'Chewy';
 }
 
-@media only screen and ( max-width: 1024px ) {
-    body, .level1-instructions-right{
-        font-size: 10px;
+@media only screen and ( max-width: 1366px ) {
+    img {
+        width: 60px;
     }
-    h1{
-        font-size: 40px;
+
+    .blood-splat-img {
+        width: 70px;
     }
     .gun-image{
         display: none;
     }
-    img{
-        width: 60px;
+    .bird-game-start-gif img{
+        width: 250px;
+        margin-left: -100px;
+        margin-top: -15px;
     }
-    .blood-splat-img{
-        width: 70px;
-    }
-    .gun-aim{
+    .gun-aim {
 
     }
-    .man-bird-image{
-        width: 300px;
+    .man-bird-image {
+        width: 250px;
     }
-
-    .bird-game-start-gif img, .dragon-entry-green, .dragon-entry-brown,
+    .dragon-entry-green, .dragon-entry-brown,
     .dragon-entry-dark-green, .dragon-fire-left, .dragon-fire-right,
-    .dragon-fire, .dragon-final, .sleeping-dragon{
-        width: 200px;
+    .dragon-fire, .dragon-final, .sleeping-dragon {
+        width: 350px;
     }
 }
 
+@media only screen and ( max-width: 1024px ) {
+    body, .level1-instructions-right{
+        font-size: 12px;
+        letter-spacing: 2px;
+    }
+    h1{
+        margin: 5px;
+        font-size: 30px;
+        text-shadow: 2px 1px 1px #000;
+        margin-top: 20px;
+    }
+    .level1-instructions-right{
+        font-size: 13px;
+    }
+    .bird-game-start-gif img{
+        width: 200px;
+        margin-left: -100px;
+        margin-top: -15px;
+    }
+    .level1-start-button, .level2-start-button, .level3-start-button{
+        width: 100px;
+        height: 100px;
+    }
+    .orb-game-start span{
+        margin-top: 34px;
+    }
+    img{
+        width: 50px;
+    }
+    .blood-splat-img{
+        width: 60px;
+    }
+    .twenty-sec-to-go{
+        font-size: 60px;
+    }
+
+    .nine-sec-to-go{
+        font-size: 100px;
+    }
+    .man-bird-image{
+        width: 150px;
+    }
+
+}
+
+@media only screen and ( max-width: 800px ) {
+    body {
+        font-size: 8px;
+        letter-spacing: 2px;
+    }
+    .level1-instructions-right{
+        width: 250px;
+        margin-left: -180px;
+        animation: 120s credits linear infinite;
+    }
+
+    h1 {
+        margin: 5px;
+        font-size: 15px;
+        text-shadow: 2px 1px 1px #000;
+        margin-top: 10px;
+    }
+
+    .level1-instructions-right, .level1-instructions-right h1  {
+        font-size: 13px;
+    }
+    .level1-start-button, .level2-start-button, .level3-start-button {
+        width: 75px;
+        height: 75px;
+    }
+    .orb-game-start span {
+        margin-top: 26px;
+        font-size: 20px;
+    }
+
+    .bird-game-start-gif img {
+        width: 100px;
+        margin-left: -40px;
+        margin-top: -15px;
+    }
+
+    img {
+        width: 40px;
+    }
+
+    .blood-splat-img {
+        width: 50px;
+    }
+
+    .twenty-sec-to-go {
+        font-size: 40px;
+    }
+
+    .nine-sec-to-go {
+        font-size: 80px;
+    }
+
+    .man-bird-image {
+        width: 100px;
+    }
+
+    .dragon-entry-green, .dragon-entry-brown,
+    .dragon-entry-dark-green, .dragon-fire-left, .dragon-fire-right,
+    .dragon-fire, .dragon-final, .sleeping-dragon {
+        width: 150px;
+    }
+
+    p {
+        text-shadow: 2px 2px black;
+    }
+
+    .before-game-start {
+        padding-top: 15%;
+    }
+
+    .header {
+        padding: 8px;
+    }
+
+    .header p {
+        margin: 3px;
+        padding: 1px;
+    }
+
+    .left-bird-nest div {
+        min-height: 10px;
+    }
+
+    .right-bird-nest div {
+        min-height: 10px;
+    }
+
+    .health-box img {
+        width: 30px;
+    }
+
+    .game-over {
+        font-size: 13px;
+        padding-top:5%;
+    }
+
+    progress {
+        height: 8px;
+    }
+
+    .movie {
+        font-size: 30px;
+        margin-bottom: 10px;
+    }
+
+    .job {
+        margin-bottom: 10px;
+        font-size: 12px;
+    }
+
+    .name {
+        margin-bottom: 50px;
+        font-size: 20px;
+    }
+
+    .drop {
+        height: 50px;
+        bottom: 200px;
+    }
+
+}
+
+@media only screen and ( max-width: 600px ) {
+    body {
+        font-size: 7px;
+    }
+
+    .level1-instructions-right {
+        width: 200px;
+        margin-left: -140px;
+        animation: 140s credits linear infinite;
+    }
+
+    h1 {
+        margin: 5px;
+        font-size: 15px;
+        text-shadow: 2px 1px 1px #000;
+        margin-top: 10px;
+    }
+
+    .level1-instructions-right, .level1-instructions-right h1 {
+        font-size: 13px;
+    }
+
+    .level1-start-button, .level2-start-button, .level3-start-button {
+        width: 50px;
+        height: 50px;
+    }
+
+    .orb-game-start span {
+        margin-top: 10px;
+        margin-left: 5px;
+        font-size: 10px;
+    }
+
+    .bird-game-start-gif img {
+        width: 80px;
+        margin-left: -30px;
+        margin-top: -20px;
+    }
+
+    img {
+        width: 30px;
+    }
+
+    .blood-splat-img {
+        width: 40px;
+    }
+
+    .twenty-sec-to-go {
+        font-size: 30px;
+    }
+
+    .nine-sec-to-go {
+        font-size: 60px;
+    }
+
+    .man-bird-image {
+        width: 80px;
+    }
+
+    .dragon-entry-green, .dragon-entry-brown,
+    .dragon-entry-dark-green, .dragon-fire-left, .dragon-fire-right,
+    .dragon-fire, .dragon-final, .sleeping-dragon {
+        width: 100px;
+    }
+
+    p {
+        text-shadow: 1px 1px black;
+    }
+
+    .header {
+        padding: 5px;
+    }
+
+    .header p {
+        margin: 1px;
+        padding: 1px;
+    }
+
+    .left-bird-nest div {
+        min-height: 10px;
+    }
+
+    .right-bird-nest div {
+        min-height: 10px;
+    }
+
+    .health-box img {
+        width: 30px;
+    }
+
+    .game-over {
+        font-size: 13px;
+        padding-top: 5%;
+    }
+    .game-over {
+        font-size: 10px;
+        padding-top: 5%;
+        line-height: 10px;
+    }
+
+    progress {
+        height: 6px;
+    }
+
+    .movie {
+        font-size: 20px;
+        margin-bottom: 5px;
+    }
+
+    .job {
+        margin-bottom: 5px;
+        font-size: 10px;
+    }
+
+    .name {
+        margin-bottom: 30px;
+        font-size: 15px;
+    }
+
+    .drop {
+        height: 40px;
+        bottom: 200px;
+    }
+
+}
