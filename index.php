@@ -10,7 +10,41 @@
     <link rel="stylesheet"  href="style.css">
 </head>
 <body>
-<h2 class="loading">Loading...</h2>
+    <div class="audio-div display">
+        <audio id="music-before-start" preload="" loop >
+            <source src="sounds/background-music-level1.mp3" type="audio/mp3">
+        </audio>
+        <audio id="rain-falling" preload="" >
+            <source src="sounds/rain-fall-background.mp3" type="audio/mp3">
+        </audio>
+        <audio id="background-music-level2" preload="" >
+            <source src="sounds/background-music-level2.mp3" type="audio/mp3">
+        </audio>
+        <audio id="background-music-level3" preload="" >
+            <source src="sounds/background-music-level3.mp3" type="audio/mp3">
+        </audio>
+        <audio id="gun-shot-audio" preload="" >
+            <source src="sounds/gun-sound.mp3" type="audio/mp3">
+        </audio>
+        <audio id="bird-killed-sound" preload="" >
+            <source src="sounds/bird-killed-sound.mp3" type="audio/mp3" >
+        </audio>
+        <audio id="bird-flapping" preload="" loop >
+            <source src="sounds/bird-flapping.mp3" type="audio/mp3">
+        </audio>
+        <audio id="man-scream" preload="" >
+            <source src="sounds/man-scream.mp3" type="audio/mp3">
+        </audio>
+        <audio id="thunderstorm-clip" preload="" >
+            <source src="sounds/loud-thunder.mp3" type="audio/mp3">
+        </audio>
+        <audio id="angry-dragon" preload="" >
+            <source src="sounds/angry-dragon.mp3" type="audio/mp3">
+        </audio>
+    </div>
+    <div class="loading">
+    <img src="images/loading.gif" alt="Game Loading. Please wait"  >
+    </div>
 
     <section id="main-section" class="rain display beginner-mode">
         <div id="before-game-start" class="before-game-start">
@@ -25,7 +59,7 @@
             <h1>Bird Shooting</h1>
             <div class="level1-instructions-right wrapper">
                 <h1>Instructions</h1>
-                <p>This game works at its best in landscape mode.</p>
+                <p>This game works at its best in portrait mode.</p>
                 <p>So if you are using a mobile device or tablet
                    request you to please switch to landscape mode before start playing the game.</p>
                 <p>Select the game mode/difficulty level and click/press Start .The game starts in beginner mode by default</p>
@@ -117,39 +151,6 @@
         </button>
     </div>
 
-    <div class="audio-div">
-        <audio id="gun-shot-audio" preload="" >
-            <source src="sounds/Gunsound.mp3" type="audio/mp3">
-        </audio>
-        <audio id="bird-killed-sound" preload="" >
-            <source src="sounds/bird-killed-sound.mp3" type="audio/mp3" preload="" >
-        </audio>
-        <audio id="bird-flapping" preload="" loop >
-            <source src="sounds/bird-flapping.mp3" type="audio/mp3">
-        </audio>
-        <audio id="rain-falling" preload="" >
-            <source src="sounds/Rain-fall-background.mp3" type="audio/mp3">
-        </audio>
-        <audio id="music-before-start" loop preload="" >
-            <source src="sounds/Music-before-game-start.mp3" type="audio/mp3">
-        </audio>
-        <audio id="man-scream" preload="" >
-            <source src="sounds/man-scream.mp3" type="audio/mp3">
-        </audio>
-        <audio id="background-music-level2" preload="" >
-            <source src="sounds/background-music-level2.mp3" type="audio/mp3">
-        </audio>
-        <audio id="background-music-level3" preload="" >
-            <source src="sounds/background-music-level3.mp3" type="audio/mp3">
-        </audio>
-        <audio id="thunderstorm-clip" preload="" >
-            <source src="sounds/loud-thunder.mp3" type="audio/mp3">
-        </audio>
-        <audio id="angry-dragon" preload="" >
-            <source src="sounds/angry-dragon.mp3" type="audio/mp3">
-        </audio>
-    </div>
-
     <div class="all-images display" >
         <img src="images/blood-splatter.jpg" alt="" class="">
         <img src="images/dark-castle.gif" alt="" class="">
@@ -167,10 +168,10 @@
         <img src="images/giphy-bird-right.gif" alt="" class="">
         <img src="images/gun-aim.png" alt="" class="">
         <img src="images/landscape.gif" alt="" class="">
-        <img src="images/level1-background.jpg" alt="" class="">
+        <img src="images/level1-background.jpg" class="level1-background-img" alt="" >
         <img src="images/level2-bird-left.gif" alt="" class="">
         <img src="images/level2-bird-right.gif" alt="" class="">
-        <img src="images/lightening-img.gif" alt="" class="">
+        <img src="images/lightening-img.gif" alt="" class="lightening-background-img">
         <img src="images/man-flying.gif" alt="" class="">
         <img src="images/manshooting.png" alt="" class="">
         <img src="images/orb-game-start.gif-c200" alt="" class="">

@@ -54,6 +54,11 @@ Common css
 .loading{
     color: #e2ff37;
     text-align: center;
+    margin: 0 auto;
+    padding-top:70%;
+}
+.loading img{
+    width: 100px;
 }
 p{
     text-shadow: 2px 2px black;
@@ -75,25 +80,30 @@ button {
 }
 
 .select-game-mode, .beginner, .advanced{
-    color: #ffffff;
+    color: #cdffff;
     font-family: 'Chewy';
     letter-spacing: 3px;
+    font-size: 15px;
 }
 .beginner:hover, .advanced:hover{
-    color: #CDDC39;
+    color: #95e3fd;
     cursor: pointer;
 }
 .advanced-mode .advanced{
-    color: #8c8c8c;
+    color: #b4ff0d;
 }
 .advanced-mode .advanced:after{
     content: '-Selected';
 }
 .beginner-mode .beginner{
-    color: #8c8c8c;
+    color: #b4ff0d;
 }
 .beginner-mode .beginner:after{
     content: '-Selected';
+}
+.start-button p{
+    font-size: 20px;
+    line-height: 15px;
 }
 
 /**
@@ -453,6 +463,7 @@ CSS for credits game ending
     font-size: 15px;
     animation: 160s credits linear infinite;
     opacity: 0.5;
+    z-index: -1;
 }
 
 .level1-instructions-right h1 {
@@ -603,13 +614,17 @@ CSS for credits game ending
     p {
         text-shadow: 2px 2px black;
     }
+    .start-button p{
+        font-size: 15px;
+    }
 
     .before-game-start {
-        padding-top: 15%;
+        padding-top: 5%;
     }
 
     .header {
         padding: 8px;
+        font-size: 10px;
     }
 
     .header p {
@@ -660,9 +675,9 @@ CSS for credits game ending
 
 }
 
-@media only screen and ( max-width: 600px ) {
+@media only screen and ( max-width: 550px ) {
     body {
-        font-size: 7px;
+        font-size: 8px;
     }
 
     .level1-instructions-right {
@@ -673,69 +688,71 @@ CSS for credits game ending
 
     h1 {
         margin: 5px;
-        font-size: 15px;
+        font-size: 20px;
         text-shadow: 2px 1px 1px #000;
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
-    .level1-instructions-right, .level1-instructions-right h1 {
-        font-size: 13px;
+    .level1-instructions-right {
+        margin-left:-200px;
     }
 
     .level1-start-button, .level2-start-button, .level3-start-button {
-        width: 50px;
-        height: 50px;
+        width: 60px;
+        height: 60px;
     }
 
     .orb-game-start span {
-        margin-top: 10px;
-        margin-left: 5px;
-        font-size: 10px;
+        margin-left: 2px;
+        margin-top: 20px;
+        font-size: 18px;
     }
 
     .bird-game-start-gif img {
-        width: 80px;
+        width: 100px;
         margin-left: -30px;
-        margin-top: -20px;
+        margin-top: -5px;
     }
 
     img {
-        width: 30px;
+        width: 42px;
     }
-
-    .blood-splat-img {
-        width: 40px;
-    }
-
-    .twenty-sec-to-go {
-        font-size: 30px;
-    }
-
-    .nine-sec-to-go {
-        font-size: 60px;
-    }
-
-    .man-bird-image {
-        width: 80px;
-    }
-
-    .dragon-entry-green, .dragon-entry-brown,
-    .dragon-entry-dark-green, .dragon-fire-left, .dragon-fire-right,
-    .dragon-fire, .dragon-final, .sleeping-dragon {
-        width: 100px;
-    }
-
-    p {
-        text-shadow: 1px 1px black;
-    }
-
     .header {
         padding: 5px;
+        font-size: 14px;
     }
 
     .header p {
         margin: 1px;
         padding: 1px;
+        opacity: 0.7;
+        letter-spacing: 3px;
+    }
+
+    .blood-splat-img {
+        width: 50px;
+    }
+
+    .twenty-sec-to-go {
+        font-size: 20px;
+    }
+
+    .nine-sec-to-go {
+        font-size: 30px;
+    }
+
+    .man-bird-image {
+        width: 90px;
+    }
+
+    .dragon-entry-green, .dragon-entry-brown,
+    .dragon-entry-dark-green, .dragon-fire-left, .dragon-fire-right,
+    .dragon-fire, .dragon-final, .sleeping-dragon {
+        width: 160px;
+    }
+
+    p {
+        text-shadow: 1px 1px black;
     }
 
     .left-bird-nest div {
@@ -752,11 +769,10 @@ CSS for credits game ending
 
     .game-over {
         font-size: 13px;
-        padding-top: 5%;
+        padding-top: 36%;
     }
-    .game-over {
-        font-size: 10px;
-        padding-top: 5%;
+    .game-over p{
+        font-size: 11px;
         line-height: 10px;
     }
 
@@ -783,5 +799,37 @@ CSS for credits game ending
         height: 40px;
         bottom: 200px;
     }
+    .start-button p{
+        font-size: 15px;
+    }
+    .start-button{
+        padding-top: 30%;
+    }
 
+}
+
+.level1-background{
+    background: url( "images/level1-background.jpg" );
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
+    min-height: 100%;
+}
+.level2-background{
+    background: url( "images/landscape.gif" );
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
+}
+.level3-background{
+    background: url( "images/dark-castle.gif" );
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
+}
+.lightening-background{
+    background: url( "images/lightening-img.gif" );
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:hidden;
 }

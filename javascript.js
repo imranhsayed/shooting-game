@@ -59,7 +59,6 @@ var birdShootingGame = (function( $ ) {
             game.mainContent.classList.add( 'display' );
             game.loadingEl.classList.add( 'display' );
             game.mainSection.classList.remove( 'display' );
-            alert( 'Welcome ! This game works at its best in landscape mode. If you are using a mobile device please switch to landscape mode')
         },
 
         /**
@@ -73,11 +72,6 @@ var birdShootingGame = (function( $ ) {
             $( game.body ).on( 'mousemove', game.imgFollowCursor );
             $( game.beginner ).on( 'click', game.toggleClassBeginner );
             $( game.advanced ).on( 'click', game.toggleClassAdvanced );
-            game.backgroundMusicLevel1.addEventListener( 'ended', function() {
-                this.currentTime = 0;
-                this.play();
-            }, false );
-            game.backgroundMusicLevel1.play();
         },
 
         /**
@@ -107,9 +101,7 @@ var birdShootingGame = (function( $ ) {
             game.level1StartButton = document.querySelector( '.level1-start-button' );
             game.level2StartButton = document.querySelector( '.level2-start-button' );
             game.level3StartButton = document.querySelector( '.level3-start-button' );
-            game.backgroundMusicLevel1 = document.getElementById( 'music-before-start' );
             game.backgroundMusicLevel2 = document.getElementById( 'background-music-level2' );
-            game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
             game.pTags = '<p>';
             game.imgTags = '<img>';
         },
@@ -169,18 +161,23 @@ var birdShootingGame = (function( $ ) {
             if ( $( game.mainSection ).hasClass( 'advanced-mode' ) ){
                 game.requiredScore = game.birdNoToSend * 110 ;
                 game.birdSpeed = 15000;
-                game.birdInterval = 2500;
+                game.birdInterval = 2300;
 
             }else{
-                game.requiredScore = game.birdNoToSend * 80 ;
+                game.requiredScore = game.birdNoToSend * 1 ; //80
                 game.birdSpeed = 20000;
-                game.birdInterval = 3000;
+                game.birdInterval = 2800;
             }
             game.gameTimer = 100; // In secs
-
+            game.backgroundMusicLevel1 = document.getElementById( 'music-before-start' );
+            game.backgroundMusicLevel1.addEventListener( 'ended', function() {
+                this.currentTime = 0;
+                this.play();
+            }, false );
+            game.backgroundMusicLevel1.play();
             game.createRain();
             game.audioRainDrop.play();
-            game.body.style.backgroundImage = "url( 'images/level1-background.jpg' )";
+            game.body.classList.add( 'level1-background' );
             document.querySelector( '.before-game-start').classList.add( 'display' );
             game.birdsMove();
             game.gameTimerLevel1();
@@ -208,9 +205,10 @@ var birdShootingGame = (function( $ ) {
         startLevelTwo: function(){
             var birdsDivs = $( '.birds-div' ),
                 timeLeftP = document.querySelector( '.time-left' );
+            $( game.body ).removeClass( 'level1-background' );
+            $( game.body ).addClass( 'level2-background' );
             game.clearAllInterval();
             game.stopRain();
-            game.body.style.backgroundImage = "url( 'images/landscape.gif' )";
             game.backgroundMusicLevel1.pause();
             game.backgroundMusicLevel2.play();
             game.gameOverScoreDiv.textContent = "";
@@ -241,7 +239,7 @@ var birdShootingGame = (function( $ ) {
                 game.birdInterval = 1500;
                 game.birdSpeed = 12000;
             }else{
-                game.requiredScore = game.birdNoToSend * 80 ;
+                game.requiredScore = game.birdNoToSend * 1 ; //80
                 game.birdInterval = 2000;
                 game.birdSpeed = 15000;
             }
@@ -279,8 +277,14 @@ var birdShootingGame = (function( $ ) {
             var progress, headerChildren = $( 'header' ).children(),
                 contentHasLeftBirdNestClass,
                 nestDivHasClassDisplay;
+            if ( ! $( game.body ).hasClass( 'lightening-background' ) ){
+                game.body.classList.add( 'lightening-background' );
+            }
             game.clearAllInterval();
             game.gameTimer = 90;
+            $( game.body ).removeClass( 'level2-background' );
+            $( game.body ).removeClass( 'level3-background');
+
             contentHasLeftBirdNestClass = $( game.content ).find( 'div' ).first().hasClass( 'left-bird-nest' );
             nestDivHasClassDisplay = $( game.leftBirdNestDiv ).hasClass( 'display' );
 
@@ -336,10 +340,6 @@ var birdShootingGame = (function( $ ) {
                 dragonRightPos = ( window.outerWidth / 4 ) ;
 
             game.lighteningIntervalCounter++;
-
-            if ( game.body.style.backgroundImage != "url( 'images/lightening-img.gif' )" ){
-                game.body.style.backgroundImage = "url( 'images/lightening-img.gif' )";
-            }
             if ( ! $( game.content ).children().hasClass( 'dragon-entry-green') ){
                 $( game.imgTags, {
                     src: 'images/dragon-entry-green.gif',
@@ -351,7 +351,7 @@ var birdShootingGame = (function( $ ) {
                         'right': dragonRightPos // was orignially set to 350px
                     }, 10000
                 )
-                .prependTo( game.content );
+                    .prependTo( game.content );
             }
 
             /**
@@ -360,7 +360,9 @@ var birdShootingGame = (function( $ ) {
             if ( game.lighteningIntervalCounter > 10 ){
                 game.changeCursor();
                 game.gunImage.classList.remove( 'display' );
-                game.body.style.backgroundImage = "url( 'images/dark-castle.gif' )";
+                game.body.classList.add( 'level3-background');
+                $( game.body ).removeClass( 'lightening-background' );
+                game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
                 game.backgroundMusicLevel3.addEventListener( 'ended', function() {
                     this.currentTime = 0;
                     this.play();
@@ -432,8 +434,8 @@ var birdShootingGame = (function( $ ) {
                 $( game.rightBirdNestDiv ).children().length === 0 ) {
                 for( var i = 0; i < game.birdNestDivNo; i++  ){
                     divLeftBird = document.createElement( 'div' ),
-                    divRightBird = document.createElement( 'div' ),
-                    rightId = i + game.birdNestDivNo;
+                        divRightBird = document.createElement( 'div' ),
+                        rightId = i + game.birdNestDivNo;
 
                     divLeftBird.setAttribute( 'id', 'id' + i );
                     divLeftBird.setAttribute( 'class', 'birds-div' );
@@ -829,7 +831,7 @@ var birdShootingGame = (function( $ ) {
             if( $( timeLeftP ).hasClass( 'nine-sec-to-go' ) ){
                 timeLeftP.classList.remove( 'nine-sec-to-go' );
             }
-             game.scoreIntervalCheck = setInterval( function () {
+            game.scoreIntervalCheck = setInterval( function () {
 
                 if( 0 < game.timer ){
                     game.timer = game.timer - 1;
@@ -1129,152 +1131,152 @@ var birdShootingGame = (function( $ ) {
                 dragonEntryGreenImg = $( '.dragon-entry-green' ),
                 dragonImgTags = '<img></img>';
 
-                game.newDragonEntryInterval = setInterval( function () {
-                    timeInterval += 1;
-                    /**
-                     * After 15 secs from the start of Level3 Game
-                     */
-                    if ( timeInterval === 5 ){
-                        dragonEntryGreenImg.fadeOut( 2000 );
-                    }
-                    if ( timeInterval === 10 ){
-                        if( false === $( game.content ).children().hasClass( 'dragon-entry-brown') ){
-                            dragonEntryGreenImg.remove();
-                            $( dragonImgTags, {
-                                src: 'images/dragon-entry-brown.png',
-                                class: 'dragon-entry-brown'
+            game.newDragonEntryInterval = setInterval( function () {
+                timeInterval += 1;
+                /**
+                 * After 15 secs from the start of Level3 Game
+                 */
+                if ( timeInterval === 5 ){
+                    dragonEntryGreenImg.fadeOut( 2000 );
+                }
+                if ( timeInterval === 10 ){
+                    if( false === $( game.content ).children().hasClass( 'dragon-entry-brown') ){
+                        dragonEntryGreenImg.remove();
+                        $( dragonImgTags, {
+                            src: 'images/dragon-entry-brown.png',
+                            class: 'dragon-entry-brown'
 
-                            } ).fadeIn( 1000 )
-                                .delay( 2000 )
-                                .prependTo( game.content )
-                                .animate(
-                                    {
-                                        'position': 'absolute',
-                                        'bottom': '400px',
-                                        'right': '1500px'
-                                    }, 9000
-                                ).fadeOut( 5000 );
-                            game.dragonImageEl = document.querySelector( '.dragon-entry-brown' );
-                            game.dragonImageEl.addEventListener( 'click', game.dragonHitStronger );
-                        }
+                        } ).fadeIn( 1000 )
+                            .delay( 2000 )
+                            .prependTo( game.content )
+                            .animate(
+                                {
+                                    'position': 'absolute',
+                                    'bottom': '400px',
+                                    'right': '1500px'
+                                }, 9000
+                            ).fadeOut( 5000 );
+                        game.dragonImageEl = document.querySelector( '.dragon-entry-brown' );
+                        game.dragonImageEl.addEventListener( 'click', game.dragonHitStronger );
                     }
-                    if ( timeInterval === 21 ){
-                        $( '.dragon-entry-brown' ).remove();
-                        if( false === $( game.content ).children().hasClass( 'dragon-entry-dark-green' ) ){
-                            $( dragonImgTags, {
-                                src: 'images/dragon-entry-dark-green.gif',
-                                class: 'dragon-entry-dark-green'
+                }
+                if ( timeInterval === 21 ){
+                    $( '.dragon-entry-brown' ).remove();
+                    if( false === $( game.content ).children().hasClass( 'dragon-entry-dark-green' ) ){
+                        $( dragonImgTags, {
+                            src: 'images/dragon-entry-dark-green.gif',
+                            class: 'dragon-entry-dark-green'
 
-                            } ).fadeIn(1000)
-                                .delay( 2000 )
-                                .prependTo( game.content )
-                                .animate(
-                                    {
-                                        'position': 'absolute',
-                                        'left': '-700px',
-                                        'bottom': '1500px'
-                                    }, 7000
-                                )
-                                .fadeOut( 7000 );
-                            game.dragonImageEl = document.querySelector( '.dragon-entry-dark-green' );
-                            game.dragonImageEl.addEventListener( 'click', game.dragonHitStronger );
-                        }
+                        } ).fadeIn(1000)
+                            .delay( 2000 )
+                            .prependTo( game.content )
+                            .animate(
+                                {
+                                    'position': 'absolute',
+                                    'left': '-700px',
+                                    'bottom': '1500px'
+                                }, 7000
+                            )
+                            .fadeOut( 7000 );
+                        game.dragonImageEl = document.querySelector( '.dragon-entry-dark-green' );
+                        game.dragonImageEl.addEventListener( 'click', game.dragonHitStronger );
                     }
-                    if( timeInterval === 32 ){
-                        $( '.dragon-entry-dark-green' ).remove();
-                        if( false === $( game.content ).children().hasClass( 'dragon-fire-left' ) ){
-                            var dragFireLeftRightPos = window.outerWidth/1.5;
-                            $( dragonImgTags, {
-                                src: 'images/dragon-fire-left.gif',
-                                class: 'dragon-fire-left'
+                }
+                if( timeInterval === 32 ){
+                    $( '.dragon-entry-dark-green' ).remove();
+                    if( false === $( game.content ).children().hasClass( 'dragon-fire-left' ) ){
+                        var dragFireLeftRightPos = window.outerWidth/2;
+                        $( dragonImgTags, {
+                            src: 'images/dragon-fire-left.gif',
+                            class: 'dragon-fire-left'
 
-                            } ).fadeIn( 1000 )
-                                .prependTo( game.content )
-                                .animate(
-                                    {
-                                        'position': 'absolute',
-                                        'top': 0,
-                                        'right': dragFireLeftRightPos
-                                    }, 2000
-                                )
-                                .fadeOut( 5000 );
-                            game.dragonImageEl = document.querySelector( '.dragon-fire-left' );
-                            game.dragonImageEl.addEventListener( 'click', game.dragonHitVulnerable );
-                        }
+                        } ).fadeIn( 1000 )
+                            .prependTo( game.content )
+                            .animate(
+                                {
+                                    'position': 'absolute',
+                                    'top': 0,
+                                    'right': dragFireLeftRightPos
+                                }, 2000
+                            )
+                            .fadeOut( 5000 );
+                        game.dragonImageEl = document.querySelector( '.dragon-fire-left' );
+                        game.dragonImageEl.addEventListener( 'click', game.dragonHitVulnerable );
                     }
-                    if( timeInterval === 40 ){
-                        $( '.dragon-fire-left' ).remove();
-                        if( false === $( game.content ).children().hasClass( 'dragon-fire-right' ) ){
-                            var dragFireRightBotPos = window.outerHeight/4.2;
-                            $( dragonImgTags, {
-                                src: 'images/dragon-fire-right.gif',
-                                class: 'dragon-fire-right'
+                }
+                if( timeInterval === 40 ){
+                    $( '.dragon-fire-left' ).remove();
+                    if( false === $( game.content ).children().hasClass( 'dragon-fire-right' ) ){
+                        var dragFireRightBotPos = window.outerHeight/5.6;
+                        $( dragonImgTags, {
+                            src: 'images/dragon-fire-right.gif',
+                            class: 'dragon-fire-right'
 
-                            } ).fadeIn( 1000 )
-                                .prependTo( game.content )
-                                .animate(
-                                    {
-                                        'position': 'absolute',
-                                        'bottom': dragFireRightBotPos,
-                                        'right': 0
-                                    }, 2000
-                                )
-                                .fadeOut( 5000 );
-                            game.dragonImageEl = document.querySelector( '.dragon-fire-right' );
-                            game.dragonImageEl.addEventListener( 'click', game.dragonHitVulnerable );
-                        }
+                        } ).fadeIn( 1000 )
+                            .prependTo( game.content )
+                            .animate(
+                                {
+                                    'position': 'absolute',
+                                    'bottom': dragFireRightBotPos,
+                                    'right': 0
+                                }, 2000
+                            )
+                            .fadeOut( 5000 );
+                        game.dragonImageEl = document.querySelector( '.dragon-fire-right' );
+                        game.dragonImageEl.addEventListener( 'click', game.dragonHitVulnerable );
                     }
-                    if( timeInterval === 47 ){
-                        $( '.dragon-fire-right' ).remove();
-                        if( false === $( game.content ).children().hasClass( 'dragon-fire' ) ){
-                            $( dragonImgTags, {
-                                src: 'images/dragon-fire.gif',
-                                class: 'dragon-fire'
+                }
+                if( timeInterval === 47 ){
+                    $( '.dragon-fire-right' ).remove();
+                    if( false === $( game.content ).children().hasClass( 'dragon-fire' ) ){
+                        $( dragonImgTags, {
+                            src: 'images/dragon-fire.gif',
+                            class: 'dragon-fire'
 
-                            } ).fadeIn( 1000 )
-                                .prependTo( game.content )
-                                .animate(
-                                    {
-                                        'position': 'absolute',
-                                        'top': '120px',
-                                        'right': '200px'
-                                    }, 5000
-                                )
-                                .fadeOut( 4000 );
-                            game.dragonImageEl = document.querySelector( '.dragon-fire' );
-                            game.dragonImageEl.addEventListener( 'click', game.dragonHitVulnerable );
-                        }
+                        } ).fadeIn( 1000 )
+                            .prependTo( game.content )
+                            .animate(
+                                {
+                                    'position': 'absolute',
+                                    'top': '120px',
+                                    'right': '200px'
+                                }, 5000
+                            )
+                            .fadeOut( 4000 );
+                        game.dragonImageEl = document.querySelector( '.dragon-fire' );
+                        game.dragonImageEl.addEventListener( 'click', game.dragonHitVulnerable );
                     }
-                    /**
-                     * Dragon Red Vulnerable
-                     */
-                    if( timeInterval === 55 ){
-                        $( '.dragon-fire' ).remove();
-                        if( false === $( game.content ).children().hasClass( 'dragon-final' ) ){
-                            $( dragonImgTags, {
-                                src: 'images/dragon-final.gif',
-                                class: 'dragon-final'
+                }
+                /**
+                 * Dragon Red Vulnerable
+                 */
+                if( timeInterval === 55 ){
+                    $( '.dragon-fire' ).remove();
+                    if( false === $( game.content ).children().hasClass( 'dragon-final' ) ){
+                        $( dragonImgTags, {
+                            src: 'images/dragon-final.gif',
+                            class: 'dragon-final'
 
-                            } ).fadeIn( 1000 )
-                                .prependTo( game.content )
-                                .animate(
-                                    {
-                                        'position': 'absolute',
-                                        'bottom': '100px',
-                                        'right': '400px'
-                                    }, 10000
-                                )
-                                .fadeOut( 9000 );
+                        } ).fadeIn( 1000 )
+                            .prependTo( game.content )
+                            .animate(
+                                {
+                                    'position': 'absolute',
+                                    'bottom': '100px',
+                                    'right': '300px'
+                                }, 10000
+                            )
+                            .fadeOut( 9000 );
 
-                            game.dragonImageEl = document.querySelector( '.dragon-final' );
-                            game.dragonImageEl.addEventListener( 'click', game.dragonHitVulnerable );
-                        }
+                        game.dragonImageEl = document.querySelector( '.dragon-final' );
+                        game.dragonImageEl.addEventListener( 'click', game.dragonHitVulnerable );
                     }
-                    if ( timeInterval > 80 ){
-                        $( '.dragon-final' ).remove();
-                        clearInterval( game.newDragonEntryInterval );
-                    }
-                }, 1000 );
+                }
+                if ( timeInterval > 80 ){
+                    $( '.dragon-final' ).remove();
+                    clearInterval( game.newDragonEntryInterval );
+                }
+            }, 1000 );
         },
 
         /**
