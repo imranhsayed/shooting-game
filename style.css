@@ -74,6 +74,28 @@ button {
     display: none;
 }
 
+.select-game-mode, .beginner, .advanced{
+    color: #ffffff;
+    font-family: 'Chewy';
+    letter-spacing: 3px;
+}
+.beginner:hover, .advanced:hover{
+    color: #CDDC39;
+    cursor: pointer;
+}
+.advanced-mode .advanced{
+    color: #8c8c8c;
+}
+.advanced-mode .advanced:after{
+    content: '-Selected';
+}
+.beginner-mode .beginner{
+    color: #8c8c8c;
+}
+.beginner-mode .beginner:after{
+    content: '-Selected';
+}
+
 /**
 All images css
  */

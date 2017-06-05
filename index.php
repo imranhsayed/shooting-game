@@ -7,14 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Bird Shooting Game!</title>
     <link href="https://fonts.googleapis.com/css?family=Bangers|Nosifer|Chewy" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet"  href="style.css">
 </head>
 <body>
-    <section id="main-section" class="rain">
-        <h2 class="loading">Loading...</h2>
+<h2 class="loading">Loading...</h2>
 
+    <section id="main-section" class="rain display beginner-mode">
         <div id="before-game-start" class="before-game-start">
             <div class="start-button">
+                <p class="select-game-mode">Select the game mode and Start :</p>
+                <p class="beginner">Beginner</p>
+                <p class="advanced">Advanced</p>
                 <button class="level1-start-button">
                     <span class="orb-game-start"><span>Start</span></span>
                 </button>
@@ -25,13 +28,15 @@
                 <p>This game works at its best in landscape mode.</p>
                 <p>So if you are using a mobile device or tablet
                    request you to please switch to landscape mode before start playing the game.</p>
+                <p>Select the game mode/difficulty level and click/press Start .The game starts in beginner mode by default</p>
                 <p>As the name says ,its a Bird Shooting Game </p>
                 <p>So you need to shoot the birds to score points.</p>
                 <p>Every level of the game has a preset target points</p>
                 <p>You need to score the target Points in order to complete the level</p>
                 <p>You can then move on to the next one.</p>
                 <p>The game gets challenging as you progress from one level to another.</p>
-
+                <p>You will encounter a Birdman during the level, if killed you will loose all the progress
+                    in the game and you will need to restart the game</p>
                 <p>You need to achieve the required score within the preset time each level has</p>
                 <p>Look at the top of the screen when you start the Game </p>
                 <p>It will tell you what is the target score for the level </p>

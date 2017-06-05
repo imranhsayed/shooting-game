@@ -58,7 +58,8 @@ var birdShootingGame = (function( $ ) {
             game.events();
             game.mainContent.classList.add( 'display' );
             game.loadingEl.classList.add( 'display' );
-            alert( 'Welcome ! This game works at its best in landscape mode. Please switch to landscape mode')
+            game.mainSection.classList.remove( 'display' );
+            alert( 'Welcome ! This game works at its best in landscape mode. If you are using a mobile device please switch to landscape mode')
         },
 
         /**
@@ -70,6 +71,8 @@ var birdShootingGame = (function( $ ) {
             $( game.level1StartButton ).on( 'click', game.startLevelOne );
             $( game.level2StartButton ).on( 'click', game.startLevelTwo );
             $( game.body ).on( 'mousemove', game.imgFollowCursor );
+            $( game.beginner ).on( 'click', game.toggleClassBeginner );
+            $( game.advanced ).on( 'click', game.toggleClassAdvanced );
             game.backgroundMusicLevel1.addEventListener( 'ended', function() {
                 this.currentTime = 0;
                 this.play();
@@ -85,6 +88,8 @@ var birdShootingGame = (function( $ ) {
         setEl: function(){
             game.body = document.querySelector( 'body' );
             game.loadingEl = document.querySelector( '.loading' );
+            game.beginner = document.querySelector( '.beginner' );
+            game.advanced = document.querySelector( '.advanced' );
             game.mainContent = document.querySelector( '.main-content' );
             game.header = document.querySelector( '.header' );
             game.mainSection = document.getElementById( 'main-section' );
@@ -109,6 +114,25 @@ var birdShootingGame = (function( $ ) {
             game.imgTags = '<img>';
         },
 
+        /**
+         * toggles class beginner
+         */
+        toggleClassBeginner: function () {
+            $( game.mainSection ).toggleClass( 'beginner-mode' );
+            $( game.mainSection ).removeClass( 'advanced-mode' );
+        },
+
+        /**
+         * toggles class advanced
+         */
+        toggleClassAdvanced: function () {
+            $( game.mainSection ).toggleClass( 'advanced-mode' );
+            $( game.mainSection ).removeClass( 'beginner-mode' );
+        },
+
+        /**
+         * Clears all intervals
+         */
         clearAllInterval : function () {
             clearInterval( game.scoreIntervalCheck );
             clearInterval( game.dragonEntryInterval );
@@ -132,23 +156,26 @@ var birdShootingGame = (function( $ ) {
          */
         startLevelOne: function(){
             /**
-             * Meaning after how many seconds next bird will be sent.
-             */
-            game.birdInterval = 3000;
-
-            /**
              * birdNoToSend is in multiples of 2 .
              * If you choose 2 meaning 4 birds will be sent
              */
-            game.birdNoToSend = 50;
-            game.birdNestDivNo = 50;
+            game.birdNoToSend = 60;
+            game.birdNestDivNo = 60;
 
             /*
              * ids to be created from zero up until range.
              */
             game.randRange = game.birdNestDivNo;
-            game.birdSpeed = 20000;
-            game.requiredScore = game.birdNoToSend * 110 ;
+            if ( $( game.mainSection ).hasClass( 'advanced-mode' ) ){
+                game.requiredScore = game.birdNoToSend * 110 ;
+                game.birdSpeed = 15000;
+                game.birdInterval = 2500;
+
+            }else{
+                game.requiredScore = game.birdNoToSend * 80 ;
+                game.birdSpeed = 20000;
+                game.birdInterval = 3000;
+            }
             game.gameTimer = 100; // In secs
 
             game.createRain();
@@ -198,25 +225,26 @@ var birdShootingGame = (function( $ ) {
             } );
 
             /**
-             * meaning after how many seconds next bird will be sent
-             * @type {number}
-             */
-            game.birdInterval = 2000;
-
-            /**
              * birdNoToSend is in multiples of 4 .
              * If you choose 2 meaning 4 birds will be sent
              * @type {number}
              */
-            game.birdNoToSend = 60;
-            game.birdNestDivNo = 60;
+            game.birdNoToSend = 80;
+            game.birdNestDivNo = 80;
 
             /*
              * ids to be created from zero up until range
              */
             game.randRange = game.birdNestDivNo;
-            game.birdSpeed = 15000;
-            game.requiredScore = game.birdNoToSend * 120;
+            if ( $( game.mainSection ).hasClass( 'advanced-mode' ) ){
+                game.requiredScore = game.birdNoToSend * 100 ;
+                game.birdInterval = 1500;
+                game.birdSpeed = 12000;
+            }else{
+                game.requiredScore = game.birdNoToSend * 80 ;
+                game.birdInterval = 2000;
+                game.birdSpeed = 15000;
+            }
             game.gameTimer = 110; // in secs
             game.birdImgSourceLeft = 'images/level2-bird-left.gif';
             game.birdImgSourceRight = 'images/level2-bird-right.gif';
@@ -1280,7 +1308,11 @@ var birdShootingGame = (function( $ ) {
          */
         dragonHitVulnerable: function ( event ) {
             game.gunShotAudio.play();
-            game.health.value -= 1;
+            if ( $( game.mainSection ).hasClass( 'advanced-mode' ) ){
+                game.health.value -= 1;
+            }else{
+                game.health.value -= 2;
+            }
             $( event.target ).fadeOut( 200 );
             $( event.target ).fadeIn( 100 );
         }
