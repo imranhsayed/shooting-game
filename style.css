@@ -802,11 +802,14 @@ CSS for credits game ending
     }
     .game-over p{
         font-size: 15px;
-        line-height: 20px;
+        line-height: 15px;
+    }
+    .header .dragon-health-name{
+        margin-bottom: 5px;
     }
 
     progress {
-        height: 10px;
+        height: 12px;
     }
 
     .movie {
