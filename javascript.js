@@ -1327,8 +1327,5 @@ var birdShootingGame = (function( $ ) {
 })( jQuery );
 
 window.onload = function() {
-    var backMusLv3 = document.getElementById( 'background-music-level3' );
-    backMusLv3.addEventListener( 'canplaythrough', function () {
         birdShootingGame.init();
-    });
 };
