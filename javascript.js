@@ -60,6 +60,10 @@ var birdShootingGame = (function( $ ) {
             game.loadingEl.classList.add( 'display' );
             game.mainSection.classList.remove( 'display' );
             game.body.style.minHeight = window.outerHeight;
+            $('#test').on( 'click', function() {
+                game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
+                game.backgroundMusicLevel3.play();
+            } );
         },
 
         /**

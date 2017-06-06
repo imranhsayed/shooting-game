@@ -57,6 +57,7 @@
                     <span class="orb-game-start"><span>Start</span></span>
                 </button>
             </div>
+            <button id="test">Test Sound</button>
             <h1>Bird Shooting</h1>
             <div class="level1-instructions-right wrapper">
                 <h1>Instructions</h1>
@@ -153,6 +154,9 @@
     </div>
 
     <div class="all-images display" >
+        <img src="images/portrait-level1.gif" alt="" class="">
+        <img src="images/portrait-level2.gif" alt="" class="">
+        <img src="images/portrait-level3.gif" alt="" class="">
         <img src="images/blood-splatter.jpg" alt="" class="">
         <img src="images/dark-castle.gif" alt="" class="">
         <img src="images/dragon-entry-brown.png" alt="" class="">
@@ -176,6 +180,9 @@
         <img src="images/man-flying.gif" alt="" class="">
         <img src="images/manshooting.png" alt="" class="">
         <img src="images/orb-game-start.gif-c200" alt="" class="">
+
+
+
     </div>
 
 <script src="jquery.js"></script>
