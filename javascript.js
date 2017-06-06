@@ -368,10 +368,6 @@ var birdShootingGame = (function( $ ) {
                 game.body.classList.add( 'level3-background');
                 $( game.body ).removeClass( 'lightening-background' );
                 game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
-                game.backgroundMusicLevel3.addEventListener( 'ended', function() {
-                    this.currentTime = 0;
-                    this.play();
-                }, false);
                 game.backgroundMusicLevel3.play();
 
                 if( ! $( game.header ).children().hasClass( 'progress-class' ) ){
