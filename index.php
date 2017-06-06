@@ -43,8 +43,8 @@
         </audio>
     </div>
     <div class="loading">
-        Please Wait...
     <img src="images/loading.gif" alt="Game Loading. Please wait"  >
+        <p>Please Wait...</p>
     </div>
 
     <section id="main-section" class="rain display beginner-mode">

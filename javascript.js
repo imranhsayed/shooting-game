@@ -1264,8 +1264,8 @@ var birdShootingGame = (function( $ ) {
                             .animate(
                                 {
                                     'position': 'absolute',
-                                    'bottom': '80px',
-                                    'right': '200px'
+                                    'bottom': '60px',
+                                    'right': '150px'
                                 }, 10000
                             )
                             .fadeOut( 9000 );
@@ -1327,5 +1327,8 @@ var birdShootingGame = (function( $ ) {
 })( jQuery );
 
 window.onload = function() {
-    birdShootingGame.init();
+    var backMusLv3 = document.getElementById( 'background-music-level3' );
+    backMusLv3.addEventListener( 'canplaythrough', function () {
+        birdShootingGame.init();
+    });
 };
