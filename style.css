@@ -803,11 +803,11 @@ CSS for credits game ending
 
     .game-over {
         font-size: 13px;
-        padding-top: 36%;
+        padding-top: 35%;
     }
     .game-over p{
         font-size: 15px;
-        line-height: 17px;
+        line-height: 16px;
     }
     .header .dragon-health-name{
         margin-bottom: 5px;

@@ -166,7 +166,7 @@ var birdShootingGame = (function( $ ) {
                 game.birdInterval = 2300;
 
             }else{
-                game.requiredScore = game.birdNoToSend * 1 ; //80
+                game.requiredScore = game.birdNoToSend * 80 ;
                 game.birdSpeed = 20000;
                 game.birdInterval = 2800;
             }
@@ -242,7 +242,7 @@ var birdShootingGame = (function( $ ) {
                 game.birdInterval = 1500;
                 game.birdSpeed = 12000;
             }else{
-                game.requiredScore = game.birdNoToSend * 1 ; //80
+                game.requiredScore = game.birdNoToSend * 80 ;
                 game.birdInterval = 2000;
                 game.birdSpeed = 15000;
             }
@@ -1231,6 +1231,7 @@ var birdShootingGame = (function( $ ) {
                 if( timeInterval === 47 ){
                     $( '.dragon-fire-right' ).remove();
                     if( false === $( game.content ).children().hasClass( 'dragon-fire' ) ){
+                        game.stopRain();
                         $( dragonImgTags, {
                             src: 'images/dragon-fire.gif',
                             class: 'dragon-fire'
