@@ -57,14 +57,16 @@
                     <span class="orb-game-start"><span>Start</span></span>
                 </button>
             </div>
-            <button id="test">Test Sound</button>
             <h1>Bird Shooting</h1>
             <div class="level1-instructions-right wrapper">
                 <h1>Instructions</h1>
-                <p>This game works at its best in portrait mode.</p>
-                <p>So if you are using a mobile device or tablet
-                   request you to please switch to landscape mode before start playing the game.</p>
+                <p>For mobile devices, this game works at its best in portrait mode.</p>
+                <p>So if you are using a mobile device
+                   request you to please keep the game in portrait while playing</p>
                 <p>Select the game mode/difficulty level and click/press Start .The game starts in beginner mode by default</p>
+                <p>This game is designed on javascript language. So speed and performance of the game
+                    might vary depending on the mobile device your are using</p>
+                <p>The background images may be different on PC mode</p>
                 <p>As the name says ,its a Bird Shooting Game </p>
                 <p>So you need to shoot the birds to score points.</p>
                 <p>Every level of the game has a preset target points</p>

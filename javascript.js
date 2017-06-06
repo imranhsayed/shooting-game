@@ -60,9 +60,8 @@ var birdShootingGame = (function( $ ) {
             game.loadingEl.classList.add( 'display' );
             game.mainSection.classList.remove( 'display' );
             game.body.style.minHeight = window.outerHeight;
-            $('#test').on( 'click', function() {
-
-            } );
+            alert( 'Welcome! For the best user experience , this game is designed to play in portrait mode on mobile devices. So if ' +
+                'you are using a mobile device, please play in portrait mode')
         },
 
         /**
@@ -283,7 +282,7 @@ var birdShootingGame = (function( $ ) {
                 nestDivHasClassDisplay;
             game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
             game.backgroundMusicLevel3.play();
-            game.backgroundMusicLevel3.volume = 0.08;
+            game.backgroundMusicLevel3.volume = 0.085;
             if ( ! $( game.body ).hasClass( 'lightening-background' ) ){
                 game.body.classList.add( 'lightening-background' );
             }
@@ -369,7 +368,7 @@ var birdShootingGame = (function( $ ) {
                 game.gunImage.classList.remove( 'display' );
                 game.body.classList.add( 'level3-background');
                 $( game.body ).removeClass( 'lightening-background' );
-                game.backgroundMusicLevel3.volume = 0.1;
+                game.backgroundMusicLevel3.volume = 1.0;
 
                 if( ! $( game.header ).children().hasClass( 'progress-class' ) ){
                     $( '<p></p>', {
