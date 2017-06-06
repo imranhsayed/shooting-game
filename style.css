@@ -25,6 +25,34 @@ body {
     letter-spacing: 2px;
     font-size: 15px;
 }
+.level1-background{
+    background: url( "images/level1-background.jpg" );
+    /*background-repeat: no-repeat;*/
+    background-size: cover;
+    overflow:hidden;
+    min-height: 100%;
+}
+.level2-background{
+    background: url( "images/landscape.gif" );
+    /*background-repeat: no-repeat;*/
+    background-size: cover;
+    overflow:hidden;
+    min-height: 100%;
+}
+.level3-background{
+    background: url( "images/dark-castle.gif" );
+    /*background-repeat: no-repeat;*/
+    background-size: cover;
+    overflow:hidden;
+    min-height: 100%;
+}
+.lightening-background{
+    background: url( "images/lightening-img.gif" );
+    /*background-repeat: no-repeat;*/
+    background-size: cover;
+    overflow:hidden;
+    min-height: 100%;
+}
 .body, .header {
     font-family: 'Chewy';
 }
@@ -806,37 +834,38 @@ CSS for credits game ending
     .start-button{
         padding-top: 30%;
     }
+    .level1-background{
+        background: url( "images/portrait-level1.gif" );
+        /*background-repeat: no-repeat;*/
+        background-size: cover;
+        overflow:hidden;
+        min-height: 100%;
+    }
+    .level2-background{
+        background: url( "images/portrait-level2.gif" );
+        /*background-repeat: no-repeat;*/
+        background-size: cover;
+        overflow:hidden;
+        min-height: 100%;
+    }
+    .level3-background{
+        background: url( "images/portrait-level3.gif" );
+        /*background-repeat: no-repeat;*/
+        background-size: cover;
+        overflow:hidden;
+        min-height: 100%;
+    }
+    .lightening-background{
+        background: url( "images/lightening-img.gif" );
+        /*background-repeat: no-repeat;*/
+        background-size: cover;
+        overflow:hidden;
+        min-height: 100%;
+    }
 
 }
 
-.level1-background{
-    background: url( "images/level1-background.jpg" );
-    /*background-repeat: no-repeat;*/
-    background-size: cover;
-    overflow:hidden;
-    min-height: 100%;
-}
-.level2-background{
-    background: url( "images/landscape.gif" );
-    /*background-repeat: no-repeat;*/
-    background-size: cover;
-    overflow:hidden;
-    min-height: 100%;
-}
-.level3-background{
-    background: url( "images/dark-castle.gif" );
-    /*background-repeat: no-repeat;*/
-    background-size: cover;
-    overflow:hidden;
-    min-height: 100%;
-}
-.lightening-background{
-    background: url( "images/lightening-img.gif" );
-    /*background-repeat: no-repeat;*/
-    background-size: cover;
-    overflow:hidden;
-    min-height: 100%;
-}
+
 body{
     /*background-repeat: no-repeat;*/
     background-size: cover;
