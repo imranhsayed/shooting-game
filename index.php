@@ -66,7 +66,9 @@
                 <p>Select the game mode/difficulty level and click/press Start .The game starts in beginner mode by default</p>
                 <p>This game is designed on javascript language. So speed and performance of the game
                     might vary depending on the mobile device your are using</p>
-                <p>The background images may be different on PC mode</p>
+                <p>The game features might differ slightly on PC mode</p>
+                <p>The game has heavy sound files and images. As this game is online few sound files may
+                take time to download depending on your internet connection</p>
                 <p>As the name says ,its a Bird Shooting Game </p>
                 <p>So you need to shoot the birds to score points.</p>
                 <p>Every level of the game has a preset target points</p>

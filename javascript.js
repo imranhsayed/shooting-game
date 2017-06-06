@@ -61,7 +61,7 @@ var birdShootingGame = (function( $ ) {
             game.mainSection.classList.remove( 'display' );
             game.body.style.minHeight = window.outerHeight;
             alert( 'Welcome! For the best user experience , this game is designed to play in portrait mode on mobile devices. So if ' +
-                'you are using a mobile device, please play in portrait mode')
+                'you are using a mobile device, please play in portrait mode. This game is online. So some music and images files may take time to download')
         },
 
         /**
@@ -1265,7 +1265,7 @@ var birdShootingGame = (function( $ ) {
                             .animate(
                                 {
                                     'position': 'absolute',
-                                    'bottom': '80px',
+                                    'bottom': '85px',
                                     'right': '180px'
                                 }, 10000
                             )
