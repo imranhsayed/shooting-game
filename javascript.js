@@ -1265,7 +1265,7 @@ var birdShootingGame = (function( $ ) {
                                 {
                                     'position': 'absolute',
                                     'bottom': '75px',
-                                    'right': '160px'
+                                    'right': '170px'
                                 }, 10000
                             )
                             .fadeOut( 9000 );
