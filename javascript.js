@@ -1264,7 +1264,7 @@ var birdShootingGame = (function( $ ) {
                             .animate(
                                 {
                                     'position': 'absolute',
-                                    'bottom': '60px',
+                                    'bottom': '70px',
                                     'right': '150px'
                                 }, 10000
                             )

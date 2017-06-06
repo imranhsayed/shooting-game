@@ -15,7 +15,7 @@ body {
     background:-webkit-gradient(linear,0% 0%,0% 100%, from(rgba(13,52,58,1) ), to(#000000)  );
     background: -moz-linear-gradient(top, rgba(13,52,58,1) 0%, rgba(0,0,0,1) 100%);
     background-image: url( 'images/game-start-background.jpg' );
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
     background-size: cover;
     overflow:hidden;
     -webkit-user-select: none;
@@ -774,7 +774,7 @@ CSS for credits game ending
     }
     .game-over p{
         font-size: 15px;
-        line-height: 10px;
+        line-height: 20px;
     }
 
     progress {
@@ -811,34 +811,34 @@ CSS for credits game ending
 
 .level1-background{
     background: url( "images/level1-background.jpg" );
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
     background-size: cover;
     overflow:hidden;
     min-height: 100%;
 }
 .level2-background{
     background: url( "images/landscape.gif" );
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
     background-size: cover;
     overflow:hidden;
     min-height: 100%;
 }
 .level3-background{
     background: url( "images/dark-castle.gif" );
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
     background-size: cover;
     overflow:hidden;
     min-height: 100%;
 }
 .lightening-background{
     background: url( "images/lightening-img.gif" );
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
     background-size: cover;
     overflow:hidden;
     min-height: 100%;
 }
 body{
-    background-repeat: no-repeat;
+    /*background-repeat: no-repeat;*/
     background-size: cover;
     overflow:hidden;
 }
