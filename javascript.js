@@ -61,8 +61,7 @@ var birdShootingGame = (function( $ ) {
             game.mainSection.classList.remove( 'display' );
             game.body.style.minHeight = window.outerHeight;
             $('#test').on( 'click', function() {
-                game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
-                game.backgroundMusicLevel3.play();
+
             } );
         },
 
@@ -282,6 +281,9 @@ var birdShootingGame = (function( $ ) {
             var progress, headerChildren = $( 'header' ).children(),
                 contentHasLeftBirdNestClass,
                 nestDivHasClassDisplay;
+            game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
+            game.backgroundMusicLevel3.play();
+            game.backgroundMusicLevel3.volume = 0.08;
             if ( ! $( game.body ).hasClass( 'lightening-background' ) ){
                 game.body.classList.add( 'lightening-background' );
             }
@@ -367,8 +369,7 @@ var birdShootingGame = (function( $ ) {
                 game.gunImage.classList.remove( 'display' );
                 game.body.classList.add( 'level3-background');
                 $( game.body ).removeClass( 'lightening-background' );
-                game.backgroundMusicLevel3 = document.getElementById( 'background-music-level3' );
-                game.backgroundMusicLevel3.play();
+                game.backgroundMusicLevel3.volume = 0.1;
 
                 if( ! $( game.header ).children().hasClass( 'progress-class' ) ){
                     $( '<p></p>', {
@@ -1264,8 +1265,8 @@ var birdShootingGame = (function( $ ) {
                             .animate(
                                 {
                                     'position': 'absolute',
-                                    'bottom': '75px',
-                                    'right': '170px'
+                                    'bottom': '80px',
+                                    'right': '180px'
                                 }, 10000
                             )
                             .fadeOut( 9000 );
