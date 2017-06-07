@@ -60,8 +60,8 @@ var birdShootingGame = (function( $ ) {
             game.loadingEl.classList.add( 'display' );
             game.mainSection.classList.remove( 'display' );
             game.body.style.minHeight = window.outerHeight;
-            alert( 'Welcome! For the best user experience , this game is designed to play in portrait mode for mobile devices. So if ' +
-                'you are using a mobile device, please play in portrait mode. This game is online. So some music and images files may take time to download')
+            alert( 'Welcome! ,If ' +
+                'you are using a mobile device, please play in portrait mode. This game is online. So you may experience some lag')
         },
 
         /**
@@ -161,7 +161,7 @@ var birdShootingGame = (function( $ ) {
              */
             game.randRange = game.birdNestDivNo;
             if ( $( game.mainSection ).hasClass( 'advanced-mode' ) ){
-                game.requiredScore = game.birdNoToSend * 110 ;
+                game.requiredScore = game.birdNoToSend * 120 ;
                 game.birdSpeed = 15000;
                 game.birdInterval = 2300;
 
@@ -238,7 +238,7 @@ var birdShootingGame = (function( $ ) {
              */
             game.randRange = game.birdNestDivNo;
             if ( $( game.mainSection ).hasClass( 'advanced-mode' ) ){
-                game.requiredScore = game.birdNoToSend * 100 ;
+                game.requiredScore = game.birdNoToSend * 110 ;
                 game.birdInterval = 1500;
                 game.birdSpeed = 12000;
             }else{
@@ -368,7 +368,7 @@ var birdShootingGame = (function( $ ) {
                 game.gunImage.classList.remove( 'display' );
                 game.body.classList.add( 'level3-background');
                 $( game.body ).removeClass( 'lightening-background' );
-                game.backgroundMusicLevel3.volume = 1.0;
+                game.backgroundMusicLevel3.volume = 1;
 
                 if( ! $( game.header ).children().hasClass( 'progress-class' ) ){
                     $( '<p></p>', {
@@ -378,7 +378,7 @@ var birdShootingGame = (function( $ ) {
                     $( '<progress></progress>', {
                         id: 'health',
                         class: 'progress-class',
-                        value: '200',
+                        value: '250',
                         max:'400'
                     }).appendTo( game.header );
                 }
@@ -630,8 +630,8 @@ var birdShootingGame = (function( $ ) {
                 birdManShot = 1;
                 game.gameOverLevel1( birdManShot );
             } else {
-                game.birdKilledSound.volume = 0.08;
                 game.birdKilledSound.play();
+                game.birdKilledSound.volume = 0.08
             }
 
             game.totalBirdsShot.push( birdHitId );
@@ -1071,7 +1071,7 @@ var birdShootingGame = (function( $ ) {
 
                     $( game.pTags, {
                         text: 'Congratulations You have completed all three levels.You have put the Dragon back to Sleep in '
-                        + timeTookToFinish + ' secs. ' +' Go back to the home Screen and Restart the Game',
+                        + timeTookToFinish + ' secs. ' +' Go back to the home Screen and Select Advance Level to challenge yourself',
                         class: 'congrats-text'
                     } ).prependTo( game.gameOverdiv );
 
@@ -1187,6 +1187,7 @@ var birdShootingGame = (function( $ ) {
                 if( timeInterval === 32 ){
                     $( '.dragon-entry-dark-green' ).remove();
                     if( false === $( game.content ).children().hasClass( 'dragon-fire-left' ) ){
+                        game.stopRain();
                         var dragFireLeftRightPos = window.outerWidth/2;
                         $( dragonImgTags, {
                             src: 'images/dragon-fire-left.gif',
@@ -1231,7 +1232,6 @@ var birdShootingGame = (function( $ ) {
                 if( timeInterval === 47 ){
                     $( '.dragon-fire-right' ).remove();
                     if( false === $( game.content ).children().hasClass( 'dragon-fire' ) ){
-                        game.stopRain();
                         $( dragonImgTags, {
                             src: 'images/dragon-fire.gif',
                             class: 'dragon-fire'
